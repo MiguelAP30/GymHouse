@@ -7,7 +7,8 @@ class Ingreso(Base):
 
     id              = Column(Integer, primary_key=True, autoincrement=True)    
     fecha           = Column(Date)    
-    descripcion     = Column(String(length=150))    
-    password        = Column(String(length=64))    
+    descripcion     = Column(String(length=150))   
     valor           = Column(Integer)   
-    categoria = relationship("Category", back_populates="ingresos")
+    categoria_id    = Column(Integer, ForeignKey("categorias_ingresos.id"))
+
+    categoria = relationship("Categoria_Ingreso", back_populates="ingresos")
