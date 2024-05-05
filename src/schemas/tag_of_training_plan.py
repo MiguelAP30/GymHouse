@@ -1,8 +1,8 @@
 from pydantic import BaseModel, Field, validator, model_validator
 from typing import List, Optional
 
-class Plate(BaseModel):
-    id: int
+class TagOfTrainingPlan(BaseModel):
+    id: Optional[int] = Field(default=None, title="Id of the tag of the training plan")
     name: str
     description: str
 

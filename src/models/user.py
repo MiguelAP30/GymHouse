@@ -16,7 +16,6 @@ class User(Base):
     height = Column(Float)
     birth_date = Column(Date)
     physical_activity = Column(Integer)
-
     role_id = Column(Integer, ForeignKey("roles.id"))
 
     roles = relationship("Role", back_populates="users")

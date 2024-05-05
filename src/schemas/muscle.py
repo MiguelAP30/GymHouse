@@ -1,15 +1,20 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, inspect
-from sqlalchemy.orm import relationship
-from src.config.database import Base
+from pydantic import BaseModel, Field, validator, model_validator
+from typing import List, Optional
 
-class Muscle(Base):
-    __tablename__ = "muscles"
+class Muscle(BaseModel):
+    id: Optional[int] = Field(default=None, title="Id of the muscle")
+    name: str = Field(..., title="Name of the muscle", max_length=50)
+    description: Optional[str] = Field(None, title="Description of the muscle", max_length=150)
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(length=50))
-    description = Column(String(length=150))
-
-    exercisesMusclesMachines = relationship("Exercise", back_populates="muscle")
-
-    def to_dict(self):
-        return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
+    @validator("name")
+    def name_must_contain_letter(cls, v):
+        assert any(char.isalpha() for char in v), "Must contain a letter"
+        return v
+    
+    @validator("description")
+    def description_must_contain_letter(cls, v):
+        if v:
+            assert any(char.isalpha() for char in v), "Must contain a letter"
+        return v
+    class Config:
+        orm_mode = True
