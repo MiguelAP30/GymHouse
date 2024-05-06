@@ -6,7 +6,7 @@ class User(BaseModel):
     id_number: str = Field(min_length=6, title="Numero de identificacion del usuario", max_length=20)
     password: str = Field(min_length=6,title="Contraseña del usuario", max_length=100)
     name: str = Field(min_length=2, title="Nombre del usuario", max_length=50)
-    last_name: str = Field(min_length=2, title="Apellido del usuario", max_length=50)
+    lastname: str = Field(min_length=2, title="Apellido del usuario", max_length=50)
     phone: str = Field(min_length=8, title="Telefono del usuario", max_length=20)
     address: str = Field(min_length=8, title="Direccion del usuario", max_length=150)
     weight: float = Field(title="Peso del usuario")
@@ -35,7 +35,7 @@ class User(BaseModel):
         assert isinstance(v, str), ValueError("El nombre del usuario debe ser un string")
         return v
     
-    @validator("last_name")
+    @validator("lastname")
     def last_name_must_be_str(cls, v):
         assert isinstance(v, str), ValueError("El apellido del usuario debe ser un string")
         return v

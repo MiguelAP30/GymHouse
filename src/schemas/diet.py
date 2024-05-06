@@ -17,4 +17,9 @@ class Diet (BaseModel):
             assert isinstance(v, str), ValueError("la descripcion debe ser un string")
         return v
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "name": "Dieta 1",
+                "description": "Dieta para bajar de peso"
+            }
+        }

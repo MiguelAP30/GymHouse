@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, validator, model_validator
 from typing import Optional
 
-class ExerciseMuscleMachine (BaseModel):
+class ExerciseMuscleMachine(BaseModel):
     id: Optional[int] = Field(default=None, title="Id de la maquina de ejercicios")
     excercise_id: int = Field(title="Id del ejercicio")
     muscle_id: int = Field(title="Id del musculo")

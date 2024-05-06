@@ -8,7 +8,7 @@ from src.schemas.training_plan_user import TrainingPlanUser
 from src.models.training_plan_user import TrainingPlanUser as training_plan_users
 from src.repositories.training_plan_user import TrainingPlanUserRepository
 
-training_plan_user_router = APIRouter(prefix='/training_plan_user', tags=['training_plan_users'])
+training_plan_user_router = APIRouter(prefix='/training_plan_user', tags=['training_plans_users'])
 
 #CRUD training_plan_user
 

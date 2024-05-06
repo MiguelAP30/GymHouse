@@ -8,7 +8,7 @@ from src.schemas.quantityFood import QuantityFood
 from src.models.quantityFood import QuantityFood as quantityFoods
 from src.repositories.quantityFood import QuantityFoodRepository
 
-quantityFood_router = APIRouter(prefix='/quantityFood', tags=['quantityFoods'])
+quantityFood_router = APIRouter(prefix='/quantityFood', tags=['quantity_foods'])
 
 #CRUD quantityFood
 

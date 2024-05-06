@@ -8,7 +8,7 @@ from src.schemas.training_plan_exercise import TrainingPlanExercise
 from src.models.training_plan_exercise import TrainingPlanExercise as training_plan_exercises
 from src.repositories.training_plan_exercise import TrainingPlanExerciseRepository
 
-training_plan_exercise_router = APIRouter(prefix='/training_plan_exercise', tags=['training_plan_exercises'])
+training_plan_exercise_router = APIRouter(prefix='/training_plan_exercise', tags=['training_plans_exercises'])
 
 #CRUD training_plan_exercise
 

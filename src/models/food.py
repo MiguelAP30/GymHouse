@@ -12,6 +12,7 @@ class Food(Base):
     food_category_id = Column(Integer, ForeignKey("food_categories.id"))
 
     food_categories = relationship("FoodCategory", back_populates="foods")
+    quantity_foods = relationship("QuantityFood", back_populates="foods")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}

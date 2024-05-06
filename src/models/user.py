@@ -20,7 +20,7 @@ class User(Base):
 
     roles = relationship("Role", back_populates="users")
     diets_users = relationship("DietUser", back_populates="users")
-    trainings_users = relationship("TrainingUser", back_populates="users")
+    training_plans_users = relationship("TrainingPlanUser", back_populates="users")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}

@@ -1,6 +1,8 @@
 from typing import List
-from schemas.exercise_muscle_machine import ExerciseMuscleMachine
-from models.exercise_muscle_machine import ExerciseMuscleMachine as ExcersiceMuscleMachineModel
+from src.schemas.exercise_muscle_machine import ExerciseMuscleMachine
+from src.models.exercise_muscle_machine import ExerciseMuscleMachine as ExcersiceMuscleMachineModel
+
+
 
 class ExerciseMuscleMachineRepository():
     def __init__(self, db) -> None:

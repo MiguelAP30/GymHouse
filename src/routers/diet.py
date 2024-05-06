@@ -12,13 +12,13 @@ diet_router = APIRouter(tags=['diets'])
 
 #CRUD diet
 
-@diet_router.get('/diet',response_model=List[Diet],description="Returns all diet")
+@diet_router.get('/',response_model=List[Diet],description="Returns all diet")
 def get_diet()-> List[Diet]:
     db= SessionLocal()
     result = DietRepository(db).get_all_diets()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
-@diet_router.get('/diet{id}',response_model=Diet,description="Returns specific diet")
+@diet_router.get('/{id}',response_model=Diet,description="Returns specific diet")
 def get_diet_by_id(id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     element = DietRepository(db).get_diet_by_id(id)

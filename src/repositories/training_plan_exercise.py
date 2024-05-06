@@ -1,6 +1,6 @@
 from typing import List
-from schemas.training_plan_exercise import TrainingPlanExercise
-from models.training_plan_exercise import TrainingPlanExercise as training_plan_excersices
+from src.schemas.training_plan_exercise import TrainingPlanExercise
+from src.models.training_plan_exercise import TrainingPlanExercise as training_plan_excersices
 
 class TrainingPlanExerciseRepository():
     def __init__(self, db) -> None:

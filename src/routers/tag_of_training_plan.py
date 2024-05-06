@@ -8,7 +8,7 @@ from src.schemas.tag_of_training_plan import TagOfTrainingPlan
 from src.models.tag_of_training_plan import TagOfTrainingPlan as tag_of_training_plans
 from src.repositories.tag_of_training_plan import TagOfTrainingPlanRepository
 
-tag_of_training_plan_router = APIRouter(prefix='/tag_of_training_plan', tags=['tag_of_training_plans'])
+tag_of_training_plan_router = APIRouter(prefix='/tag_of_training_plan', tags=['tags_of_training_plans'])
 
 #CRUD tag_of_training_plan
 

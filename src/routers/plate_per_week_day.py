@@ -8,7 +8,7 @@ from src.schemas.plate_per_week_day import PlatePerWeekDay
 from src.models.plate_per_week_day import PlatePerWeekDay as plate_per_week_days
 from src.repositories.plate_per_week_day import PlatePerWeekDayRepository
 
-plate_per_week_day_router = APIRouter(prefix='/plate_per_week_day', tags=['plate_per_week_days'])
+plate_per_week_day_router = APIRouter(prefix='/plate_per_week_day', tags=['plates_per_weeks_days'])
 
 #CRUD plate_per_week_day
 

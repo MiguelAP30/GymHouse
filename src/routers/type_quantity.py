@@ -8,7 +8,7 @@ from src.schemas.type_quantity import TypeQuantity
 from src.models.type_quantity import TypeQuantity as type_quantities
 from src.repositories.type_quantity import TypeQuantityRepository
 
-type_quantity_router = APIRouter(prefix='/type_quantity', tags=['type_quantities'])
+type_quantity_router = APIRouter(prefix='/type_quantity', tags=['types_quantity'])
 
 #CRUD type_quantity
 
