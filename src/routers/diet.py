@@ -12,7 +12,7 @@ diet_router = APIRouter(tags=['diets'])
 
 #CRUD diet
 
-@diet_router.get('/diet',response_model=List[diets],description="Returns all diet")
+@diet_router.get('/diet',response_model=List[Diet],description="Returns all diet")
 def get_diet()-> List[Diet]:
     db= SessionLocal()
     result = DietRepository(db).get_all_diets()

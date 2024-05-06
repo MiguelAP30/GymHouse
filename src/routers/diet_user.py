@@ -5,14 +5,14 @@ from fastapi import APIRouter
 from src.config.database import SessionLocal 
 from fastapi.encoders import jsonable_encoder
 from src.schemas.diet_user import DietUser
-from src.models.diet_user import DietUser as diet_users
+from src.models.diet_user import DietUser as DietUsers
 from src.repositories.diet_user import DietUserRepository
 
 diet_user_router = APIRouter(tags=['diet_users'])
 
 #CRUD diet_user
 
-@diet_user_router.get('/diet-user',response_model=List[diet_users],description="Returns all diet_user")
+@diet_user_router.get('/diet-user',response_model=List[DietUser],description="Returns all diet_user")
 def get_diet_user()-> List[DietUser]:
     db= SessionLocal()
     result = DietUserRepository(db).get_all_diet_user()
@@ -47,6 +47,26 @@ def remove_diet_user(id: int = Path(ge=1)) -> dict:
         content={        
             "message": "The diet_user was removed successfully",        
             "data": None    
+            }, 
+        status_code=status.HTTP_200_OK
+        )
+
+@diet_user_router.get('/diet-user{id}',response_model=DietUser,description="Returns specific diet_user")
+def get_diet_user_by_id(id: int = Path(ge=1)) -> dict:
+    db = SessionLocal()
+    element = DietUserRepository(db).get_diet_user_by_id(id)
+    if not element:        
+        return JSONResponse(
+            content={            
+                "message": "The requested diet_user was not found",            
+                "data": None        
+                }, 
+            status_code=status.HTTP_404_NOT_FOUND
+            )    
+    return JSONResponse(
+        content={        
+            "message": "The diet_user was found successfully",        
+            "data": jsonable_encoder(element)    
             }, 
         status_code=status.HTTP_200_OK
         )
