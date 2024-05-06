@@ -1,10 +1,10 @@
 from pydantic import BaseModel, Field, validator, model_validator
 from typing import List, Optional
 
-class TrainingPlanExcersice(BaseModel):
+class TrainingPlanExercise(BaseModel):
     id: Optional[int] = Field(default=None, title="Id del ejercicio en el plan de entrenamiento")
     training_plan_id: int = Field(title="Id del plan de entrenamiento")
-    excersice_id: int = Field(title="Id del ejercicio")
+    exercise_id: int = Field(title="Id del ejercicio")
     sets: int = Field(ge=1,title="Cantidad de series", le=10)
     reps: int = Field(ge=1,title="Cantidad de repeticiones", le=100)
     rest: float = Field(ge=1, title="Tiempo de descanso", le=1000)

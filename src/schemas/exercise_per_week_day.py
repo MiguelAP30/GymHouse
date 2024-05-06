@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, validator, model_validator
 from typing import List, Optional
 
-class ExercisePerWeekDayBase(BaseModel):
+class ExercisePerWeekDay(BaseModel):
     id: Optional[int] = Field(default=None, title="Id del ejercicio")
     exerciseId: int = Field(title="Id del ejercicio")
     weekDayId: int = Field(title="Id del dia de la semana")

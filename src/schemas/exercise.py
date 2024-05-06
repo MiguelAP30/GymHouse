@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, validator, model_validator
 from typing import List, Optional
 
-class Excersice(BaseModel):
+class Exercise(BaseModel):
     id: Optional[int] = Field(default=None, title="Id del ejercicio")
     name: str = Field(min_length=4, max_length=60, title="Nombre del ejercicio")
     description: str = Field(min_length=4, max_length=500, title="Descripcion del ejercicio")

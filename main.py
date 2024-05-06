@@ -24,7 +24,7 @@ tags_metadata = [
     { "name": "diets", "description": "dietas"},
     { "name": "excercises_muscles_machines", "description": "ejercicios musculos maquinas"},
     { "name": "excercises", "description": "ejercicios"},
-    { "name": "exercises_per_weeks_days", "description": "ejercicios por semanas dias"},
+    { "name": "exercises_per_week_days", "description": "ejercicios por semanas dias"},
     { "name": "foods_categories", "description": "categorias de alimentos"},
     { "name": "foods", "description": "alimentos"},
     { "name": "machines", "description": "maquinas"},

@@ -5,7 +5,7 @@ class Food(BaseModel):
     id: Optional[int] = Field(default=None, title="Id de la comida")
     name: str = Field(min_length=4, title="nombre de la comida", max_length=50)
     description: str = Field(min_length=4, title="descripción de la comida ", max_length=500)
-    photo: str = Field(title="foto de la comida")
+    image: str = Field(title="foto de la comida")
     food_category_id: int = Field(title="Id de la categoria de la comida")
 
     @validator("name")

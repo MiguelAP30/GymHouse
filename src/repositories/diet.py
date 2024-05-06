@@ -23,6 +23,7 @@ class DietRepository():
     def create_new_diet(self, diet:Diet ) -> dict:
         new_diet = diets(**diet.model_dump())
         self.db.add(new_diet)
+        
         self.db.commit()
         self.db.refresh(new_diet)
         return new_diet
@@ -31,5 +32,7 @@ class DietRepository():
         element = self.db.query(diets).filter(diets.id == id).first()
         element.name = diet.name
         element.description = diet.description
+
         self.db.commit()
+        self.db.refresh(element)
         return element
