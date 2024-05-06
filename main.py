@@ -17,7 +17,29 @@ tags_metadata = [
     { "name": "egress", "description": "egresos"}, 
     { "name": "reports", "description": "reportes"},  
     { "name": "categories_incomes", "description": "categorias de los ingresos"},
-    { "name": "categories_egress", "description": "categorias de los egresos"}
+    { "name": "categories_egress", "description": "categorias de los egresos"},
+
+    { "name": "users", "description": "usuarios"},
+    { "name": "diet_users", "description": "dietas de los usuarios"},
+    { "name": "diets", "description": "dietas"},
+    { "name": "excercises_muscles_machines", "description": "ejercicios musculos maquinas"},
+    { "name": "excercises", "description": "ejercicios"},
+    { "name": "exercises_per_weeks_days", "description": "ejercicios por semanas dias"},
+    { "name": "foods_categories", "description": "categorias de alimentos"},
+    { "name": "foods", "description": "alimentos"},
+    { "name": "machines", "description": "maquinas"},
+    { "name": "meals", "description": "comidas"},
+    { "name": "muscles", "description": "musculos"},
+    { "name": "plates_per_weeks_days", "description": "platos por semanas dias"},
+    { "name": "plates", "description": "platos"},
+    { "name": "quantity_foods", "description": "cantidad de alimentos"},
+    { "name": "roles", "description": "roles"},
+    { "name": "tags_of_training_plans", "description": "etiquetas de los planes de entrenamiento"},
+    { "name": "training_plans_exercises", "description": "planes de entrenamiento ejercicios"},
+    { "name": "training_plans_users", "description": "planes de entrenamiento usuarios"},
+    { "name": "training_plans", "description": "planes de entrenamiento"},
+    { "name": "types_quantity", "description": "tipos de cantidad"},
+    { "name": "week_days", "description": "dias de la semana"},
 ]
 
 app = FastAPI(openapi_tags=tags_metadata)

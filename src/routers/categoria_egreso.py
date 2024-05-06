@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Body, Query, Path, status
 from fastapi.responses import JSONResponse
 from typing import List
-from src.schemas.categoria_egreso import Categoria_Egreso 
 from fastapi import APIRouter
 from src.config.database import SessionLocal 
-from src.models.categoria_egreso import Categoria_Egreso as CategoriaEgresoModel 
 from fastapi.encoders import jsonable_encoder
+from src.schemas.categoria_egreso import Categoria_Egreso 
+from src.models.categoria_egreso import Categoria_Egreso as CategoriaEgresoModel 
 from src.repositories.categoria_egreso import CategoriaEgresoRepository
 
 categories_egress_router = APIRouter(tags=['categories_egress'])
