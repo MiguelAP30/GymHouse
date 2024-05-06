@@ -8,17 +8,17 @@ from src.repositories.exercise import ExerciseRepository
 from src.schemas.exercise import Exercise
 from src.models.exercise import Exercise as ExerciseModel
 
-exercise_router = APIRouter(prefix='/exercise', tags=['exercises'])
+exercise_router = APIRouter(tags=['Ejercicios'])
 
 #CRUD exercise
 
-@exercise_router.get('',response_model=List[Exercise],description="Returns all exercises")
+@exercise_router.get('/',response_model=List[Exercise],description="Returns all exercises")
 def get_categories()-> List[Exercise]:
     db= SessionLocal()
     result = ExerciseRepository(db).get_all_excercise()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
-@exercise_router.get('{id}',response_model=Exercise,description="Returns data of one specific exercise")
+@exercise_router.get('/{id}',response_model=Exercise,description="Returns data of one specific exercise")
 def get_excercise(id: int = Path(ge=1)) -> Exercise:
     db = SessionLocal()
     element=  ExerciseRepository(db).get_excercise_by_id(id)
@@ -35,7 +35,7 @@ def get_excercise(id: int = Path(ge=1)) -> Exercise:
         status_code=status.HTTP_200_OK
         )
 
-@exercise_router.post('',response_model=dict,description="Creates a new exercise")
+@exercise_router.post('/',response_model=dict,description="Creates a new exercise")
 def create_categorie(exercise: Exercise = Body()) -> dict:
     db= SessionLocal()
     new_excercise = ExerciseRepository(db).create_new_excercise(exercise)
@@ -47,7 +47,7 @@ def create_categorie(exercise: Exercise = Body()) -> dict:
         status_code=status.HTTP_201_CREATED
     )
 
-@exercise_router.delete('{id}',response_model=dict,description="Removes specific exercise")
+@exercise_router.delete('/{id}',response_model=dict,description="Removes specific exercise")
 def remove_excercise(id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     element = ExerciseRepository(db).delete_excercise(id)
@@ -67,7 +67,7 @@ def remove_excercise(id: int = Path(ge=1)) -> dict:
         status_code=status.HTTP_200_OK
     )
 
-@exercise_router.put('{id}',response_model=Exercise,description="Updates specific exercise")
+@exercise_router.put('/{id}',response_model=Exercise,description="Updates specific exercise")
 def update_excercise(id: int = Path(ge=1), exercise: Exercise = Body()) -> dict:
     db = SessionLocal()
     element = ExerciseRepository(db).update_excercise(id, exercise)

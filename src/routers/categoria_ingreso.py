@@ -8,7 +8,7 @@ from src.models.categoria_ingreso import Categoria_Ingreso as CategoriaIngresoMo
 from fastapi.encoders import jsonable_encoder
 from src.repositories.categoria_ingreso import CategoriaIngresoRepository
 
-categories_incomes_router = APIRouter(prefix='/categories-incomes', tags=['categories_incomes'])
+categories_incomes_router = APIRouter(prefix='/categories-incomes', tags=['Categorías para los ingresos'])
 
 #CRUD categorías
 

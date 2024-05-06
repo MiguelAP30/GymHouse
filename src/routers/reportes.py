@@ -22,7 +22,7 @@ repoCategoriaIngresos = CategoriaIngresoRepository(db)
 repoCategoriaEgresos = CategoriaEgresoRepository(db)
 
 #REPORTES
-@reportes_router.get('/basic_report', tags=['reports'], response_model=List, description="Returns the basic report")
+@reportes_router.get('/basic_report', tags=['Reportes'], response_model=List, description="Returns the basic report")
 def get_basic_report():
     egresos = repoEgresos.suma_all_egress()
     ingresos = repoIngresos.suma_all_incomes()
@@ -36,7 +36,7 @@ def get_basic_report():
     },
     status_code=200)
 
-@reportes_router.get('/expanded_report',tags=['reports'],description="Return expanded report")
+@reportes_router.get('/expanded_report',tags=['Reportes'],description="Return expanded report")
 def get_expanded_report():
     egreso_categories = repoCategoriaEgresos.get_all_categorias()
     ingreso_categories = repoCategoriaIngresos.get_all_categorias()

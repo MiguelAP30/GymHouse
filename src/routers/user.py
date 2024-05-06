@@ -8,17 +8,17 @@ from src.schemas.user import User
 from src.models.user import User as users
 from src.repositories.user import UserRepository
 
-user_router = APIRouter(prefix='/user', tags=['users'])
+user_router = APIRouter(tags=['Usuarios'])
 
 #CRUD user
 
-@user_router.get('',response_model=List[User],description="Returns all user")
+@user_router.get('/',response_model=List[User],description="Returns all user")
 def get_categories()-> List[User]:
     db= SessionLocal()
     result = UserRepository(db).get_all_users()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
-@user_router.get('{id}',response_model=User,description="Returns data of one specific user")
+@user_router.get('/{id}',response_model=User,description="Returns data of one specific user")
 def get_user(id: int = Path(ge=1)) -> User:
     db = SessionLocal()
     element=  UserRepository(db).get_user_by_id(id)
@@ -35,7 +35,7 @@ def get_user(id: int = Path(ge=1)) -> User:
         status_code=status.HTTP_200_OK
         )
 
-@user_router.post('',response_model=dict,description="Creates a new user")
+@user_router.post('/',response_model=dict,description="Creates a new user")
 def create_categorie(user: User = Body()) -> dict:
     db= SessionLocal()
     new_user = UserRepository(db).create_new_user(user)
@@ -47,7 +47,7 @@ def create_categorie(user: User = Body()) -> dict:
         status_code=status.HTTP_201_CREATED
     )
 
-@user_router.delete('{id}',response_model=dict,description="Removes specific user")
+@user_router.delete('/{id}',response_model=dict,description="Removes specific user")
 def remove_user(id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     element = UserRepository(db).delete_user(id)
@@ -61,7 +61,7 @@ def remove_user(id: int = Path(ge=1)) -> dict:
         )
     return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
 
-@user_router.put('{id}',response_model=dict,description="Updates specific user")
+@user_router.put('/{id}',response_model=dict,description="Updates specific user")
 def update_user(id: int = Path(ge=1), user: User = Body()) -> dict:
     db = SessionLocal()
     element = UserRepository(db).update_user(id, user)

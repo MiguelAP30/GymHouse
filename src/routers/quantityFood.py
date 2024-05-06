@@ -8,17 +8,17 @@ from src.schemas.quantityFood import QuantityFood
 from src.models.quantityFood import QuantityFood as quantityFoods
 from src.repositories.quantityFood import QuantityFoodRepository
 
-quantityFood_router = APIRouter(prefix='/quantityFood', tags=['quantity_foods'])
+quantityFood_router = APIRouter(tags=['Cantidad de alimentos'])
 
 #CRUD quantityFood
 
-@quantityFood_router.get('',response_model=List[QuantityFood],description="Returns all quantityFood")
+@quantityFood_router.get('/',response_model=List[QuantityFood],description="Returns all quantityFood")
 def get_categories()-> List[QuantityFood]:
     db= SessionLocal()
     result = QuantityFoodRepository(db).get_all_quantity_foods()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
-@quantityFood_router.get('{id}',response_model=QuantityFood,description="Returns data of one specific quantityFood")
+@quantityFood_router.get('/{id}',response_model=QuantityFood,description="Returns data of one specific quantityFood")
 def get_quantityFood(id: int = Path(ge=1)) -> QuantityFood:
     db = SessionLocal()
     element=  QuantityFoodRepository(db).get_quantity_food_by_id(id)
@@ -35,7 +35,7 @@ def get_quantityFood(id: int = Path(ge=1)) -> QuantityFood:
         status_code=status.HTTP_200_OK
         )
 
-@quantityFood_router.post('',response_model=dict,description="Creates a new quantityFood")
+@quantityFood_router.post('/',response_model=dict,description="Creates a new quantityFood")
 def create_categorie(quantityFood: QuantityFood = Body()) -> dict:
     db= SessionLocal()
     new_quantityFood = QuantityFoodRepository(db).create_new_quantity_food(quantityFood)
@@ -47,7 +47,7 @@ def create_categorie(quantityFood: QuantityFood = Body()) -> dict:
         status_code=status.HTTP_201_CREATED
     )
 
-@quantityFood_router.delete('{id}',response_model=dict,description="Removes specific quantityFood")
+@quantityFood_router.delete('/{id}',response_model=dict,description="Removes specific quantityFood")
 def remove_quantityFood(id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     element = QuantityFoodRepository(db).delete_quantity_food(id)
@@ -61,7 +61,7 @@ def remove_quantityFood(id: int = Path(ge=1)) -> dict:
             )
     return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
 
-@quantityFood_router.put('{id}',response_model=dict,description="Updates specific quantityFood")
+@quantityFood_router.put('/{id}',response_model=dict,description="Updates specific quantityFood")
 def update_quantityFood(id: int = Path(ge=1), quantityFood: QuantityFood = Body()) -> dict:
     db = SessionLocal()
     element = QuantityFoodRepository(db).update_quantity_food(id, quantityFood)

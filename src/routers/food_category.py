@@ -8,17 +8,17 @@ from src.repositories.food_category import FoodCategoryRepository
 from src.schemas.food_category import FoodCategory
 from src.models.food_category import FoodCategory as FoodCategoryModel
 
-food_category_router = APIRouter(prefix='/food_category', tags=['foods_categories'])
+food_category_router = APIRouter(tags=['Categorías de alimentos'])
 
 #CRUD food_category
 
-@food_category_router.get('',response_model=List[FoodCategory],description="Returns all food_category")
+@food_category_router.get('/',response_model=List[FoodCategory],description="Returns all food_category")
 def get_categories()-> List[FoodCategory]:
     db= SessionLocal()
     result = FoodCategoryRepository(db).get_all_food_category()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
-@food_category_router.get('{id}',response_model=FoodCategory,description="Returns data of one specific food_category")
+@food_category_router.get('/{id}',response_model=FoodCategory,description="Returns data of one specific food_category")
 def get_food_category(id: int = Path(ge=1)) -> FoodCategory:
     db = SessionLocal()
     element=  FoodCategoryRepository(db).get_food_category_by_id(id)
@@ -35,7 +35,7 @@ def get_food_category(id: int = Path(ge=1)) -> FoodCategory:
         status_code=status.HTTP_200_OK
         )
 
-@food_category_router.post('',response_model=dict,description="Creates a new food_category")
+@food_category_router.post('/',response_model=dict,description="Creates a new food_category")
 def create_categorie(food: FoodCategory = Body()) -> dict:
     db= SessionLocal()
     new_food = FoodCategoryRepository(db).create_new_food_category(food)
@@ -47,7 +47,7 @@ def create_categorie(food: FoodCategory = Body()) -> dict:
         status_code=status.HTTP_201_CREATED
     )
 
-@food_category_router.delete('{id}',response_model=dict,description="Removes specific food_category")
+@food_category_router.delete('/{id}',response_model=dict,description="Removes specific food_category")
 def remove_food_category(id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     element = FoodCategoryRepository(db).delete_food_category(id)
@@ -67,7 +67,7 @@ def remove_food_category(id: int = Path(ge=1)) -> dict:
         status_code=status.HTTP_200_OK
     )
 
-@food_category_router.put('{id}',response_model=dict,description="Updates specific food_category")
+@food_category_router.put('/{id}',response_model=dict,description="Updates specific food_category")
 def update_food_category(id: int = Path(ge=1), food: FoodCategory = Body()) -> dict:
     db = SessionLocal()
     element = FoodCategoryRepository(db).update_food_category(id, food)

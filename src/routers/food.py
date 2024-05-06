@@ -8,17 +8,17 @@ from src.repositories.food import FoodRepository
 from src.schemas.food import Food
 from src.models.food import Food as FoodModel
 
-food_router = APIRouter(prefix='/food', tags=['foods'])
+food_router = APIRouter(tags=['Alimentos'])
 
 #CRUD food
 
-@food_router.get('',response_model=List[Food],description="Returns all food")
+@food_router.get('/',response_model=List[Food],description="Returns all food")
 def get_categories()-> List[Food]:
     db= SessionLocal()
     result = FoodRepository(db).get_all_food()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
-@food_router.get('{id}',response_model=Food,description="Returns data of one specific food")
+@food_router.get('/{id}',response_model=Food,description="Returns data of one specific food")
 def get_food(id: int = Path(ge=1)) -> Food:
     db = SessionLocal()
     element=  FoodRepository(db).get_food_by_id(id)
@@ -35,7 +35,7 @@ def get_food(id: int = Path(ge=1)) -> Food:
         status_code=status.HTTP_200_OK
         )
 
-@food_router.post('',response_model=dict,description="Creates a new food")
+@food_router.post('/',response_model=dict,description="Creates a new food")
 def create_categorie(food: Food = Body()) -> dict:
     db= SessionLocal()
     new_food = FoodRepository(db).create_new_food(food)
@@ -47,7 +47,7 @@ def create_categorie(food: Food = Body()) -> dict:
         status_code=status.HTTP_201_CREATED
     )
 
-@food_router.delete('{id}',response_model=dict,description="Removes specific food")
+@food_router.delete('/{id}',response_model=dict,description="Removes specific food")
 def remove_food(id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     element = FoodRepository(db).delete_food(id)
@@ -67,7 +67,7 @@ def remove_food(id: int = Path(ge=1)) -> dict:
         status_code=status.HTTP_200_OK
         )
 
-@food_router.put('{id}',response_model=Food,description="Updates specific food")
+@food_router.put('/{id}',response_model=Food,description="Updates specific food")
 def update_food(id: int = Path(ge=1), food: Food = Body()) -> dict:
     db = SessionLocal()
     element = FoodRepository(db).update_food(id, food)

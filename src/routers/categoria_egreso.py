@@ -8,7 +8,7 @@ from src.schemas.categoria_egreso import Categoria_Egreso
 from src.models.categoria_egreso import Categoria_Egreso as CategoriaEgresoModel 
 from src.repositories.categoria_egreso import CategoriaEgresoRepository
 
-categories_egress_router = APIRouter(tags=['categories_egress'])
+categories_egress_router = APIRouter(tags=['Categorías para los egresos'])
 
 #CRUD categorías
 

@@ -8,17 +8,17 @@ from src.schemas.role import Role
 from src.models.role import Role as roles
 from src.repositories.role import RoleRepository
 
-role_router = APIRouter(prefix='/role', tags=['roles'])
+role_router = APIRouter(tags=['Roles'])
 
 #CRUD role
 
-@role_router.get('',response_model=List[Role],description="Returns all role")
+@role_router.get('/',response_model=List[Role],description="Returns all role")
 def get_categories()-> List[Role]:
     db= SessionLocal()
     result = RoleRepository(db).get_all_roles()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
-@role_router.get('{id}',response_model=Role,description="Returns data of one specific role")
+@role_router.get('/{id}',response_model=Role,description="Returns data of one specific role")
 def get_role(id: int = Path(ge=1)) -> Role:
     db = SessionLocal()
     element=  RoleRepository(db).get_role_by_id(id)
@@ -35,7 +35,7 @@ def get_role(id: int = Path(ge=1)) -> Role:
         status_code=status.HTTP_200_OK
         ) 
 
-@role_router.post('',response_model=dict,description="Creates a new role")
+@role_router.post('/',response_model=dict,description="Creates a new role")
 def create_categorie(role: Role = Body()) -> dict:
     db= SessionLocal()
     new_role = RoleRepository(db).create_new_role(role)
@@ -47,7 +47,7 @@ def create_categorie(role: Role = Body()) -> dict:
         status_code=status.HTTP_201_CREATED
     )
 
-@role_router.delete('{id}',response_model=dict,description="Removes specific role")
+@role_router.delete('/{id}',response_model=dict,description="Removes specific role")
 def remove_role(id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     element = RoleRepository(db).delete_role(id)
@@ -67,7 +67,7 @@ def remove_role(id: int = Path(ge=1)) -> dict:
         status_code=status.HTTP_200_OK
         )
 
-@role_router.put('{id}',response_model=dict,description="Updates specific role")
+@role_router.put('/{id}',response_model=dict,description="Updates specific role")
 def update_role(id: int = Path(ge=1), role: Role = Body()) -> dict:
     db = SessionLocal()
     element = RoleRepository(db).update_role(id, role)

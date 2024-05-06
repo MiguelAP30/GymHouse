@@ -8,17 +8,17 @@ from src.schemas.meal import Meal
 from src.models.meal import Meal as meals
 from src.repositories.meal import MealRepository
 
-meal_router = APIRouter(prefix='/meal', tags=['meals'])
+meal_router = APIRouter(tags=['Comidas'])
 
 #CRUD meal
 
-@meal_router.get('',response_model=List[Meal],description="Returns all meal")
+@meal_router.get('/',response_model=List[Meal],description="Returns all meal")
 def get_categories()-> List[Meal]:
     db= SessionLocal()
     result = MealRepository(db).get_all_meals()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
-@meal_router.get('{id}',response_model=Meal,description="Returns data of one specific meal")
+@meal_router.get('/{id}',response_model=Meal,description="Returns data of one specific meal")
 def get_meal(id: int = Path(ge=1)) -> Meal:
     db = SessionLocal()
     element=  MealRepository(db).get_meal_by_id(id)
@@ -35,7 +35,7 @@ def get_meal(id: int = Path(ge=1)) -> Meal:
         status_code=status.HTTP_200_OK
         )
 
-@meal_router.post('',response_model=dict,description="Creates a new meal")
+@meal_router.post('/',response_model=dict,description="Creates a new meal")
 def create_categorie(meal: Meal = Body()) -> dict:
     db= SessionLocal()
     new_meal = MealRepository(db).create_new_meal(meal)
@@ -47,7 +47,7 @@ def create_categorie(meal: Meal = Body()) -> dict:
         status_code=status.HTTP_201_CREATED
     )
 
-@meal_router.delete('{id}',response_model=dict,description="Removes specific meal")
+@meal_router.delete('/{id}',response_model=dict,description="Removes specific meal")
 def remove_meal(id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     element = MealRepository(db).delete_meal(id)

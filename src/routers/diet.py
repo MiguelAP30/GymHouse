@@ -8,7 +8,7 @@ from src.schemas.diet import Diet
 from src.models.diet import Diet as diets
 from src.repositories.diet import DietRepository
 
-diet_router = APIRouter(tags=['diets'])
+diet_router = APIRouter(tags=['Dietas'])
 
 #CRUD diet
 
@@ -38,7 +38,7 @@ def get_diet_by_id(id: int = Path(ge=1)) -> dict:
         status_code=status.HTTP_200_OK
         )
 
-@diet_router.post('/diet',response_model=Diet,description="Creates a new diet")
+@diet_router.post('/',response_model=Diet,description="Creates a new diet")
 def create_diet(diet: Diet = Body()) -> dict:
     db= SessionLocal()
     new_diet = DietRepository(db).create_new_diet(diet)
@@ -50,7 +50,7 @@ def create_diet(diet: Diet = Body()) -> dict:
         status_code=status.HTTP_201_CREATED
     )
 
-@diet_router.delete('/diet{id}',response_model=dict,description="Removes specific diet")
+@diet_router.delete('/{id}',response_model=dict,description="Removes specific diet")
 def remove_diet(id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     element = DietRepository(db).get_diet_by_id(id)
@@ -71,7 +71,7 @@ def remove_diet(id: int = Path(ge=1)) -> dict:
         status_code=status.HTTP_200_OK
         )
 
-@diet_router.put('/diet{id}',response_model=Diet,description="Updates specific diet")
+@diet_router.put('/{id}',response_model=Diet,description="Updates specific diet")
 def update_diet(id: int = Path(ge=1), diet: Diet = Body()) -> dict:
     db = SessionLocal()
     element = DietRepository(db).get_diet_by_id(id)

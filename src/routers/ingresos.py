@@ -8,7 +8,7 @@ from src.models.ingreso import Ingreso as IngresoModel
 from fastapi.encoders import jsonable_encoder
 from src.repositories.ingreso import IngresoRepository
 
-incomes_router = APIRouter(prefix='/incomes', tags=['incomes'])
+incomes_router = APIRouter(prefix='/incomes', tags=['Ingresos'])
 
 #CRUD ingresos
 

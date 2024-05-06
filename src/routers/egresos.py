@@ -8,7 +8,7 @@ from src.models.egreso import Egreso as EgresoModel
 from fastapi.encoders import jsonable_encoder
 from src.repositories.egreso import EgresoRepository
 
-egress_router = APIRouter(prefix='/egress', tags=['egress'])
+egress_router = APIRouter(prefix='/egress', tags=['Egresos'])
 
 #CRUD egresos
 
