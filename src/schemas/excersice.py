@@ -11,27 +11,17 @@ class Excersice(BaseModel):
 
     @validator("name")
     def name_must_not_be_empty(cls, value):
-        assert value.strip() != "", "El nombre no debe estar vacio"
+        assert isinstance(value,str), ValueError("el nombre debe ser un string")
         return value
     
     @validator("description")
     def description_must_not_be_empty(cls, value):
-        assert value.strip() != "", "La descripcion no debe estar vacia"
-        return value
-    
-    @validator("video")
-    def video_must_not_be_empty(cls, value):
-        assert value.strip() != "", "El video no debe estar vacio"
-        return value
-    
-    @validator("image")
-    def image_must_not_be_empty(cls, value):
-        assert value.strip() != "", "La imagen no debe estar vacia"
+        assert isinstance(value,str), ValueError("la descripcion debe ser un string")
         return value
     
     @validator("dateAdded")
     def dateAdded_must_not_be_empty(cls, value):
-        assert value.strip() != "", "La fecha no debe estar vacia"
+        assert value.strip() != "", ValueError("La fecha no debe estar vacia")
         return value
     
     class Config:

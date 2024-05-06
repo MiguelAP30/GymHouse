@@ -10,11 +10,16 @@ class DietUser (BaseModel):
     def diet_id_must_be_positive(cls, value):
         assert value > 0, "El id de la dieta debe ser positivo"
         return value
+    def diet_id_must_not_be_empty(cls, value):
+        assert value.strip() != "", ValueError("El id de la dieta no debe estar vacio")
+        return value
     
     @validator("user_id")
     def user_id_must_be_email(cls, value):
         assert "@" in value, "El email del usuario debe ser un email"
         return value
-    
+    def user_id_must_not_be_empty(cls, value):
+        assert value.strip() != "", ValueError("El email del usuario no debe estar vacio")
+        return value
     class Config:
         orm_mode = True

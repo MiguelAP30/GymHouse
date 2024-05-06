@@ -10,24 +10,22 @@ class ExcerciseMuscleMachine (BaseModel):
     
     @validator("excercise_id")
     def excercise_id_must_be_positive(cls, value):
-        assert value > 0, "El id del ejercicio debe ser positivo"
+        assert value.strip() != "", ValueError("El id del ejercicio no debe estar vacio")
         return value
     
     @validator("muscle_id")
     def muscle_id_must_be_positive(cls, value):
-        assert value > 0, "El id del musculo debe ser positivo"
+        assert value.strip() != "", ValueError("El id del musculo no debe estar vacio")
         return value
     
     @validator("machine_id")
     def machine_id_must_be_positive(cls, value):
-        assert value > 0, "El id de la maquina debe ser positivo"
+        assert value.strip() != "", ValueError("El id de la maquina no debe estar vacio")
         return value
     
     @validator("rate")
     def rate_must_be_positive(cls, value):
-        assert value > 0, "La calificacion debe ser positiva"
+        assert isinstance(value,int), ValueError("La calificacion debe ser un entero")
         return value
-
-    
     class Config:
         orm_mode = True
