@@ -22,4 +22,10 @@ class PlatePerWeekDay(BaseModel):
         assert value.strip() != "", ValueError("el id de la dieta no debe estar vacio")
         return value
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "plate_id": 1,
+                "week_day_id": 1,
+                "diet_id": 1
+            }
+        }

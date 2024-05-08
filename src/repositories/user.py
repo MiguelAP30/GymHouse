@@ -14,8 +14,12 @@ class UserRepository():
         element = self.db.query(users).filter(users.id == id).first()
         return element
     
-    def delete_user(self, id: int ) -> dict:
-        element: User= self.db.query(users).filter(users.id == id).first()
+    def get_user_by_email(self, email: str):
+        element = self.db.query(users).filter(users.email == email).first()
+        return element
+    
+    def delete_user(self, email: str ) -> dict:
+        element: User= self.db.query(users).filter(users.email == email).first()
         self.db.delete(element)
         self.db.commit()
         return element
@@ -28,12 +32,12 @@ class UserRepository():
         self.db.refresh(new_user)
         return new_user
     
-    def update_user(self, id: int, user: User) -> dict:
-        element = self.db.query(users).filter(users.id == id).first()
+    def update_user(self, email: str, user: User) -> dict:
+        element = self.db.query(users).filter(users.email == email).first()
         element.id_number = user.id_number
         element.password = user.password
         element.name = user.name
-        element.last_name = user.last_name
+        element.lastname = user.lastname
         element.address = user.address
         element.phone = user.phone
         element.weight = user.weight
@@ -44,15 +48,10 @@ class UserRepository():
         self.db.commit()
         self.db.refresh(element)
         return element
-    
-    def get_user_by_email(self, email: str):
-        element = self.db.query(users).filter(users.email == email).first()
-        return element
-    
-    def update_role(self, id: int, role_id: int) -> dict:
-        element = self.db.query(users).filter(users.id == id).first()
-        element.role_id = role_id
 
+    def update_role(self, email: str, role_id: int) -> dict:
+        element = self.db.query(users).filter(users.email == email).first()
+        element.role_id = role_id
         self.db.commit()
         self.db.refresh(element)
         return element

@@ -4,7 +4,7 @@ from typing import List, Optional
 class Food(BaseModel):
     id: Optional[int] = Field(default=None, title="Id de la comida")
     name: str = Field(min_length=4, title="nombre de la comida", max_length=50)
-    description: str = Field(min_length=4, title="descripción de la comida ", max_length=500)
+    description: str = Field(min_length=4, title="descripción de la comida ", max_length=200)
     image: str = Field(title="foto de la comida")
     food_category_id: int = Field(title="Id de la categoria de la comida")
 
@@ -25,4 +25,11 @@ class Food(BaseModel):
         return v
     
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "name": "Pollo",
+                "description": "El pollo es una carne magra y rica en proteinas",
+                "image": "https://www.google.com",
+                "food_category_id": 1
+            }
+        }

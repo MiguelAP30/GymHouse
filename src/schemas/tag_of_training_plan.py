@@ -3,8 +3,8 @@ from typing import List, Optional
 
 class TagOfTrainingPlan(BaseModel):
     id: Optional[int] = Field(default=None, title="Id de la etiqueta del plan de entrenamiento")
-    name: str = Field(min_length=4, title="nombre de la etiqueta del plan de entrenamiento", max_length=60)
-    description: str = Field(min_length=4, title="Descripcion de la etiqueta del plan de entrenamiento", max_length=500)
+    name: str = Field(min_length=4, title="nombre de la etiqueta del plan de entrenamiento", max_length=50)
+    description: str = Field(min_length=4, title="Descripcion de la etiqueta del plan de entrenamiento", max_length=200)
 
     @validator("name")
     def name_must_be_str(cls, v):
@@ -19,4 +19,9 @@ class TagOfTrainingPlan(BaseModel):
         return v
     
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "name": "hipertrofia",
+                "description": "La hipertrofia es un tipo de entrenamiento que se basa en el aumento de la masa muscular a traves de la hipertrofia de las fibras musculares"
+            }
+        }

@@ -7,8 +7,8 @@ class Food(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(length=50))
-    description = Column(String(length=150))
-    image = Column(String(length=100))
+    description = Column(String(length=200))
+    image = Column(String(length=200))
     food_category_id = Column(Integer, ForeignKey("food_categories.id"))
 
     food_categories = relationship("FoodCategory", back_populates="foods")

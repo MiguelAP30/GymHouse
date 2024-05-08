@@ -3,8 +3,8 @@ from typing import List, Optional
 
 class Plate(BaseModel):
     id: int = Field(default=None, title="Id del plato")
-    name: str = Field(min_length=4, title="nombre del plato", max_length=60)
-    description: str = Field(min_length=4, title="Descripcion del plato", max_length=500)
+    name: str = Field(min_length=4, title="nombre del plato", max_length=50)
+    description: str = Field(min_length=4, title="Descripcion del plato", max_length=200)
 
     @validator("name")
     def name_must_be_str(cls, v):
@@ -19,4 +19,9 @@ class Plate(BaseModel):
         return v
     
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "name": "Ensalada de pollo",
+                "description": "Ensalada de pollo con lechuga, tomate, cebolla, zanahoria y pollo a la plancha"
+            }
+        }

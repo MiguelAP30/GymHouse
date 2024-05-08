@@ -7,15 +7,16 @@ class User(Base):
 
     email = Column(String(length=150), primary_key=True)
     id_number = Column(String(length=20))
-    password = Column(String(length=50))
+    password = Column(String(length=60))
     name = Column(String(length=50))
     lastname = Column(String(length=50))
-    phone = Column(String(length=50))
+    phone = Column(String(length=20))
     address = Column(String(length=150))
     weight = Column(Float)
     height = Column(Float)
     birth_date = Column(Date)
     physical_activity = Column(Integer)
+    gender = Column(String(length=1))
     role_id = Column(Integer, ForeignKey("roles.id"))
 
     roles = relationship("Role", back_populates="users")

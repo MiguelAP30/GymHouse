@@ -27,4 +27,12 @@ class TrainingPlanExercise(BaseModel):
             raise ValueError("el tiempo de descanso debe ser un float")
         return v
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "training_plan_id": 1,
+                "exercise_id": 1,
+                "sets": 3,
+                "reps": 10,
+                "rest": 60.0
+            }
+        }

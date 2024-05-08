@@ -28,3 +28,12 @@ class TrainingPlanExerciseRepository():
         self.db.refresh(new_training_plan_exercise)
         return new_training_plan_exercise
     
+    def update_training_plan_exercise(self, id:int, training_plan_exercise:TrainingPlanExercise ) -> dict:
+        element = self.db.query(training_plan_excersices).filter(training_plan_excersices.id == id).first()
+        element.sets = training_plan_exercise.sets
+        element.reps = training_plan_exercise.reps
+        element.rest = training_plan_exercise.rest
+
+        self.db.commit()
+        self.db.refresh(element)
+        return element

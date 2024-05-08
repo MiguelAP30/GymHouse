@@ -6,7 +6,7 @@ class FoodCategory(Base):
     __tablename__ = "food_categories"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(length=50))
+    name = Column(String(length=40))
 
     foods = relationship("Food", back_populates="food_categories")
 

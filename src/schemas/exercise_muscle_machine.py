@@ -3,12 +3,12 @@ from typing import Optional
 
 class ExerciseMuscleMachine(BaseModel):
     id: Optional[int] = Field(default=None, title="Id de la maquina de ejercicios")
-    excercise_id: int = Field(title="Id del ejercicio")
+    exercise_id: int = Field(title="Id del ejercicio")
     muscle_id: int = Field(title="Id del musculo")
     machine_id: int = Field(title="Id de la maquina")
     rate: int = Field(ge=0, le=10,title="Calificacion del ejercicio")
     
-    @validator("excercise_id")
+    @validator("exercise_id")
     def excercise_id_must_be_positive(cls, value):
         assert value.strip() != "", ValueError("El id del ejercicio no debe estar vacio")
         return value
@@ -28,4 +28,11 @@ class ExerciseMuscleMachine(BaseModel):
         assert isinstance(value,int), ValueError("La calificacion debe ser un entero")
         return value
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "exercise_id": 1,
+                "muscle_id": 1,
+                "machine_id": 1,
+                "rate": 10
+            }
+        }

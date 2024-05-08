@@ -3,7 +3,7 @@ from typing import List, Optional
 
 class FoodCategory(BaseModel):
     id: Optional[int] = Field(default=None, title="Id of the food category")
-    name: str = Field(min_length=4, max_length=60, title="Name of the food category")
+    name: str = Field(min_length=4, max_length=40, title="Name of the food category")
 
     @validator("name")
     def name_must_contain_letter(cls, v):
@@ -11,4 +11,8 @@ class FoodCategory(BaseModel):
         return v
     
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "name": "Proteinas"
+            }
+        }

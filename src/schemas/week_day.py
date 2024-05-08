@@ -11,4 +11,8 @@ class WeekDay(BaseModel):
         return value
     
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "name": "lunes"
+            }
+        }

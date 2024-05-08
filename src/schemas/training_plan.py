@@ -4,7 +4,7 @@ from typing import List, Optional
 class TrainingPlan(BaseModel):
     id: Optional[int] = Field(default=None, title="Id del plan de entrenamiento")
     name: str = Field(min_length=4, title="nombre del plan de entrenamiento", max_length=60)
-    description: str = Field(min_length=4, title="Descripcion del plan de entrenamiento", max_length=500)
+    description: str = Field(min_length=4, title="Descripcion del plan de entrenamiento", max_length=200)
     tag_of_training_plan_id: int = Field(default=None, title="Id de la etiqueta del plan de entrenamiento")
 
     @validator("name")
@@ -22,4 +22,10 @@ class TrainingPlan(BaseModel):
         assert value.strip() != "", ValueError("el id de la etiqueta del plan de entrenamiento no debe estar vacio")
         return value
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "name": "push pull legs",
+                "description": "El push pull legs es un plan de entrenamiento que se basa en dividir los musculos en 3 grupos principales, los musculos que empujan, los musculos que jalan y las piernas",
+                "tag_of_training_plan_id": 1
+            }
+        }

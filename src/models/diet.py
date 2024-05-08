@@ -7,7 +7,7 @@ class Diet(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(length=50))
-    description = Column(String(length=150))
+    description = Column(String(length=200))
 
     diets_users = relationship("DietUser", back_populates="diets")
     plates_per_week_days = relationship("PlatePerWeekDay", back_populates="diets")

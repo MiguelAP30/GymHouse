@@ -16,4 +16,9 @@ class Meal(BaseModel):
         assert value.strip() != "", ValueError("la cantidad de comida no debe estar vacia")
         return value
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "plates_id": 1,
+                "quantity_food_id": 1
+            }
+        }

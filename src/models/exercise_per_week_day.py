@@ -6,13 +6,11 @@ class ExercisePerWeekDay(Base):
     __tablename__ = "exercises_per_week_days"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    exercise_id = Column(Integer, ForeignKey("exercises.id"))
     week_day_id = Column(Integer, ForeignKey("week_days.id"))
-    training_plan_id = Column(Integer, ForeignKey("training_plans.id"))
+    training_plan_exercise_id = Column(Integer, ForeignKey("training_plans_exercises.id"))
 
-    exercises = relationship("Exercise", back_populates="exercises_per_week_days")
     week_days = relationship("WeekDay", back_populates="exercises_per_week_days")
-    training_plans = relationship("TrainingPlan", back_populates="exercises_per_week_days")
+    training_plans_exercises = relationship("TrainingPlanExercise", back_populates="exercises_per_week_days")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}

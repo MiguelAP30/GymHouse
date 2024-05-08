@@ -4,7 +4,7 @@ from typing import Optional
 class Diet (BaseModel):
     id: Optional[int] = Field(default=None, title="Id de la dieta")
     name: str = Field(min_length=4, max_length=50, title="Nombre de la dieta")
-    description: str = Field(min_length=4, max_length=500, title="Descripcion de la dieta")
+    description: str = Field(min_length=4, max_length=200, title="Descripcion de la dieta")
     
     @validator("name")
     def name_must_contain_letter(cls, v):
@@ -19,7 +19,7 @@ class Diet (BaseModel):
     class Config:
         json_schema_extra = {
             "example": {
-                "name": "Dieta 1",
-                "description": "Dieta para bajar de peso"
+                "name": "Dieta cetogenica",
+                "description": "Se centra en consumir alimentos bajos en carbohidratos y altos en grasas saludables, lo que lleva al cuerpo a un estado de cetosis donde quema grasa como principal fuente de energía."
             }
         }

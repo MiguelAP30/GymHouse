@@ -46,4 +46,14 @@ class QuantityFood(BaseModel):
         assert isinstance(value,float), ValueError("los carbohidratos deben ser un float")
         return value
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "value": 200.0,
+                "food_id": 1,
+                "type_quantity_id": 1,
+                "calorie": 100.0,
+                "protein": 40,
+                "fat": 10.0,
+                "carbohydrate": 2.0
+            }
+        }

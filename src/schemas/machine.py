@@ -4,7 +4,7 @@ from typing import List, Optional
 class Machine(BaseModel):
     id: Optional[int] = Field(default=None, title="Id de la maquina")
     name: str = Field(min_length=4, title="nombre de la maquina", max_length=50)
-    description: str = Field(min_length=4, title="descripción de la maquina ", max_length=500)
+    description: str = Field(min_length=4, title="descripción de la maquina ", max_length=200)
 
     @validator("name")
     def name_must_contain_letter(cls, v):
@@ -17,4 +17,9 @@ class Machine(BaseModel):
             assert isinstance(v, str), ValueError("la descripcion debe ser un string")
         return v
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "name": "Barra",
+                "description": "La barra es un elemento de entrenamiento"
+            }
+        }

@@ -7,7 +7,7 @@ class Muscle(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(length=50))
-    description = Column(String(length=150))
+    description = Column(String(length=200))
 
     exercises_muscles_machines = relationship("ExerciseMuscleMachine", back_populates="muscles")
 

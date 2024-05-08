@@ -3,8 +3,8 @@ from typing import List, Optional
 
 class Role(BaseModel):
     id: Optional[int] = Field(default=None, title="Id del rol")
-    name: str = Field(min_length=4, title="nombre del rol", max_length=60)
-    description: str = Field(min_length=4, title="Descripcion del rol", max_length=500)
+    name: str = Field(min_length=4, title="nombre del rol", max_length=40)
+    description: str = Field(min_length=4, title="Descripcion del rol", max_length=200)
 
     @validator("name")
     def name_must_be_str(cls, v):
@@ -19,4 +19,9 @@ class Role(BaseModel):
         return v
     
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "name": "Admin",
+                "description": "El rol de administrador es el rol con mas permisos en el sistema"
+            }
+        }

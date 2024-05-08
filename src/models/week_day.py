@@ -6,7 +6,7 @@ class WeekDay(Base):
     __tablename__ = "week_days"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(length=50))
+    name = Column(String(length=20))
 
     exercises_per_week_days = relationship("ExercisePerWeekDay", back_populates="week_days")
     plates_per_week_days = relationship("PlatePerWeekDay", back_populates="week_days")

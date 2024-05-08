@@ -14,6 +14,7 @@ class TrainingPlanExercise(Base):
 
     training_plans = relationship("TrainingPlan", back_populates="training_plans_exercises")
     exercises = relationship("Exercise", back_populates="training_plans_exercises")
+    exercises_per_week_days = relationship("ExercisePerWeekDay", back_populates="training_plans_exercises")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}

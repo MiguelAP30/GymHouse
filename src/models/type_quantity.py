@@ -6,7 +6,8 @@ class TypeQuantity(Base):
     __tablename__ = "types_quantities"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(length=50))
+    name = Column(String(length=30))
+    description = Column(String(length=200))
 
     quantity_foods = relationship("QuantityFood", back_populates="types_quantities")
 

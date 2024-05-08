@@ -4,7 +4,7 @@ from typing import List, Optional
 class Exercise(BaseModel):
     id: Optional[int] = Field(default=None, title="Id del ejercicio")
     name: str = Field(min_length=4, max_length=60, title="Nombre del ejercicio")
-    description: str = Field(min_length=4, max_length=500, title="Descripcion del ejercicio")
+    description: str = Field(min_length=4, max_length=200, title="Descripcion del ejercicio")
     video: str = Field(title="Video del ejercicio")
     image: str = Field(title="Imagen del ejercicio")
     dateAdded: str = Field(title="Fecha de creacion del ejercicio")
@@ -25,5 +25,13 @@ class Exercise(BaseModel):
         return value
     
     class Config:
-        orm_mode = True
+        json_schema_extra = {
+            "example": {
+                "name": "Press de banca con barra",
+                "description": "El press de banca es un ejercicio de empuje que trabaja principalmente los músculos del pecho, los tríceps y los hombros.",
+                "video": "https://www.youtube.com/watch?v=1",
+                "image": "https://www.google.com",
+                "dateAdded": "2024-05-07"
+            }
+        }
 

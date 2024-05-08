@@ -60,3 +60,17 @@ def remove_training_plan_exercise(id: int = Path(ge=1)) -> dict:
             status_code=status.HTTP_404_NOT_FOUND
         )
     return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
+
+@training_plan_exercise_router.put('/{id}',response_model=TrainingPlanExercise,description="Updates specific training_plan_exercise")
+def update_training_plan_exercise(id: int = Path(ge=1), training_plan_exercise: TrainingPlanExercise = Body()) -> TrainingPlanExercise:
+    db = SessionLocal()
+    element = TrainingPlanExerciseRepository(db).update_training_plan_exercise(id, training_plan_exercise)
+    if not element:        
+        return JSONResponse(
+            content={            
+                "message": "The requested training_plan_exercise was not found",            
+                "data": None        
+                }, 
+            status_code=status.HTTP_404_NOT_FOUND
+        )
+    return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
