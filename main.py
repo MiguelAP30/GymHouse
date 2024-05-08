@@ -6,6 +6,7 @@ from src.routers.categoria_ingreso import categories_incomes_router
 from src.routers.categoria_egreso import categories_egress_router
 from src.routers.reportes import reportes_router
 
+from src.routers.diet_meal import diet_meal_router
 from src.routers.diet_user import diet_user_router
 from src.routers.diet import diet_router
 from src.routers.exercise_muscle_machine import exercise_muscle_machine_router
@@ -17,7 +18,6 @@ from src.routers.machine import machine_router
 from src.routers.meal import meal_router
 from src.routers.muscle import muscle_router
 from src.routers.plate_per_week_day import plate_per_week_day_router
-from src.routers.plate import plate_router
 from src.routers.quantityFood import quantityFood_router
 from src.routers.role import role_router
 from src.routers.tag_of_training_plan import tag_of_training_plan_router
@@ -54,7 +54,6 @@ tags_metadata = [
     { "name": "Comidas", "description": "comidas"},
     { "name": "Músculos", "description": "musculos"},
     { "name": "Platillos por días de la semana", "description": "platos por semanas dias"},
-    { "name": "Platillos", "description": "platos"},
     { "name": "Cantidad de alimentos", "description": "cantidad de alimentos"},
     { "name": "Roles", "description": "roles"},
     { "name": "Etiquetas para planes de entrenamiento", "description": "etiquetas de los planes de entrenamiento"},
@@ -80,6 +79,7 @@ app.include_router(router= egress_router)
 app.include_router(router= categories_incomes_router)
 app.include_router(router= categories_egress_router)
 app.include_router(prefix="/reports", router= reportes_router)
+app.include_router(prefix="/diet_meal", router= diet_meal_router)
 app.include_router(prefix="/diet_user", router= diet_user_router)
 app.include_router(prefix="/diet", router= diet_router)
 app.include_router(prefix="/exercise_muscle_machine", router= exercise_muscle_machine_router)
@@ -91,7 +91,6 @@ app.include_router(prefix="/machine", router= machine_router)
 app.include_router(prefix="/meal", router= meal_router)
 app.include_router(prefix="/muscle", router= muscle_router)
 app.include_router(prefix="/plate_per_week_day", router= plate_per_week_day_router)
-app.include_router(prefix="/plate", router= plate_router)
 app.include_router(prefix="/quantityFood", router= quantityFood_router)
 app.include_router(prefix="/role", router= role_router)
 app.include_router(prefix="/tag_of_training_plan", router= tag_of_training_plan_router)

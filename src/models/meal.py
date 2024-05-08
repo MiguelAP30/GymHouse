@@ -6,11 +6,12 @@ class Meal(Base):
     __tablename__ = "meals"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    plates_id = Column(Integer, ForeignKey("plates.id"))
     quantity_food_id = Column(Integer, ForeignKey("quantity_foods.id"))
+    name = Column(String(length=50))
+    description = Column(String(length=200))
 
-    plates = relationship("Plate", back_populates="meals")
     quantity_foods = relationship("QuantityFood", back_populates="meals")
+    diets_meals = relationship("DietMeal", back_populates="meals")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
