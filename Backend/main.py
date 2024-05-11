@@ -35,41 +35,15 @@ Base.metadata.create_all(bind=engine)
 ##################################################
 #                     Tags                       #
 
-tags_metadata = [
-    { "name": "Ingresos", "description": "ingresos"},
-    { "name": "Egresos", "description": "egresos"},  
-    { "name": "Reportes", "description": "reportes"},  
-    { "name": "Categorías para los ingresos", "description": "categorias de los ingresos"},
-    { "name": "Categorías para los egresos", "description": "categorias de los egresos"},
+tags_metadata = []
 
-    { "name": "Usuarios", "description": "usuarios"},
-    { "name": "Dietas de usuarios", "description": "dietas de los usuarios"},
-    { "name": "Dietas", "description": "dietas"},
-    { "name": "Máquina para hacer ejercicio por músculo", "description": "ejercicios musculos maquinas"},
-    { "name": "Ejercicios", "description": "ejercicios"},
-    { "name": "Ejercicios para días de la semana", "description": "ejercicios por semanas dias"},
-    { "name": "Categorías de alimentos", "description": "categorias de alimentos"},
-    { "name": "Alimentos", "description": "alimentos"},
-    { "name": "Máquinas", "description": "maquinas"},
-    { "name": "Comidas", "description": "comidas"},
-    { "name": "Músculos", "description": "musculos"},
-    { "name": "Platillos por días de la semana", "description": "platos por semanas dias"},
-    { "name": "Cantidad de alimentos", "description": "cantidad de alimentos"},
-    { "name": "Roles", "description": "roles"},
-    { "name": "Etiquetas para planes de entrenamiento", "description": "etiquetas de los planes de entrenamiento"},
-    { "name": "Ejercicios para planes de entrenamiento", "description": "planes de entrenamiento ejercicios"},
-    { "name": "Planes de entrenamiento de los usuarios", "description": "planes de entrenamiento usuarios"},
-    { "name": "Planes de entrenamiento", "description": "planes de entrenamiento"},
-    { "name": "Tipo de cantidad de una comida", "description": "tipos de cantidad"},
-    { "name": "Días de la semana", "description": "dias de la semana"},
-]
 
 app = FastAPI(openapi_tags=tags_metadata)
 
 #################################################
 #                 Middlewares                   #
 
-#app.add_middleware(ErrorHandler)
+app.add_middleware(ErrorHandler)
 
 #################################################
 #      Router's definition (endpoints sets)     #

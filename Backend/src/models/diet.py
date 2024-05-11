@@ -10,7 +10,7 @@ class Diet(Base):
     description = Column(String(length=200))
 
     diets_users = relationship("DietUser", back_populates="diets")
-    diet_meals = relationship("DietMeal", back_populates="diets")
+    diets_meals = relationship("DietMeal", back_populates="diets")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
