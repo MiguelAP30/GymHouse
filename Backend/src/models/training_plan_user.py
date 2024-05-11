@@ -7,7 +7,7 @@ class TrainingPlanUser(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     training_plan_id = Column(Integer, ForeignKey("training_plans.id"))
-    user_email = Column(String, ForeignKey("users.email"))
+    user_email = Column(String(length=200), ForeignKey("users.email"))
     status = Column(Boolean, default=False)
 
     training_plans = relationship("TrainingPlan", back_populates="training_plans_users")

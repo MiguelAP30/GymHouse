@@ -7,7 +7,7 @@ class DietUser(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     diet_id = Column(Integer, ForeignKey("diets.id"))
-    user_email = Column(String, ForeignKey("users.email"))
+    user_email = Column(String(length=200), ForeignKey("users.email"))
 
     diets = relationship("Diet", back_populates="diets_users")
     users = relationship("User", back_populates="diets_users")
