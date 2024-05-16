@@ -7,33 +7,35 @@ import img1 from "../assets/img/pngwing.com (50).png";
 import img2 from "../assets/img/pngwing.com (62).png";
 import img3 from "../assets/img/pngwing.com (53).png";
 import ScrollReveal from "scrollreveal";
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 export function Main() {
   return (
     <Container>
       <main class="main">
         <section class="home section" id="home">
-          <div class="shape__small"></div>
-          <div class="shape__big"></div>
 
           <div class="home__container container grid">
             <div class="home__data">
               <h1 class="home__title">
-                <span>Halloween</span> Truco o Transferencia!!!
-                <img src={img1} alt="home image" class="home__title-img-1" />
-                <img src={img1} alt="home image" class="home__title-img-2" />
+                <span>Gym House</span> Aqui iria una frase tocha
+                
               </h1>
 
-              <p class="home__description">La calle esta dura</p>
+              <p class="home__description">Conoce mas acerca de Gym House</p>
 
-              <a href="#" class="button">
-                Visitar!!!
-              </a>
+              <div style={{ marginTop: '280px' }}>
+                    <span style={{ marginRight: '40px' }}>
+                      <ArrowDownwardIcon sx={{ fontSize: 40 }} />
+                    </span>
+                    <span style={{ marginRight: '40px' }}>
+                      <ArrowDownwardIcon sx={{ fontSize: 40 }} />
+                    </span>
+                    <span>
+                      <ArrowDownwardIcon sx={{ fontSize: 40 }} />
+                    </span>
+                  </div>
             </div>
 
-            <img src={img2} alt="home image" class="home__img" />
-
-            <img src={img1} alt="home image" class="home__tree-1" />
-            <img src={img3} alt="home image" class="home__tree-2" />
           </div>
         </section>
 

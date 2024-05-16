@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import img1 from "../assets/img/pngwing.com (61).png";
+import img1 from "../assets/img/GymHouse.png";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { MdClose } from "react-icons/md";
 import { useState, useLayoutEffect } from "react";
@@ -22,12 +22,13 @@ export function Header() {
     <Container>
       <header
         className={stateHeader ? "header bg-header" : "header"}
-        id="header"
+        id="header
+        "
       >
-        <nav class="nav container">
+        <nav class="nav container" >
           <a href="#" class="nav__logo">
-            <img src={img1} alt="logo image" />
-            Halloween
+          <img src={img1} alt="logo image" />
+            GymHouse
           </a>
 
           <div
@@ -37,7 +38,7 @@ export function Header() {
             <ul class="nav__list" onClick={() => setState(!state)}>
               <li class="nav__item">
                 <a href="#home" class="nav__link active-link">
-                  Home
+                  Inicio
                 </a>
               </li>
               <li class="nav__item">
@@ -47,33 +48,25 @@ export function Header() {
               </li>
               <li class="nav__item">
                 <a href="#items" class="nav__link">
-                  Productos
+                  Ejercicios
                 </a>
               </li>
               <li class="nav__item">
                 <a href="#party" class="nav__link">
-                  Fiesta
+                  Videos de apoyo
                 </a>
               </li>
+
+              <a class="button ">
+                Iniciar
+              </a>
+
+              <a class="button ">
+                Registrarse
+              </a>
             </ul>
 
-            <div
-              class="nav__close"
-              id="nav-close"
-              onClick={() => setState(!state)}
-            >
-              <MdClose />
-            </div>
-
             <img src={img1} alt="nav image" class="nav__img" />
-          </div>
-
-          <div
-            className={state ? "nav__toggle show-menu" : "nav__toggle"}
-            id="nav-toggle"
-            onClick={() => setState(!state)}
-          >
-            <HiMenuAlt2 />
           </div>
         </nav>
       </header>
@@ -89,7 +82,12 @@ const Container = styled.div`
     left: 0;
     z-index: var(--z-fixed);
     transition: background 0.3s, box-shadow 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
   }
+
 
   .nav {
     position: relative;
@@ -99,6 +97,7 @@ const Container = styled.div`
     align-items: center;
 
     &__logo,
+    &__item,
     &__toggle,
     &__close {
       display: inline-flex;
@@ -109,6 +108,7 @@ const Container = styled.div`
       column-gap: 0.5rem;
       font-weight: var(--font-medium);
       transition: color 0.3s;
+      margin-right: 50px;
 
       & img {
         width: 1.25rem;
@@ -117,6 +117,13 @@ const Container = styled.div`
       &:hover {
         color: var(--first-color);
       }
+    }
+    &__item {
+      align-items: center;
+      column-gap: 0.5rem;
+      font-weight: var(--font-medium);
+      transition: color 0.3s;
+      margin-right: 50px;
     }
     &__toggle {
       font-size: 1.25rem;
@@ -136,7 +143,6 @@ const Container = styled.div`
       }
     }
     &__list {
-      display: flex;
       flex-direction: column;
       text-align: center;
       row-gap: 1.5rem;

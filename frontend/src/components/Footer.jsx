@@ -9,8 +9,6 @@ export function Footer() {
   return (
     <Container>
       <footer class="footer section">
-        <div class="shape__small"></div>
-        <div class="shape__big"></div>
 
         <div class="footer__container container grid">
           <div>

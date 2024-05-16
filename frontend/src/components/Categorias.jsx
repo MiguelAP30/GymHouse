@@ -6,11 +6,14 @@ import img4 from "../assets/img/pngwing.com (59).png";
 import img5 from "../assets/img/pngwing.com (50).png";
 import { ItemsCategorias } from "../components/ItemsCategorias";
 import { datacategorias } from "../data/DataEstatica";
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 export function Categorias() {
   return (
     <Container>
+      
       <section class="category section">
-        <div class="shape__small"></div>
+
+        
 
         <h2 class="section__title">
         Elige tu <br />

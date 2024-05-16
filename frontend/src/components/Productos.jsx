@@ -5,7 +5,6 @@ export function Productos() {
   return (
     <Container>
       <section class="items section" id="items">
-        <div class="shape__big"></div>
 
         <h2 class="section__title">
         Selecciona tu <br />

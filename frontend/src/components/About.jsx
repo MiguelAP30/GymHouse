@@ -3,8 +3,6 @@ import img1 from "../assets/img/pngwing.com (58).png"
 export function About() {
   return (<Container>
    <section class="about section" id="about">
-          <div class="shape__small"></div>
-          <div class="shape__big"></div>
 
           <div class="about__container container grid">
             <div class="about__data">
