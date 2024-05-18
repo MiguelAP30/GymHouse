@@ -5,7 +5,7 @@ from src.config.database import Base
 class User(Base):
     __tablename__ = "users"
 
-    email = Column(String(length=200), primary_key=True)
+    email = Column(String(length=250), primary_key=True)
     id_number = Column(String(length=20))
     password = Column(String(length=60))
     name = Column(String(length=50))
