@@ -16,7 +16,7 @@ from src.routers.quantityFood import quantityFood_router
 from src.routers.role import role_router
 from src.routers.tag_of_diet import tag_of_diet_router
 from src.routers.tag_of_training_plan import tag_of_training_plan_router
-from routers.detailed_exercise import detailed_exercise_router
+from src.routers.detailed_exercise import detailed_exercise_router
 from src.routers.training_plan_user import training_plan_user_router
 from src.routers.training_plan import training_plan_router
 from src.routers.type_quantity import type_quantity_router
