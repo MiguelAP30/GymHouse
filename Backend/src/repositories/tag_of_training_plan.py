@@ -31,7 +31,6 @@ class TagOfTrainingPlanRepository():
     def update_tag_of_training_plan(self, id: int, tag_of_training_plan: TagOfTrainingPlan) -> dict:    
         element = self.db.query(tag_of_training_plans).filter(tag_of_training_plans.id == id).first()
         element.name = tag_of_training_plan.name
-        element.description = tag_of_training_plan.description
 
         self.db.commit()
         self.db.refresh(element)

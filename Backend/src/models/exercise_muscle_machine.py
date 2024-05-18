@@ -14,6 +14,7 @@ class ExerciseMuscleMachine(Base):
     exercises = relationship("Exercise", back_populates="exercises_muscles_machines")
     muscles = relationship("Muscle", back_populates="exercises_muscles_machines")
     machines = relationship("Machine", back_populates="exercises_muscles_machines")
+    details_exercises = relationship("DetailedExercise", back_populates="exercises_muscles_machines")
 
     __table_args__ = (UniqueConstraint('exercise_id', 'muscle_id', 'machine_id', name='uix_1'), )
 

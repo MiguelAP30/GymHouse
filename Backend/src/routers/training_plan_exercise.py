@@ -4,9 +4,9 @@ from typing import List
 from fastapi import APIRouter
 from src.config.database import SessionLocal 
 from fastapi.encoders import jsonable_encoder
-from src.schemas.training_plan_exercise import TrainingPlanExercise
-from src.models.training_plan_exercise import TrainingPlanExercise as training_plan_exercises
-from src.repositories.training_plan_exercise import TrainingPlanExerciseRepository
+from schemas.detailed_exercise import TrainingPlanExercise
+from models.detailed_exercise import TrainingPlanExercise as training_plan_exercises
+from repositories.detailed_exercise import TrainingPlanExerciseRepository
 
 training_plan_exercise_router = APIRouter(tags=['Ejercicios para planes de entrenamiento'])
 

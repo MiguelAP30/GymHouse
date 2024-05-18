@@ -13,7 +13,6 @@ class Exercise(Base):
     dateAdded = Column(Date)
 
     exercises_muscles_machines = relationship("ExerciseMuscleMachine", back_populates="exercises")
-    training_plans_exercises = relationship("TrainingPlanExercise", back_populates="exercises")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}

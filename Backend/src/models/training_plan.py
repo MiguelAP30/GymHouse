@@ -9,8 +9,9 @@ class TrainingPlan(Base):
     name = Column(String(length=60))
     description = Column(String(length=200))
     tag_of_training_plan_id = Column(Integer, ForeignKey("tags_of_training_plans.id"))
+    exercise_per_week_day_id = Column(Integer, ForeignKey("exercises_per_week_days.id"))
 
-    training_plans_exercises = relationship("TrainingPlanExercise", back_populates="training_plans")
+    exercises_per_week_days = relationship("ExercisePerWeekDay", back_populates="training_plans")
     tags_of_training_plans = relationship("TagOfTrainingPlan", back_populates="training_plans")
     training_plans_users = relationship("TrainingPlanUser", back_populates="training_plans")
 
