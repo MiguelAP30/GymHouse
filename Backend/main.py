@@ -16,7 +16,7 @@ from src.routers.plate_per_week_day import plate_per_week_day_router
 from src.routers.quantityFood import quantityFood_router
 from src.routers.role import role_router
 from src.routers.tag_of_training_plan import tag_of_training_plan_router
-from src.routers.training_plan_exercise import training_plan_exercise_router
+from routers.detailed_exercise import training_plan_exercise_router
 from src.routers.training_plan_user import training_plan_user_router
 from src.routers.training_plan import training_plan_router
 from src.routers.type_quantity import type_quantity_router
