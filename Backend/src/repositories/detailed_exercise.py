@@ -1,6 +1,6 @@
 from typing import List
-from schemas.detailed_exercise import DetailedExercise
-from models.detailed_exercise import DetailedExercise as detailed_exercises
+from src.schemas.detailed_exercise import DetailedExercise
+from src.models.detailed_exercise import DetailedExercise as detailed_exercises
 
 class DetailedExerciseRepository():
     def __init__(self, db) -> None:

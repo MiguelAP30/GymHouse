@@ -4,6 +4,7 @@ from typing import List, Optional
 class TagOfDiet(BaseModel):
     id: Optional[int] = Field(default=None, title="Id de la etiqueta de dieta")
     name: str = Field(title="Nombre de la etiqueta de dieta")
+    description : str = Field(title="Descripcion de la etiqueta de dieta")
 
     @validator("name")
     def name_must_be_str(cls, v):
