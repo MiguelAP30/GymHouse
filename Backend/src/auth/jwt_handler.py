@@ -25,7 +25,8 @@ class JWTHandler:
             "sub": user.email,           
             "scope": "access_token",            
             "user.name": user.name, 
-            "user.id_number": user.id_number,        
+            "user.id_number": user.id_number,
+            "user.role": user.role_id,  
         }        
         return jwt.encode(payload, self.secret, algorithm=self.algorithm)
     
