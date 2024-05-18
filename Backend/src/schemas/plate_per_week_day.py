@@ -4,14 +4,14 @@ from typing import List, Optional
 class PlatePerWeekDay(BaseModel):
     id: Optional[int] = Field(default=None, title="Id del plato por dia de la semana")
     week_day_id: int = Field(title="Id del dia de la semana")
-    diet_meal_id: int = Field(title="Id de la dieta de la comida")
+    meal_id: int = Field(title="Id de la comida")
 
     @validator("week_day_id")
     def week_day_id_must_not_be_empty(cls, value):
         assert isinstance(value, int) and value > 0, ValueError("el id del dia de la semana debe ser un entero positivo")
         return value
     
-    @validator("diet_meal_id")
+    @validator("meal_id")
     def diet_meal_id_must_not_be_empty(cls, value):
         assert isinstance(value, int) and value > 0, ValueError("el id de la dieta de la comida debe ser un entero positivo")
         return value
@@ -19,6 +19,6 @@ class PlatePerWeekDay(BaseModel):
         json_schema_extra = {
             "example": {
                 "week_day_id": 1,
-                "diet_meal_id": 1
+                "meal_id": 1
             }
         }
