@@ -1,88 +1,121 @@
-from fastapi import APIRouter, Body, Query, Path, status
+from fastapi import APIRouter, Body, Depends, Query, Path, status
 from fastapi.responses import JSONResponse
-from typing import List
+from typing import Annotated, List
 from fastapi import APIRouter
 from src.config.database import SessionLocal 
 from fastapi.encoders import jsonable_encoder
 from src.repositories.exercise import ExerciseRepository
 from src.schemas.exercise import Exercise
 from src.models.exercise import Exercise as ExerciseModel
+from fastapi.security import HTTPAuthorizationCredentials
+from src.auth.has_access import security
+from src.auth import auth_handler
 
 exercise_router = APIRouter(tags=['Ejercicios'])
 
 #CRUD exercise
 
-@exercise_router.get('/',response_model=List[Exercise],description="Returns all exercises")
-def get_categories()-> List[Exercise]:
+@exercise_router.get('/',response_model=List[Exercise],description="Devuelve todos los ejercicios")
+def get_exercises(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> List[Exercise]:
     db= SessionLocal()
-    result = ExerciseRepository(db).get_all_excercise()
-    return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_user = payload.get("user.role")
+        if role_user >= 3:
+            result = ExerciseRepository(db).get_all_excercise()
+            return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
+        else:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
-@exercise_router.get('/{id}',response_model=Exercise,description="Returns data of one specific exercise")
-def get_excercise(id: int = Path(ge=1)) -> Exercise:
+@exercise_router.get('/{id}',response_model=Exercise,description="Devuelve la información de un solo ejercicio")
+def get_excercise(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> Exercise:
     db = SessionLocal()
-    element=  ExerciseRepository(db).get_excercise_by_id(id)
-    if not element:        
-        return JSONResponse(
-            content={            
-                "message": "The requested income was not found",            
-                "data": None        
-                }, 
-            status_code=status.HTTP_404_NOT_FOUND
-            )    
-    return JSONResponse(
-        content=jsonable_encoder(element),                        
-        status_code=status.HTTP_200_OK
-        )
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_user = payload.get("user.role")
+        if role_user >= 3:
+            element=  ExerciseRepository(db).get_excercise_by_id(id)
+            if not element:        
+                return JSONResponse(
+                    content={            
+                        "message": "The requested income was not found",            
+                        "data": None        
+                        }, 
+                    status_code=status.HTTP_404_NOT_FOUND
+                    )    
+            return JSONResponse(
+                content=jsonable_encoder(element),                        
+                status_code=status.HTTP_200_OK
+                )
+        else:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
-@exercise_router.post('/',response_model=dict,description="Creates a new exercise")
-def create_categorie(exercise: Exercise = Body()) -> dict:
+@exercise_router.post('/',response_model=dict,description="Crear un nuevo ejercicio")
+def create_exercise(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], exercise: Exercise = Body()) -> dict:
     db= SessionLocal()
-    new_excercise = ExerciseRepository(db).create_new_excercise(exercise)
-    return JSONResponse(
-        content={        
-        "message": "The exercise was successfully created",        
-        "data": jsonable_encoder(new_excercise)    
-        }, 
-        status_code=status.HTTP_201_CREATED
-    )
-
-@exercise_router.delete('/{id}',response_model=dict,description="Removes specific exercise")
-def remove_excercise(id: int = Path(ge=1)) -> dict:
-    db = SessionLocal()
-    element = ExerciseRepository(db).delete_excercise(id)
-    if not element:        
-        return JSONResponse(
-            content={            
-                "message": "The requested exercise was not found",            
-                "data": None        
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_user = payload.get("user.role")
+        if role_user >= 3:
+            new_excercise = ExerciseRepository(db).create_new_excercise(exercise)
+            return JSONResponse(
+                content={        
+                "message": "The exercise was successfully created",        
+                "data": jsonable_encoder(new_excercise)    
                 }, 
-            status_code=status.HTTP_404_NOT_FOUND
-        )
-    return JSONResponse(
-        content={        
-        "message": "The exercise was successfully removed",        
-        "data": jsonable_encoder(element)    
-        }, 
-        status_code=status.HTTP_200_OK
-    )
+                status_code=status.HTTP_201_CREATED
+            )
+        else:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
-@exercise_router.put('/{id}',response_model=Exercise,description="Updates specific exercise")
-def update_excercise(id: int = Path(ge=1), exercise: Exercise = Body()) -> dict:
+@exercise_router.delete('/{id}',response_model=dict,description="Remover un ejercicio específico")
+def remove_excercise(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
-    element = ExerciseRepository(db).update_excercise(id, exercise)
-    if not element:        
-        return JSONResponse(
-            content={            
-                "message": "The requested exercise was not found",            
-                "data": None        
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_user = payload.get("user.role")
+        if role_user >= 3:
+            element = ExerciseRepository(db).delete_excercise(id)
+            if not element:        
+                return JSONResponse(
+                    content={            
+                        "message": "The requested exercise was not found",            
+                        "data": None        
+                        }, 
+                    status_code=status.HTTP_404_NOT_FOUND
+                )
+            return JSONResponse(
+                content={        
+                "message": "The exercise was successfully removed",        
+                "data": jsonable_encoder(element)    
                 }, 
-            status_code=status.HTTP_404_NOT_FOUND
-        )
-    return JSONResponse(
-        content={        
-        "message": "The exercise was successfully updated",        
-        "data": jsonable_encoder(element)    
-        }, 
-        status_code=status.HTTP_200_OK
-    )
+                status_code=status.HTTP_200_OK
+            )
+        else:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+
+@exercise_router.put('/{id}',response_model=Exercise,description="Actualizar un ejercicio específico")
+def update_excercise(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1), exercise: Exercise = Body()) -> dict:
+    db = SessionLocal()
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_user = payload.get("user.role")
+        if role_user >= 3:
+            element = ExerciseRepository(db).update_excercise(id, exercise)
+            if not element:        
+                return JSONResponse(
+                    content={            
+                        "message": "The requested exercise was not found",            
+                        "data": None        
+                        }, 
+                    status_code=status.HTTP_404_NOT_FOUND
+                )
+            return JSONResponse(
+                content={        
+                "message": "The exercise was successfully updated",        
+                "data": jsonable_encoder(element)    
+                }, 
+                status_code=status.HTTP_200_OK
+            )
+        else:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)

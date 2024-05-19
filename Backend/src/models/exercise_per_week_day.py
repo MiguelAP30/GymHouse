@@ -8,6 +8,7 @@ class ExercisePerWeekDay(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     week_day_id = Column(Integer, ForeignKey("week_days.id"))
     detail_exercise_id = Column(Integer, ForeignKey("details_exercises.id"))
+    training_plan_id = Column(Integer, ForeignKey("training_plans.id"))
 
     week_days = relationship("WeekDay", back_populates="exercises_per_week_days")
     training_plans = relationship("TrainingPlan", back_populates="exercises_per_week_days")

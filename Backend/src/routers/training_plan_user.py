@@ -56,16 +56,20 @@ def create_training_plan_user(credentials: Annotated[HTTPAuthorizationCredential
     db= SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
-        current_user = payload.get("sub")
-        training_plan_user.user_email = current_user
-        new_training_plan_user = TrainingPlanUserRepository(db).create_new_training_plan_user(training_plan_user)
-        return JSONResponse(
-            content={        
-            "message": "The training_plan_user was successfully created",        
-            "data": jsonable_encoder(new_training_plan_user)    
-            }, 
-            status_code=status.HTTP_201_CREATED
-        )
+        role_current_user = payload.get("user.role")
+        if role_current_user >= 2:
+            current_user = payload.get("sub")
+            training_plan_user.user_email = current_user
+            new_training_plan_user = TrainingPlanUserRepository(db).create_new_training_plan_user(training_plan_user)
+            return JSONResponse(
+                content={        
+                "message": "The training_plan_user was successfully created",        
+                "data": jsonable_encoder(new_training_plan_user)    
+                }, 
+                status_code=status.HTTP_201_CREATED
+            )
+        else:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
 @training_plan_user_router.delete('/{id}',response_model=dict,description="Remover un plan de entrenamiento de un usuario")
 def remove_training_plan_user(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> dict:

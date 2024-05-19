@@ -1,6 +1,10 @@
 from typing import List
+
+from sqlalchemy import desc
 from src.schemas.exercise_muscle_machine import ExerciseMuscleMachine
 from src.models.exercise_muscle_machine import ExerciseMuscleMachine as ExcersiceMuscleMachineModel
+from src.models.muscle import Muscle as MuscleModel
+from src.models.machine import Machine as MachineModel
 
 
 
@@ -8,15 +12,19 @@ class ExerciseMuscleMachineRepository():
     def __init__(self, db) -> None:
         self.db = db
 
-    def get_all_excercise_muscle_machine(self) -> List[ExerciseMuscleMachine]: 
-        query = self.db.query(ExcersiceMuscleMachineModel)
+    def get_all_excercise_muscle_by_rate(self, muscle: id) -> List[ExerciseMuscleMachine]: 
+        query = self.db.query(ExcersiceMuscleMachineModel).join(MuscleModel).filter(MuscleModel.id == muscle).order_by(desc(ExcersiceMuscleMachineModel.rate))
+        return query.all()
+
+    def get_all_excercise_muscle_machine_by_rate(self, muscle: int, machine: int) -> List[ExerciseMuscleMachine]:
+        query = self.db.query(ExcersiceMuscleMachineModel).join(MuscleModel).join(MachineModel).filter(MuscleModel.id == muscle, MachineModel.id == machine).order_by(desc(ExcersiceMuscleMachineModel.rate))
         return query.all()
 
     def get_excercise_muscle_machine_by_id(self, id: int ):
         element = self.db.query(ExcersiceMuscleMachineModel).filter(ExcersiceMuscleMachineModel.id == id).first()    
         return element
 
-    def delete_excercise_muscle_machine(self, id: int ) -> dict: 
+    def delete_excercise_muscle_machine(self, id: int) -> dict: 
         element: ExerciseMuscleMachine= self.db.query(ExcersiceMuscleMachineModel).filter(ExcersiceMuscleMachineModel.id == id).first()       
         self.db.delete(element)    
         self.db.commit()    
@@ -30,7 +38,7 @@ class ExerciseMuscleMachineRepository():
         self.db.refresh(new_excercise)
         return new_excercise
 
-    def update_excercise_muscle_machine(self, id:int, excercise:ExerciseMuscleMachine) -> dict:
+    def update_rate_excercise_muscle_machine(self, id:int, excercise:ExerciseMuscleMachine) -> dict:
         element = self.db.query(ExcersiceMuscleMachineModel).filter(ExcersiceMuscleMachineModel.id == id).first()
         element.rate = excercise.rate
 

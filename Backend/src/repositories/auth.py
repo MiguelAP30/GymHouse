@@ -27,7 +27,7 @@ class AuthRepository:
             birth_date=user.birth_date,
             physical_activity=user.physical_activity,
             gender= user.gender,
-            ##Si falla es por el role_id
+            role_id=user.role_id,
         )        
         return UserRepository(db).create_new_user(new_user)
 

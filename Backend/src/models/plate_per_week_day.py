@@ -11,6 +11,7 @@ class PlatePerWeekDay(Base):
 
     week_days = relationship("WeekDay", back_populates="plates_per_week_days")
     meals = relationship("Meal", back_populates="plates_per_week_days")
+    diets = relationship("Diet", back_populates="plates_per_week_days")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}

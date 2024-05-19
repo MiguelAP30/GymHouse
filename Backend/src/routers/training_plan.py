@@ -1,77 +1,110 @@
-from fastapi import APIRouter, Body, Query, Path, status
+from fastapi import APIRouter, Body, Depends, Query, Path, status
 from fastapi.responses import JSONResponse
-from typing import List
+from typing import Annotated, List
 from fastapi import APIRouter
 from src.config.database import SessionLocal 
 from fastapi.encoders import jsonable_encoder
 from src.schemas.training_plan import TrainingPlan
 from src.models.training_plan import TrainingPlan as training_plans
 from src.repositories.training_plan import TrainingPlanRepository
+from fastapi.security import HTTPAuthorizationCredentials
+from src.auth.has_access import security
+from src.auth import auth_handler
 
 training_plan_router = APIRouter(tags=['Planes de entrenamiento'])
 
 #CRUD training_plan
 
-@training_plan_router.get('/',response_model=List[TrainingPlan],description="Returns all training_plan")
-def get_categories()-> List[TrainingPlan]:
+@training_plan_router.get('/',response_model=List[TrainingPlan],description="Retorna todos los planes de entrenamiento")
+def get_training_plans(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> List[TrainingPlan]:
     db= SessionLocal()
-    result = TrainingPlanRepository(db).get_all_training_plans()
-    return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_current_user = payload.get("user.role")
+        if role_current_user < 2:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        current_user = payload.get("sub")
+        result = TrainingPlanRepository(db).get_all_training_plans(current_user)
+        return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
-@training_plan_router.get('/{id}',response_model=TrainingPlan,description="Returns data of one specific training_plan")
-def get_training_plan(id: int = Path(ge=1)) -> TrainingPlan:
+@training_plan_router.get('/{id}',response_model=TrainingPlan,description="Retorna un solo plan de entrenamiento")
+def get_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> TrainingPlan:
     db = SessionLocal()
-    element=  TrainingPlanRepository(db).get_training_plan_by_id(id)
-    if not element:        
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_current_user = payload.get("user.role")
+        if role_current_user < 2:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        current_user = payload.get("sub")
+        element=  TrainingPlanRepository(db).get_training_plan_by_id(id, current_user)
+        if not element:        
+            return JSONResponse(
+                content={            
+                    "message": "The requested training plan was not found",            
+                    "data": None        
+                    }, 
+                status_code=status.HTTP_404_NOT_FOUND
+                )    
         return JSONResponse(
-            content={            
-                "message": "The requested income was not found",            
-                "data": None        
-                }, 
-            status_code=status.HTTP_404_NOT_FOUND
-            )    
-    return JSONResponse(
-        content=jsonable_encoder(element),                        
-        status_code=status.HTTP_200_OK
-        )
+            content=jsonable_encoder(element),                        
+            status_code=status.HTTP_200_OK
+            )
 
-@training_plan_router.post('/',response_model=dict,description="Creates a new training_plan")
-def create_categorie(training_plan: TrainingPlan = Body()) -> dict:
+@training_plan_router.post('/',response_model=dict,description="Crea un nuevo plan de entrenamiento")
+##Debe recibir el ID de ejercicio por día de la semana y de tag de plan de entrenamiento en el JSON que viene con el Frontend
+def create_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], training_plan: TrainingPlan = Body()) -> dict:
     db= SessionLocal()
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_current_user = payload.get("user.role")
+        if role_current_user < 2:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
     new_training_plan = TrainingPlanRepository(db).create_new_training_plan(training_plan)
     return JSONResponse(
         content={        
-        "message": "The training_plan was successfully created",        
+        "message": "The training plan was successfully created",        
         "data": jsonable_encoder(new_training_plan)    
         }, 
         status_code=status.HTTP_201_CREATED
     )
 
-@training_plan_router.delete('/{id}',response_model=dict,description="Removes specific training_plan")
-def remove_training_plan(id: int = Path(ge=1)) -> dict:
+@training_plan_router.delete('/{id}',response_model=dict,description="Elimina un plan de entrenamiento específico")
+def remove_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
-    element = TrainingPlanRepository(db).delete_training_plan(id)
-    if not element:        
-        return JSONResponse(
-            content={            
-                "message": "The requested training_plan was not found",            
-                "data": None        
-                }, 
-            status_code=status.HTTP_404_NOT_FOUND
-            )
-    return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_current_user = payload.get("user.role")
+        if role_current_user < 2:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        current_user = payload.get("sub")
+        element = TrainingPlanRepository(db).delete_training_plan(id, current_user)
+        if not element:        
+            return JSONResponse(
+                content={            
+                    "message": "The requested training plan was not found",            
+                    "data": None        
+                    }, 
+                status_code=status.HTTP_404_NOT_FOUND
+                )
+        return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
 
-@training_plan_router.put('/{id}',response_model=dict,description="Updates specific training_plan")
-def update_training_plan(id: int = Path(ge=1), training_plan: TrainingPlan = Body()) -> dict:
+@training_plan_router.put('/{id}',response_model=dict,description="Actualiza un plan de entrenamiento específico")
+def update_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1), training_plan: TrainingPlan = Body()) -> dict:
     db = SessionLocal()
-    element = TrainingPlanRepository(db).update_training_plan(id, training_plan)
-    if not element:        
-        return JSONResponse(
-            content={            
-                "message": "The requested training_plan was not found",            
-                "data": None        
-                }, 
-            status_code=status.HTTP_404_NOT_FOUND
-            )
-    return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_current_user = payload.get("user.role")
+        if role_current_user < 2:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        current_user = payload.get("sub")
+        element = TrainingPlanRepository(db).update_training_plan(id, training_plan, current_user)
+        if not element:        
+            return JSONResponse(
+                content={            
+                    "message": "The requested training plan was not found",            
+                    "data": None        
+                    }, 
+                status_code=status.HTTP_404_NOT_FOUND
+                )
+        return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
 
