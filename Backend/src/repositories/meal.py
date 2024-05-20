@@ -2,7 +2,7 @@ from typing import List
 from src.schemas.meal import Meal
 from src.models.meal import Meal as meals
 from src.models.user import User as UserModel
-from src.models.diet_user import DietUser as DietUserModel
+from src.models.diet import Diet as DietModel
 
 class MealRepository():
     def __init__(self, db) -> None:
@@ -21,7 +21,7 @@ class MealRepository():
         Returns:
             Una lista de objetos Meal que representan todas las comidas almacenadas.
         """
-        query = self.db.query(meals).join(DietUserModel).filter(DietUserModel.user_email == user)
+        query = self.db.query(meals).join(DietModel).filter(DietModel.user_email == user)
         return query.all()
     
     def get_meal_by_id(self, id: int, user:str):
@@ -34,7 +34,7 @@ class MealRepository():
         Returns:
             El objeto Meal correspondiente al ID proporcionado.
         """
-        element = self.db.query(meals).join(DietUserModel).filter(meals.id == id, DietUserModel.user_email == user).first()
+        element = self.db.query(meals).join(DietModel).filter(meals.id == id, DietModel.user_email == user).first()
         return element
     
     def delete_meal(self, id: int, user:str ) -> dict:
@@ -47,7 +47,7 @@ class MealRepository():
         Returns:
             Un diccionario que contiene la información de la comida eliminada.
         """
-        element: Meal= self.db.query(meals).join(DietUserModel).filter(meals.id == id, DietUserModel.user_email == user).first()
+        element: Meal= self.db.query(meals).join(DietModel).filter(meals.id == id, DietModel.user_email == user).first()
         self.db.delete(element)
         self.db.commit()
         return element
@@ -80,7 +80,7 @@ class MealRepository():
         Returns:
             Un diccionario que contiene la información de la comida actualizada.
         """
-        element = self.db.query(meals).join(DietUserModel).filter(meals.id == id, DietUserModel.user_email == user).first()
+        element = self.db.query(meals).join(DietModel).filter(meals.id == id, DietModel.user_email == user).first()
         element.name = meal.name
         element.description = meal.description
         self.db.commit()

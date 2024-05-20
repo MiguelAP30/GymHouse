@@ -1,7 +1,6 @@
 from typing import List
 from src.schemas.training_plan import TrainingPlan
 from src.models.training_plan import TrainingPlan as training_plans
-from src.models.training_plan_user import TrainingPlanUser as training_plan_user
 
 class TrainingPlanRepository():
     def __init__(self, db) -> None:
@@ -32,7 +31,8 @@ class TrainingPlanRepository():
         Postcondición:
         - Devuelve una lista de objetos TrainingPlan que representan los planes de entrenamiento asociados al usuario.
         """
-        query = self.db.query(training_plans).join(training_plan_user).filter(training_plan_user.user_email == user)
+        query = self.db.query(training_plans).\
+        filter(training_plans.user_email == user)
         return query.all()
     
     def get_training_plan_by_id(self, id: int, user: str):
@@ -50,7 +50,8 @@ class TrainingPlanRepository():
         Postcondición:
         - Devuelve el objeto TrainingPlan que representa el plan de entrenamiento solicitado.
         """
-        element = self.db.query(training_plans).join(training_plan_user).filter(training_plans.id == id, training_plan_user.user_email == user).first()
+        element = self.db.query(training_plans).\
+        filter(training_plans.id == id, training_plans.user_email == user).first()
         return element
     
     def delete_training_plan(self, id: int, user: str) -> dict:
@@ -69,7 +70,8 @@ class TrainingPlanRepository():
         - El plan de entrenamiento se elimina de la base de datos.
         - Devuelve un diccionario que representa el plan de entrenamiento eliminado.
         """
-        element = self.db.query(training_plans).join(training_plan_user).filter(training_plans.id == id, training_plan_user.user_email == user).first()
+        element = self.db.query(training_plans).\
+        filter(training_plans.id == id, training_plans.user_email == user).first()
         self.db.delete(element)
         self.db.commit()
         return element
@@ -111,7 +113,8 @@ class TrainingPlanRepository():
         - El plan de entrenamiento se actualiza en la base de datos con los nuevos datos proporcionados.
         - Devuelve un diccionario que representa el plan de entrenamiento actualizado.
         """
-        element = self.db.query(training_plans).join(training_plan_user).filter(training_plans.id == id, training_plan_user.user_email == user).first()
+        element = self.db.query(training_plans).\
+        filter(training_plans.id == id, training_plans.user_email == user).first()
         element.name = training_plan.name
         element.description = training_plan.description
 

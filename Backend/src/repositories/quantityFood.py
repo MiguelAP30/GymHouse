@@ -1,8 +1,7 @@
 from typing import List
 from src.schemas.quantityFood import QuantityFood
 from src.models.quantityFood import QuantityFood as quantity_foods
-from src.models.diet_user import DietUser as DietUserModel
-
+from src.models.diet import Diet as DietModel
 
 class QuantityFoodRepository():
     def __init__(self, db) -> None:
@@ -30,7 +29,7 @@ class QuantityFoodRepository():
         Postcondición:
         - Devuelve una lista de objetos QuantityFood que representan los alimentos en cantidad.
         """
-        query = self.db.query(quantity_foods).join(DietUserModel).filter(DietUserModel.user_email == user)
+        query = self.db.query(quantity_foods).join(DietModel).filter(DietModel.user_email == user)
         return query.all()
     
     def get_quantity_food_by_id(self, id: int , user:str):
@@ -46,7 +45,7 @@ class QuantityFoodRepository():
         Postcondición:
         - Devuelve el objeto QuantityFood correspondiente al ID especificado.
         """
-        element = self.db.query(quantity_foods).join(DietUserModel).filter(quantity_foods.id == id, DietUserModel.user_email == user).first()
+        element = self.db.query(quantity_foods).join(DietModel).filter(quantity_foods.id == id, DietModel.user_email == user).first()
         return element
     
     def delete_quantity_food(self, id: int, user: str) -> dict:
@@ -63,7 +62,7 @@ class QuantityFoodRepository():
         - El alimento en cantidad correspondiente al ID especificado es eliminado de la base de datos.
         - Devuelve un diccionario que representa el alimento en cantidad eliminado.
         """
-        element: QuantityFood= self.db.query(quantity_foods).join(DietUserModel).filter(quantity_foods.id == id, DietUserModel.user_email == user).first()
+        element: QuantityFood= self.db.query(quantity_foods).join(DietModel).filter(quantity_foods.id == id, DietModel.user_email == user).first()
         self.db.delete(element)
         self.db.commit()
         return element

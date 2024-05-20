@@ -59,6 +59,7 @@ def create_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Dep
         role_current_user = payload.get("user.role")
         if role_current_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        training_plan.user_email = payload.get("sub")
         new_training_plan = TrainingPlanRepository(db).create_new_training_plan(training_plan)
         return JSONResponse(
             content={        

@@ -2,7 +2,6 @@ from typing import List
 from src.models.exercise_per_week_day import ExercisePerWeekDay as ExercisePerWeekDayModel
 from src.models.week_day import WeekDay as WeekDayModel
 from src.models.training_plan import TrainingPlan as TrainingPlanModel
-from src.models.training_plan_user import TrainingPlanUser as TrainingPlanUserModel
 from src.models.user import User as UserModel
 from src.schemas.exercise_per_week_day import ExercisePerWeekDay
 
@@ -38,9 +37,8 @@ class ExercisePerWeekDayRepository:
         """
         exercises = self.db.query(ExercisePerWeekDayModel, WeekDayModel.name, TrainingPlanModel.name, UserModel.name).\
             join(TrainingPlanModel).\
-            join(TrainingPlanUserModel).\
             join(WeekDayModel, ExercisePerWeekDayModel.week_day_id == WeekDayModel.id).\
-            filter(TrainingPlanUserModel.user_email == user).\
+            filter(TrainingPlanModel.user_email == user).\
             all()
 
         return self.group_exercises_by_day_and_training_plan(exercises)
@@ -57,8 +55,7 @@ class ExercisePerWeekDayRepository:
         """
         exercises = self.db.query(ExercisePerWeekDayModel, WeekDayModel.name, TrainingPlanModel.name, UserModel.name).\
             join(TrainingPlanModel).\
-            join(TrainingPlanUserModel).\
-            filter(TrainingPlanUserModel.status == True).\
+            filter(TrainingPlanModel.status == True).\
             join(UserModel).\
             filter(UserModel.role_id == 2).\
             join(WeekDayModel, ExercisePerWeekDayModel.week_day_id == WeekDayModel.id).\
@@ -78,8 +75,7 @@ class ExercisePerWeekDayRepository:
         """
         exercises = self.db.query(ExercisePerWeekDayModel, WeekDayModel.name, TrainingPlanModel.name, UserModel.name).\
             join(TrainingPlanModel).\
-            join(TrainingPlanUserModel).\
-            filter(TrainingPlanUserModel.status == True).\
+            filter(TrainingPlanModel.is_visible == True).\
             join(UserModel).\
             filter(UserModel.role_id == 3).\
             join(WeekDayModel, ExercisePerWeekDayModel.week_day_id == WeekDayModel.id).\
@@ -99,8 +95,7 @@ class ExercisePerWeekDayRepository:
         """
         exercises = self.db.query(ExercisePerWeekDayModel, WeekDayModel.name, TrainingPlanModel.name, UserModel.name).\
             join(TrainingPlanModel).\
-            join(TrainingPlanUserModel).\
-            filter(TrainingPlanUserModel.status == True).\
+            filter(TrainingPlanModel.is_visible == True).\
             join(UserModel).\
             filter(UserModel.role_id == 4).\
             join(WeekDayModel, ExercisePerWeekDayModel.week_day_id == WeekDayModel.id).\
@@ -147,7 +142,7 @@ class ExercisePerWeekDayRepository:
         Postcondición:
         - Devuelve el ejercicio y el nombre del día de la semana correspondiente.
         """
-        return self.db.query(ExercisePerWeekDayModel, WeekDayModel.name).join(WeekDayModel).filter(ExercisePerWeekDayModel.id == id, TrainingPlanUserModel.user_email == user).first()
+        return self.db.query(ExercisePerWeekDayModel, WeekDayModel.name).join(WeekDayModel).filter(ExercisePerWeekDayModel.id == id, TrainingPlanModel.user_email == user).first()
 
     def create_new_excercise_per_week_day(self, exercise_per_week_day: ExercisePerWeekDay):
         """
@@ -183,7 +178,9 @@ class ExercisePerWeekDayRepository:
         Postcondición:
         - Elimina el ejercicio por día de la semana de la base de datos y lo devuelve.
         """
-        element = self.db.query(ExercisePerWeekDayModel).join(TrainingPlanModel).join(TrainingPlanUserModel).filter(ExercisePerWeekDayModel.id == id, TrainingPlanUserModel.user_email == user).first()
+        element = self.db.query(ExercisePerWeekDayModel).\
+            join(TrainingPlanModel).\
+            filter(ExercisePerWeekDayModel.id == id, TrainingPlanModel.user_email == user).first()
         self.db.delete(element)
         self.db.commit()
         return element

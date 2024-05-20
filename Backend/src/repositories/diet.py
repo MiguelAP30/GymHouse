@@ -1,7 +1,6 @@
 from typing import List
 from src.schemas.diet import Diet
 from src.models.diet import Diet as diets
-from src.models.diet_user import DietUser as diet_user
 
 
 class DietRepository():
@@ -18,7 +17,8 @@ class DietRepository():
         Postcondición:
         - Devuelve una lista de objetos de tipo Diet que representan todas las dietas almacenadas en la base de datos.
         """
-        query = self.db.query(diets).join(diet_user).filter(diet_user.user_email == user)
+        query = self.db.query(diets).\
+        filter(diets.user_email == user)
         return query.all()
     
     def get_diet_by_id(self, id: int, user:str):
@@ -35,7 +35,8 @@ class DietRepository():
         Postcondición:
         - Devuelve un objeto de tipo Diet que representa la dieta encontrada.
         """
-        element = self.db.query(diets).join(diet_user).filter(diets.id == id, diet_user.user_email == user).first()
+        element = self.db.query(diets).\
+        filter(diets.id == id, diets.user_email == user).first()
         return element
     
     def delete_diet(self, id: int, user:str ) -> dict:
@@ -52,7 +53,8 @@ class DietRepository():
         Postcondición:
         - Elimina la dieta de la base de datos y devuelve un diccionario que contiene los datos de la dieta eliminada.
         """
-        element: Diet= self.db.query(diets).join(diet_user).filter(diets.id == id, diet_user.user_email == user).first()
+        element: Diet= self.db.query(diets).\
+        filter(diets.id == id, diets.user_email == user).first()
         self.db.delete(element)
         self.db.commit()
         return element
@@ -93,7 +95,8 @@ class DietRepository():
         Postcondición:
         - Actualiza la dieta en la base de datos y devuelve un diccionario que contiene los datos de la dieta actualizada.
         """
-        element = self.db.query(diets).join(diet_user).filter(diets.id == id, diet_user.user_email == user).first()
+        element = self.db.query(diets).\
+        filter(diets.id == id, diets.user_email == user).first()
         element.name = diet.name
         element.description = diet.description
         element.tag_of_diet_id = diet.tags_of_diet_id

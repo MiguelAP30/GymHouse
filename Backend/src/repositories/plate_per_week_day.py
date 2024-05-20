@@ -5,7 +5,7 @@ from src.models.week_day import WeekDay as WeekDayModel
 from src.models.diet import Diet as DietModel
 from src.models.user import User as UserModel
 from src.models.meal import Meal as MealModel
-from src.models.diet_user import DietUser as DietUserModel
+from src.models.diet import Diet as DietModel
 
 
 class PlatePerWeekDayRepository():
@@ -64,9 +64,9 @@ class PlatePerWeekDayRepository():
         """
         plates = self.db.query(plate_per_week_days, WeekDayModel.name, DietModel.name, UserModel.name).\
             join(DietModel).\
-            join(DietUserModel).\
+            join(DietModel).\
             join(WeekDayModel, plate_per_week_days.week_day_id == WeekDayModel.id).\
-            filter(DietUserModel.user_email == user).\
+            filter(DietModel.user_email == user).\
             all()
 
         return self.group_meals_by_day_and_diet(plates)
@@ -83,8 +83,8 @@ class PlatePerWeekDayRepository():
         """
         plates = self.db.query(plate_per_week_days, WeekDayModel.name, DietModel.name, UserModel.name).\
             join(DietModel).\
-            join(DietUserModel).\
-            filter(DietUserModel.status == True).\
+            join(DietModel).\
+            filter(DietModel.status == True).\
             join(UserModel).\
             filter(UserModel.role_id == 2).\
             join(WeekDayModel, plate_per_week_days.week_day_id == WeekDayModel.id).\
@@ -104,8 +104,8 @@ class PlatePerWeekDayRepository():
         """
         plates = self.db.query(plate_per_week_days, WeekDayModel.name, DietModel.name, UserModel.name).\
             join(DietModel).\
-            join(DietUserModel).\
-            filter(DietUserModel.status == True).\
+            join(DietModel).\
+            filter(DietModel.status == True).\
             join(UserModel).\
             filter(UserModel.role_id == 3).\
             join(WeekDayModel, plate_per_week_days.week_day_id == WeekDayModel.id).\
@@ -125,8 +125,8 @@ class PlatePerWeekDayRepository():
         """
         plates = self.db.query(plate_per_week_days, WeekDayModel.name, DietModel.name, UserModel.name).\
             join(DietModel).\
-            join(DietUserModel).\
-            filter(DietUserModel.status == True).\
+            join(DietModel).\
+            filter(DietModel.status == True).\
             join(UserModel).\
             filter(UserModel.role_id == 4).\
             join(WeekDayModel, plate_per_week_days.week_day_id == WeekDayModel.id).\
@@ -147,7 +147,7 @@ class PlatePerWeekDayRepository():
         Postcondición:
         - Devuelve el objeto PlatePerWeekDay correspondiente al ID proporcionado.
         """
-        return self.db.query(plate_per_week_days, WeekDayModel.name).join(WeekDayModel).filter(plate_per_week_days.id == id, DietUserModel.user_email == user).first()
+        return self.db.query(plate_per_week_days, WeekDayModel.name).join(WeekDayModel).filter(plate_per_week_days.id == id, DietModel.user_email == user).first()
     
     def delete_plate_per_week_day(self, id: int, user:str ) -> dict:
         """
@@ -163,7 +163,7 @@ class PlatePerWeekDayRepository():
         - Elimina el objeto PlatePerWeekDay correspondiente al ID proporcionado de la base de datos.
         - Devuelve el objeto PlatePerWeekDay eliminado.
         """
-        element: PlatePerWeekDay= self.db.query(plate_per_week_days).join(DietModel).join(DietUserModel).filter(plate_per_week_days.id == id, DietUserModel.user_email == user).first()
+        element: PlatePerWeekDay= self.db.query(plate_per_week_days).join(DietModel).join(DietModel).filter(plate_per_week_days.id == id, DietModel.user_email == user).first()
         self.db.delete(element)
         self.db.commit()
         return element
