@@ -18,7 +18,7 @@ class DietUserRepository():
         """
         self.db = db
     
-    def get_all_diet_user(self) -> List[DietUser]:
+    def get_all_diet_user(self, user: str) -> List[DietUser]:
         """
         Obtiene todos los usuarios de dieta.
 
@@ -31,10 +31,10 @@ class DietUserRepository():
         Postcondición:
         - Devuelve una lista de objetos DietUser que representan a todos los usuarios de dieta en la base de datos.
         """
-        query = self.db.query(diet_users)
+        query = self.db.query(diet_users).filter(diet_users.user_email == user)
         return query.all()
     
-    def get_diet_user_by_id(self, id: int ):
+    def get_diet_user_by_id(self, id: int, user: str ):
         """
         Obtiene un usuario de dieta por su ID.
 
@@ -47,10 +47,10 @@ class DietUserRepository():
         Postcondición:
         - Devuelve el objeto DietUser que corresponde al ID proporcionado.
         """
-        element = self.db.query(diet_users).filter(diet_users.id == id).first()
+        element = self.db.query(diet_users).filter(diet_users.id == id, diet_users.user_email == user).first()
         return element
     
-    def delete_diet_user(self, id: int ) -> dict:
+    def delete_diet_user(self, id: int, user: str ) -> dict:
         """
         Elimina un usuario de dieta por su ID.
 
@@ -64,7 +64,7 @@ class DietUserRepository():
         - Elimina el usuario de dieta correspondiente al ID proporcionado de la base de datos.
         - Devuelve un diccionario que representa al usuario de dieta eliminado.
         """
-        element: DietUser= self.db.query(diet_users).filter(diet_users.id == id).first()
+        element: DietUser= self.db.query(diet_users).filter(diet_users.id == id, diet_users.user_email == user).first()
         self.db.delete(element)
 
         self.db.commit()

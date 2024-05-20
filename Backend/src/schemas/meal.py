@@ -6,10 +6,6 @@ class Meal(BaseModel):
     name: str = Field(min_length=4, title="Nombre de la comida", max_length=50)
     description: str = Field(min_length=4, title="Descripcion de la comida", max_length=200)
 
-    @validator("quantity_food_id")
-    def quantity_food_id_must_not_be_empty(cls, value):
-        assert value.strip() != "", ValueError("la cantidad de comida no debe estar vacia")
-        return value
     
     @validator("name")
     def name_must_not_be_empty(cls, value):
