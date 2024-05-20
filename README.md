@@ -8,7 +8,7 @@ Para instalar y ejecutar este proyecto, sigue estos pasos:
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/yourusername/gymhouse.git
+git clone https://github.com/MiguelAP30/GymHouse.git
 ```
 2. Navega al directorio del proyecto:
 ```bash
