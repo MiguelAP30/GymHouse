@@ -1,6 +1,8 @@
 from typing import List
 from src.schemas.quantityFood import QuantityFood
 from src.models.quantityFood import QuantityFood as quantity_foods
+from src.models.diet_user import DietUser as DietUserModel
+
 
 class QuantityFoodRepository():
     def __init__(self, db) -> None:
@@ -18,7 +20,7 @@ class QuantityFoodRepository():
         """
         self.db = db
     
-    def get_all_quantity_foods(self) -> List[QuantityFood]:
+    def get_all_quantity_foods(self, user:str) -> List[QuantityFood]:
         """
         Obtiene todos los alimentos en cantidad de la base de datos.
 
@@ -28,10 +30,10 @@ class QuantityFoodRepository():
         Postcondición:
         - Devuelve una lista de objetos QuantityFood que representan los alimentos en cantidad.
         """
-        query = self.db.query(quantity_foods)
+        query = self.db.query(quantity_foods).join(DietUserModel).filter(DietUserModel.user_email == user)
         return query.all()
     
-    def get_quantity_food_by_id(self, id: int ):
+    def get_quantity_food_by_id(self, id: int , user:str):
         """
         Obtiene un alimento en cantidad por su ID.
 
@@ -44,10 +46,10 @@ class QuantityFoodRepository():
         Postcondición:
         - Devuelve el objeto QuantityFood correspondiente al ID especificado.
         """
-        element = self.db.query(quantity_foods).filter(quantity_foods.id == id).first()
+        element = self.db.query(quantity_foods).join(DietUserModel).filter(quantity_foods.id == id, DietUserModel.user_email == user).first()
         return element
     
-    def delete_quantity_food(self, id: int ) -> dict:
+    def delete_quantity_food(self, id: int, user: str) -> dict:
         """
         Elimina un alimento en cantidad de la base de datos.
 
@@ -61,7 +63,7 @@ class QuantityFoodRepository():
         - El alimento en cantidad correspondiente al ID especificado es eliminado de la base de datos.
         - Devuelve un diccionario que representa el alimento en cantidad eliminado.
         """
-        element: QuantityFood= self.db.query(quantity_foods).filter(quantity_foods.id == id).first()
+        element: QuantityFood= self.db.query(quantity_foods).join(DietUserModel).filter(quantity_foods.id == id, DietUserModel.user_email == user).first()
         self.db.delete(element)
         self.db.commit()
         return element
