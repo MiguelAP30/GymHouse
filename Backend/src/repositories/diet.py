@@ -1,12 +1,14 @@
 from typing import List
 from src.schemas.diet import Diet
 from src.models.diet import Diet as diets
+from src.models.diet_user import DietUser as diet_user
+
 
 class DietRepository():
     def __init__(self, db) -> None:
         self.db = db
     
-    def get_all_diets(self) -> List[Diet]:
+    def get_all_diets(self, user:str) -> List[Diet]:
         """
         Obtiene todas las dietas almacenadas en la base de datos.
 
@@ -16,10 +18,10 @@ class DietRepository():
         Postcondición:
         - Devuelve una lista de objetos de tipo Diet que representan todas las dietas almacenadas en la base de datos.
         """
-        query = self.db.query(diets)
+        query = self.db.query(diets).join(diet_user).filter(diet_user.user_email == user)
         return query.all()
     
-    def get_diet_by_id(self, id: int ):
+    def get_diet_by_id(self, id: int, user:str):
         """
         Obtiene una dieta específica por su ID.
 
@@ -33,10 +35,10 @@ class DietRepository():
         Postcondición:
         - Devuelve un objeto de tipo Diet que representa la dieta encontrada.
         """
-        element = self.db.query(diets).filter(diets.id == id).first()
+        element = self.db.query(diets).join(diet_user).filter(diets.id == id, diet_user.user_email == user).first()
         return element
     
-    def delete_diet(self, id: int ) -> dict:
+    def delete_diet(self, id: int, user:str ) -> dict:
         """
         Elimina una dieta específica por su ID.
 
@@ -50,7 +52,7 @@ class DietRepository():
         Postcondición:
         - Elimina la dieta de la base de datos y devuelve un diccionario que contiene los datos de la dieta eliminada.
         """
-        element: Diet= self.db.query(diets).filter(diets.id == id).first()
+        element: Diet= self.db.query(diets).join(diet_user).filter(diets.id == id, diet_user.user_email == user).first()
         self.db.delete(element)
         self.db.commit()
         return element
@@ -76,7 +78,7 @@ class DietRepository():
         self.db.refresh(new_diet)
         return new_diet
     
-    def update_diet(self, id: int, diet: Diet) -> dict:
+    def update_diet(self, id: int, diet: Diet, user: str) -> dict:
         """
         Actualiza una dieta existente en la base de datos.
 
@@ -91,7 +93,7 @@ class DietRepository():
         Postcondición:
         - Actualiza la dieta en la base de datos y devuelve un diccionario que contiene los datos de la dieta actualizada.
         """
-        element = self.db.query(diets).filter(diets.id == id).first()
+        element = self.db.query(diets).join(diet_user).filter(diets.id == id, diet_user.user_email == user).first()
         element.name = diet.name
         element.description = diet.description
         element.tag_of_diet_id = diet.tags_of_diet_id

@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Body, Query, Path, status
+from fastapi import APIRouter, Body, Query, Path, status, Depends
 from fastapi.responses import JSONResponse
-from typing import List
+from typing import List, Annotated
 from fastapi import APIRouter
 from src.config.database import SessionLocal 
 from fastapi.encoders import jsonable_encoder
@@ -8,12 +8,16 @@ from src.schemas.meal import Meal
 from src.models.meal import Meal as meals
 from src.repositories.meal import MealRepository
 
+from fastapi.security import HTTPAuthorizationCredentials
+from src.auth.has_access import security
+from src.auth import auth_handler
+
 meal_router = APIRouter(tags=['Comidas'])
 
 #CRUD meal
 
 @meal_router.get('/',response_model=List[Meal],description="Returns all meal")
-def get_categories()-> List[Meal]:
+def get_categories(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> List[Meal]:
     db= SessionLocal()
     result = MealRepository(db).get_all_meals()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)

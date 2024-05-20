@@ -6,6 +6,7 @@ from fastapi.encoders import jsonable_encoder
 from src.schemas.training_plan_user import TrainingPlanUser
 from src.models.training_plan_user import TrainingPlanUser as training_plan_users
 from src.repositories.training_plan_user import TrainingPlanUserRepository
+
 from fastapi.security import HTTPAuthorizationCredentials
 from src.auth.has_access import security
 from src.auth import auth_handler

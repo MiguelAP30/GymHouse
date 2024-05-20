@@ -28,7 +28,7 @@ def get_training_plans(credentials: Annotated[HTTPAuthorizationCredentials,Depen
         return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
 @training_plan_router.get('/{id}',response_model=TrainingPlan,description="Retorna un solo plan de entrenamiento")
-def get_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> TrainingPlan:
+def get_training_plan_by_id(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> TrainingPlan:
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
@@ -59,14 +59,14 @@ def create_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Dep
         role_current_user = payload.get("user.role")
         if role_current_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
-    new_training_plan = TrainingPlanRepository(db).create_new_training_plan(training_plan)
-    return JSONResponse(
-        content={        
-        "message": "The training plan was successfully created",        
-        "data": jsonable_encoder(new_training_plan)    
-        }, 
-        status_code=status.HTTP_201_CREATED
-    )
+        new_training_plan = TrainingPlanRepository(db).create_new_training_plan(training_plan)
+        return JSONResponse(
+            content={        
+            "message": "The training plan was successfully created",        
+            "data": jsonable_encoder(new_training_plan)    
+            }, 
+            status_code=status.HTTP_201_CREATED
+        )
 
 @training_plan_router.delete('/{id}',response_model=dict,description="Elimina un plan de entrenamiento específico")
 def remove_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> dict:
@@ -107,4 +107,3 @@ def update_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Dep
                 status_code=status.HTTP_404_NOT_FOUND
                 )
         return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
-
