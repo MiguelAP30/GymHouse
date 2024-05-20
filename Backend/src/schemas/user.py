@@ -16,6 +16,24 @@ class User(BaseModel):
     physical_activity: int = Field(title="Total de días de ejercicio que hace el usuario", ge=0, le=7)
     role_id: Optional[int] = Field(default= 1, title="Rol del usuario", ge=1)
     
+    class Config:
+        json_Schema_extra = {
+            "example": {
+                "email": "hola@gmail.com",
+                "id_number": "123456789",
+                "password": "123456",
+                "name": "Miguel Angel",
+                "lastname": "Perez Clavijo",
+                "phone": "12345678",
+                "address": "Calle 123",
+                "weight": 74.5,
+                "height": 180,
+                "birth_date": "2003-11-12",
+                "gender": "m",
+                "physical_activity": 6
+            }
+        }
+    
     @validator("id_number")
     def id_number_must_be_str(cls, v):
         assert isinstance(v, str), ValueError("El numero de identificacion del usuario debe ser un string")
@@ -70,23 +88,6 @@ class User(BaseModel):
     def gender_must_be_str(cls, v):
         assert isinstance(v, str), ValueError("El genero del usuario debe ser un string")
         return v
-    class Config:
-        json_Schema_extra = {
-            "example": {
-                "email": "hola@gmail.com",
-                "id_number": "123456789",
-                "password": "123456",
-                "name": "Miguel Angel",
-                "lastname": "Perez Clavijo",
-                "phone": "12345678",
-                "address": "Calle 123",
-                "weight": 74.5,
-                "height": 180,
-                "birth_date": "2003-11-12",
-                "gender": "M",
-                "physical_activity": 6
-            }
-        }
 
 class UserLogin (BaseModel):
     email: EmailStr = Field(min_length=6, max_length=64, alias="email", title="Correo del usuario")

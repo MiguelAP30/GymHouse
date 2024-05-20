@@ -20,7 +20,7 @@ class User(Base):
     role_id = Column(Integer, ForeignKey("roles.id"))
 
     roles = relationship("Role", back_populates="users")
-    diets_users = relationship("DietUser", back_populates="users")
+    diets = relationship("Diet", back_populates="users")
     training_plans = relationship("TrainingPlan", back_populates="users")
 
     def to_dict(self):

@@ -36,10 +36,11 @@ class ExercisePerWeekDayRepository:
         - Devuelve un diccionario que agrupa los ejercicios por día de la semana y plan de entrenamiento.
         """
         exercises = self.db.query(ExercisePerWeekDayModel, WeekDayModel.name, TrainingPlanModel.name, UserModel.name).\
-            join(TrainingPlanModel).\
-            join(WeekDayModel, ExercisePerWeekDayModel.week_day_id == WeekDayModel.id).\
-            filter(TrainingPlanModel.user_email == user).\
-            all()
+        select_from(ExercisePerWeekDayModel).\
+        join(TrainingPlanModel).\
+        join(WeekDayModel, ExercisePerWeekDayModel.week_day_id == WeekDayModel.id).\
+        filter(TrainingPlanModel.user_email == user).\
+        all()
 
         return self.group_exercises_by_day_and_training_plan(exercises)
 
@@ -54,6 +55,7 @@ class ExercisePerWeekDayRepository:
         - Devuelve un diccionario que agrupa los ejercicios por día de la semana y plan de entrenamiento.
         """
         exercises = self.db.query(ExercisePerWeekDayModel, WeekDayModel.name, TrainingPlanModel.name, UserModel.name).\
+            select_from(ExercisePerWeekDayModel).\
             join(TrainingPlanModel).\
             filter(TrainingPlanModel.status == True).\
             join(UserModel).\
@@ -74,6 +76,7 @@ class ExercisePerWeekDayRepository:
         - Devuelve un diccionario que agrupa los ejercicios por día de la semana y plan de entrenamiento.
         """
         exercises = self.db.query(ExercisePerWeekDayModel, WeekDayModel.name, TrainingPlanModel.name, UserModel.name).\
+            select_from(ExercisePerWeekDayModel).\
             join(TrainingPlanModel).\
             filter(TrainingPlanModel.is_visible == True).\
             join(UserModel).\
@@ -94,6 +97,7 @@ class ExercisePerWeekDayRepository:
         - Devuelve un diccionario que agrupa los ejercicios por día de la semana y plan de entrenamiento.
         """
         exercises = self.db.query(ExercisePerWeekDayModel, WeekDayModel.name, TrainingPlanModel.name, UserModel.name).\
+            select_from(ExercisePerWeekDayModel).\
             join(TrainingPlanModel).\
             filter(TrainingPlanModel.is_visible == True).\
             join(UserModel).\
