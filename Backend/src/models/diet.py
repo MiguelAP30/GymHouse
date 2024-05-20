@@ -12,7 +12,7 @@ class Diet(Base):
     user_email = Column(String(length=200), ForeignKey("users.email"))
     is_active = Column(Boolean, default=False)
 
-    plates_per_weeks_days = relationship("PlatePerWeekDay", back_populates="diets")
+    plates_per_week_days = relationship("PlatePerWeekDay", back_populates="diets")
     tags_of_diets = relationship("TagOfDiet", back_populates="diets")
     users = relationship("User", back_populates="diets")
     

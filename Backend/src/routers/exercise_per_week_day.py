@@ -61,19 +61,22 @@ def get_excercise_per_week_day(credentials: Annotated[HTTPAuthorizationCredentia
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
-        element=  ExercisePerWeekDayRepository(db).get_excercise_per_week_day_by_id(id)
-        if not element:        
+        role_user = payload.get("user.role")
+        if role_user >= 2:
+            current_user = payload.get("sub")
+            element=  ExercisePerWeekDayRepository(db).get_excercise_per_week_day_by_id(id, current_user)
+            if not element:        
+                return JSONResponse(
+                    content={            
+                        "message": "The requested income was not found",            
+                        "data": None        
+                        }, 
+                    status_code=status.HTTP_404_NOT_FOUND
+                    )    
             return JSONResponse(
-                content={            
-                    "message": "The requested income was not found",            
-                    "data": None        
-                    }, 
-                status_code=status.HTTP_404_NOT_FOUND
-                )    
-        return JSONResponse(
-            content=jsonable_encoder(element),                        
-            status_code=status.HTTP_200_OK
-            )
+                content=jsonable_encoder(element),                        
+                status_code=status.HTTP_200_OK
+                )
 
 @exercise_per_week_day_router.post('/',response_model=dict,description="Creates a new exercise_per_week_day")
 def create_excercise_per_week_day(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], exercise: ExercisePerWeekDay = Body()) -> dict:
@@ -94,15 +97,8 @@ def remove_excercise_per_week_day(credentials: Annotated[HTTPAuthorizationCreden
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
-        element = ExercisePerWeekDayRepository(db).delete_excercise_per_week_day(id)
-        if not element:        
-            return JSONResponse(
-                content={            
-                    "message": "The requested exercise_per_week_day was not found",            
-                    "data": None        
-                    }, 
-                status_code=status.HTTP_404_NOT_FOUND
-                )    
+        current_user = payload.get("sub")
+        element = ExercisePerWeekDayRepository(db).delete_excercise_per_week_day(id, current_user)  
         return JSONResponse(
             content={        
                 "message": "The exercise_per_week_day was successfully removed",        

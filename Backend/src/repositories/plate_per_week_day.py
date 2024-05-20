@@ -63,7 +63,7 @@ class PlatePerWeekDayRepository():
         - Devuelve una lista de objetos PlatePerWeekDay que representan los platos por día de la semana.
         """
         plates = self.db.query(plate_per_week_days, WeekDayModel.name, DietModel.name, UserModel.name).\
-            join(DietModel).\
+            select_from(plate_per_week_days).\
             join(DietModel).\
             join(WeekDayModel, plate_per_week_days.week_day_id == WeekDayModel.id).\
             filter(DietModel.user_email == user).\
@@ -82,7 +82,7 @@ class PlatePerWeekDayRepository():
         - Devuelve un diccionario que agrupa los platos por día de la semana y dieta.
         """
         plates = self.db.query(plate_per_week_days, WeekDayModel.name, DietModel.name, UserModel.name).\
-            join(DietModel).\
+            select_from(plate_per_week_days).\
             join(DietModel).\
             filter(DietModel.status == True).\
             join(UserModel).\
@@ -103,7 +103,7 @@ class PlatePerWeekDayRepository():
         - Devuelve un diccionario que agrupa los platos por día de la semana y dieta.
         """
         plates = self.db.query(plate_per_week_days, WeekDayModel.name, DietModel.name, UserModel.name).\
-            join(DietModel).\
+            select_from(plate_per_week_days).\
             join(DietModel).\
             filter(DietModel.status == True).\
             join(UserModel).\
@@ -124,7 +124,7 @@ class PlatePerWeekDayRepository():
         - Devuelve un diccionario que agrupa los platos por día de la semana y dieta.
         """
         plates = self.db.query(plate_per_week_days, WeekDayModel.name, DietModel.name, UserModel.name).\
-            join(DietModel).\
+            select_from(plate_per_week_days).\
             join(DietModel).\
             filter(DietModel.status == True).\
             join(UserModel).\
@@ -163,10 +163,11 @@ class PlatePerWeekDayRepository():
         - Elimina el objeto PlatePerWeekDay correspondiente al ID proporcionado de la base de datos.
         - Devuelve el objeto PlatePerWeekDay eliminado.
         """
-        element: PlatePerWeekDay= self.db.query(plate_per_week_days).join(DietModel).join(DietModel).filter(plate_per_week_days.id == id, DietModel.user_email == user).first()
+        element: PlatePerWeekDay= self.db.query(plate_per_week_days).\
+        select_from(plate_per_week_days).\
+        join(DietModel).filter(plate_per_week_days.id == id, DietModel.user_email == user).first()
         self.db.delete(element)
         self.db.commit()
-        return element
 
     def create_new_plate_per_week_day(self, plate_per_week_day:PlatePerWeekDay ) -> dict:
         """
