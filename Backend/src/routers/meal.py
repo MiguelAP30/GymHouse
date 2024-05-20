@@ -16,65 +16,90 @@ meal_router = APIRouter(tags=['Comidas'])
 
 #CRUD meal
 
-@meal_router.get('/',response_model=List[Meal],description="Returns all meal")
-def get_categories(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> List[Meal]:
+@meal_router.get('/',response_model=List[Meal],description="Devuelve todas las comidas")
+def get_meals(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> List[Meal]:
     db= SessionLocal()
-    result = MealRepository(db).get_all_meals()
-    return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_user = payload.get("user.role")
+        if role_user < 2:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        current_user = payload.get("sub")
+        result = MealRepository(db).get_all_meals(current_user)
+        return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
-@meal_router.get('/{id}',response_model=Meal,description="Returns data of one specific meal")
-def get_meal(id: int = Path(ge=1)) -> Meal:
+@meal_router.get('/{id}',response_model=Meal,description="Devuelve la información de una comida específica")
+def get_meal(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> Meal:
     db = SessionLocal()
-    element=  MealRepository(db).get_meal_by_id(id)
-    if not element:        
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_user = payload.get("user.role")
+        if role_user < 2:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        current_user = payload.get("sub")
+        element = MealRepository(db).get_meal_by_id(id, current_user)
+        if not element:        
+            return JSONResponse(
+                content={            
+                    "message": "The requested meal was not found",            
+                    "data": None        
+                    }, 
+                status_code=status.HTTP_404_NOT_FOUND
+                )    
         return JSONResponse(
-            content={            
-                "message": "The requested income was not found",            
-                "data": None        
-                }, 
-            status_code=status.HTTP_404_NOT_FOUND
-            )    
-    return JSONResponse(
-        content=jsonable_encoder(element),                        
-        status_code=status.HTTP_200_OK
+            content=jsonable_encoder(element),                        
+            status_code=status.HTTP_200_OK
+            )
+
+@meal_router.post('/',response_model=dict,description="Crea una nueva comida")
+def create_meal(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], meal: Meal = Body()) -> dict:
+    db= SessionLocal()
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_user = payload.get("user.role")
+        if role_user < 2:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        new_meal = MealRepository(db).create_new_meal(meal)
+        return JSONResponse(
+            content={        
+            "message": "The meal was successfully created",        
+            "data": jsonable_encoder(new_meal)    
+            }, 
+            status_code=status.HTTP_201_CREATED
         )
 
-@meal_router.post('/',response_model=dict,description="Creates a new meal")
-def create_categorie(meal: Meal = Body()) -> dict:
-    db= SessionLocal()
-    new_meal = MealRepository(db).create_new_meal(meal)
-    return JSONResponse(
-        content={        
-        "message": "The meal was successfully created",        
-        "data": jsonable_encoder(new_meal)    
-        }, 
-        status_code=status.HTTP_201_CREATED
-    )
-
 @meal_router.delete('/{id}',response_model=dict,description="Removes specific meal")
-def remove_meal(id: int = Path(ge=1)) -> dict:
+def remove_meal(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
-    element = MealRepository(db).delete_meal(id)
-    if not element:        
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_user = payload.get("user.role")
+        if role_user < 2:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        current_user = payload.get("sub")
+        MealRepository(db).delete_meal(id, current_user)
         return JSONResponse(
-            content={            
-                "message": "The requested meal was not found",            
-                "data": None        
-                }, 
-            status_code=status.HTTP_404_NOT_FOUND
-            )
-    return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
+            content={        
+            "message": "The meal was successfully deleted",        
+            "data": None    
+            }, 
+            status_code=status.HTTP_200_OK
+        )
 
-@meal_router.put('/{id}',response_model=dict,description="Updates specific meal")
-def update_meal(id: int = Path(ge=1), meal: Meal = Body()) -> dict:
+@meal_router.put('/{id}',response_model=dict,description="Actualiza una comida específica")
+def update_meal(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1), meal: Meal = Body()) -> dict:
     db = SessionLocal()
-    element = MealRepository(db).update_meal(id, meal)
-    if not element:        
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_user = payload.get("user.role")
+        if role_user < 2:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        current_user = payload.get("sub")
+        result = MealRepository(db).update_meal(id, meal, current_user)
         return JSONResponse(
-            content={            
-                "message": "The requested meal was not found",            
-                "data": None        
-                }, 
-            status_code=status.HTTP_404_NOT_FOUND
-            )
-    return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
+            content={        
+            "message": "The meal was successfully updated",        
+            "data": jsonable_encoder(result)    
+            }, 
+            status_code=status.HTTP_200_OK
+        )

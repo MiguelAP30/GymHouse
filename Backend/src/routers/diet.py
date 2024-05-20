@@ -60,7 +60,8 @@ def create_diet(credentials: Annotated[HTTPAuthorizationCredentials,Depends(secu
         if role_current_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
         current_user = payload.get("sub")
-        result = DietRepository(db).create_new_diet(diet, current_user)
+        diet.user_email = current_user
+        result = DietRepository(db).create_new_diet(diet)
         return JSONResponse(
             content=jsonable_encoder(result), 
             status_code=status.HTTP_200_OK

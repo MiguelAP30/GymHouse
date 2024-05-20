@@ -19,11 +19,6 @@ class Food(BaseModel):
             assert isinstance(v, str), ValueError("la descripcion debe ser un string")
         return v
     
-    @validator("food_category_id")
-    def food_category_id_must_be_int(cls, v):
-        assert v.strip() != "", ValueError("el id de la categoria de la comida no debe estar vacio")
-        return v
-    
     class Config:
         json_schema_extra = {
             "example": {
