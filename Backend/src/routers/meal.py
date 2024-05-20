@@ -60,3 +60,17 @@ def remove_meal(id: int = Path(ge=1)) -> dict:
             status_code=status.HTTP_404_NOT_FOUND
             )
     return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
+
+@meal_router.put('/{id}',response_model=dict,description="Updates specific meal")
+def update_meal(id: int = Path(ge=1), meal: Meal = Body()) -> dict:
+    db = SessionLocal()
+    element = MealRepository(db).update_meal(id, meal)
+    if not element:        
+        return JSONResponse(
+            content={            
+                "message": "The requested meal was not found",            
+                "data": None        
+                }, 
+            status_code=status.HTTP_404_NOT_FOUND
+            )
+    return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)

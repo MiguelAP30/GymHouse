@@ -67,3 +67,20 @@ class MealRepository():
         self.db.refresh(new_meal)
         return new_meal
     
+    def update_meal(self, id:int, meal:Meal ) -> dict:
+        """
+        Actualiza una comida existente en la base de datos.
+
+        Args:
+            id: El ID de la comida a actualizar.
+            meal: El objeto Meal que contiene los nuevos datos de la comida.
+
+        Returns:
+            Un diccionario que contiene la información de la comida actualizada.
+        """
+        element = self.db.query(meals).filter(meals.id == id).first()
+        element.name = meal.name
+        element.description = meal.description
+        self.db.commit()
+        return element
+    

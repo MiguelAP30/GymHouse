@@ -8,6 +8,7 @@ class QuantityFood(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     food_id = Column(Integer, ForeignKey("foods.id"))
     type_quantity_id = Column(Integer, ForeignKey("types_quantities.id"))
+    meal_id = Column(Integer, ForeignKey("meals.id"))
     value = Column(Float)
     calorie = Column(Float)
     protein = Column(Float)

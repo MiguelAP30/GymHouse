@@ -6,7 +6,6 @@ class Meal(Base):
     __tablename__ = "meals"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    quantity_food_id = Column(Integer, ForeignKey("quantity_foods.id"))
     name = Column(String(length=50))
     description = Column(String(length=200))
 

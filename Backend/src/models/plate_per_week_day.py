@@ -8,6 +8,7 @@ class PlatePerWeekDay(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     week_day_id = Column(Integer, ForeignKey("week_days.id"))
     meal_id = Column(Integer, ForeignKey("meals.id"))
+    diet_id = Column(Integer, ForeignKey("diets.id"))
 
     week_days = relationship("WeekDay", back_populates="plates_per_week_days")
     meals = relationship("Meal", back_populates="plates_per_week_days")

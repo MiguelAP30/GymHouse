@@ -94,6 +94,7 @@ class DietRepository():
         element = self.db.query(diets).filter(diets.id == id).first()
         element.name = diet.name
         element.description = diet.description
+        element.tag_of_diet_id = diet.tags_of_diet_id
 
         self.db.commit()
         self.db.refresh(element)

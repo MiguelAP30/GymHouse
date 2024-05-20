@@ -3,9 +3,10 @@ from typing import List, Optional
 
 class QuantityFood(BaseModel):
     id: Optional[int] = Field(default=None, title="Id de la cantidad de comida")
-    value: float = Field(ge=1,title="Valor de la cantidad de comida",le=10000)
     food_id: int = Field(title="Id de la comida")
     type_quantity_id: int = Field(title="Id del tipo de cantidad")
+    meal_id: int = Field(title="Id de la comida")
+    value: float = Field(ge=1,title="Valor de la cantidad de comida",le=10000)
     calorie: float = Field(ge=0 , title="Calorias de la cantidad de comida", le=10000)
     protein: float = Field(ge=0, title="Proteinas de la cantidad de comida", le=10000)
     fat: float = Field(ge=0, title="Grasas de la cantidad de comida", le=10000)
@@ -48,9 +49,10 @@ class QuantityFood(BaseModel):
     class Config:
         json_schema_extra = {
             "example": {
-                "value": 200.0,
                 "food_id": 1,
                 "type_quantity_id": 1,
+                "meal_id": 1,
+                "value": 200.0,
                 "calorie": 100.0,
                 "protein": 40,
                 "fat": 10.0,
