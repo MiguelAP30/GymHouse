@@ -13,7 +13,7 @@ role_router = APIRouter(tags=['Roles'])
 #CRUD role
 
 @role_router.get('/',response_model=List[Role],description="Returns all role")
-def get_categories()-> List[Role]:
+def get_roles()-> List[Role]:
     db= SessionLocal()
     result = RoleRepository(db).get_all_roles()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
@@ -36,7 +36,7 @@ def get_role(id: int = Path(ge=1)) -> Role:
         ) 
 
 @role_router.post('/',response_model=dict,description="Creates a new role")
-def create_categorie(role: Role = Body()) -> dict:
+def create_role(role: Role = Body()) -> dict:
     db= SessionLocal()
     new_role = RoleRepository(db).create_new_role(role)
     return JSONResponse(

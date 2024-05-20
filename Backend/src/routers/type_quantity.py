@@ -13,7 +13,7 @@ type_quantity_router = APIRouter(tags=['Tipo de cantidad de una comida'])
 #CRUD type_quantity
 
 @type_quantity_router.get('/',response_model=List[TypeQuantity],description="Returns all type_quantity")
-def get_categories()-> List[TypeQuantity]:
+def get_types_quantities()-> List[TypeQuantity]:
     db= SessionLocal()
     result = TypeQuantityRepository(db).get_all_type_quantities()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
@@ -36,7 +36,7 @@ def get_type_quantity(id: int = Path(ge=1)) -> TypeQuantity:
         )
 
 @type_quantity_router.post('/',response_model=dict,description="Creates a new type_quantity")
-def create_categorie(type_quantity: TypeQuantity = Body()) -> dict:
+def create_type_quantity(type_quantity: TypeQuantity = Body()) -> dict:
     db= SessionLocal()
     new_type_quantity = TypeQuantityRepository(db).create_new_type_quantity(type_quantity)
     return JSONResponse(

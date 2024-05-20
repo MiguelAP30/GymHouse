@@ -24,7 +24,7 @@ def get_all_my_plates_per_week_day(credentials: Annotated[HTTPAuthorizationCrede
         role_user = payload.get("user.role")
         current_user = payload.get("sub")
         if role_user >= 2:
-            result = PlatePerWeekDayRepository(db).get_all_my_plate_per_week_day()
+            result = PlatePerWeekDayRepository(db).get_all_my_plate_per_week_day(current_user)
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
 @plate_per_week_day_router.get('/premium_diets',response_model=List[PlatePerWeekDay],description="Returns all plate_per_week_day")
@@ -33,7 +33,6 @@ def get_premium_plates_per_week_day(credentials: Annotated[HTTPAuthorizationCred
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        current_user = payload.get("sub")
         if role_user >= 2:
             result = PlatePerWeekDayRepository(db).get_all_premium_plate_per_week_day()
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
@@ -44,9 +43,8 @@ def get_client_plates_per_week_day(credentials: Annotated[HTTPAuthorizationCrede
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        current_user = payload.get("sub")
         if role_user >= 2:
-            result = PlatePerWeekDayRepository(db).get_all_my_plate_per_week_day()
+            result = PlatePerWeekDayRepository(db).get_all_client_plate_per_week_day()
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
 
@@ -58,7 +56,7 @@ def get_admin_plates_per_week_day(credentials: Annotated[HTTPAuthorizationCreden
         role_user = payload.get("user.role")
         current_user = payload.get("sub")
         if role_user >= 2:
-            result = PlatePerWeekDayRepository(db).get_all_my_plate_per_week_day()
+            result = PlatePerWeekDayRepository(db).get_all_my_plate_per_week_day(current_user)
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
 
@@ -112,7 +110,7 @@ def remove_plate_per_week_day(credentials: Annotated[HTTPAuthorizationCredential
             content=jsonable_encoder(element),                        
             status_code=status.HTTP_200_OK
             )
-    element = PlatePerWeekDayRepository(db).delete_plate_per_week_day(id)
+    element = PlatePerWeekDayRepository(db).delete_plate_per_week_day(id, current_user)
     if not element:        
         return JSONResponse(
             content={            

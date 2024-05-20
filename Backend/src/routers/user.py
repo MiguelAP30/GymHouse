@@ -13,7 +13,7 @@ user_router = APIRouter(tags=['Usuarios'])
 #CRUD user
 
 @user_router.get('/',response_model=List[User],description="Returns all user")
-def get_categories()-> List[User]:
+def get_users()-> List[User]:
     db= SessionLocal()
     result = UserRepository(db).get_all_users()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
@@ -53,7 +53,7 @@ def get_user(id: int = Path(ge=1)) -> User:
         )
 
 @user_router.post('/',response_model=dict,description="Creates a new user")
-def create_categorie(user: User = Body()) -> dict:
+def create_user(user: User = Body()) -> dict:
     db= SessionLocal()
     new_user = UserRepository(db).create_new_user(user)
     return JSONResponse(

@@ -13,7 +13,7 @@ week_day_router = APIRouter(tags=['Días de la semana'])
 #CRUD week_day
 
 @week_day_router.get('/',response_model=List[WeekDay],description="Returns all week_day")
-def get_categories()-> List[WeekDay]:
+def get_week_days()-> List[WeekDay]:
     db= SessionLocal()
     result = WeekDayRepository(db).get_all_week_days()
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
@@ -36,7 +36,7 @@ def get_week_day(id: int = Path(ge=1)) -> WeekDay:
         )
 
 @week_day_router.post('/',response_model=dict,description="Creates a new week_day")
-def create_categorie(week_day: WeekDay = Body()) -> dict:
+def create_week_day(week_day: WeekDay = Body()) -> dict:
     db= SessionLocal()
     new_week_day = WeekDayRepository(db).create_new_week_day(week_day)
     return JSONResponse(

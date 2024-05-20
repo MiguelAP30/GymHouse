@@ -17,16 +17,6 @@ class QuantityFood(BaseModel):
         assert isinstance(value,float), ValueError("el valor debe ser un float")
         return value
     
-    @validator("food_id")
-    def food_id_must_not_be_empty(cls, value):
-        assert value.strip() != "", ValueError("la comida no debe estar vacia")
-        return value
-    
-    @validator("type_quantity_id")
-    def type_quantity_id_must_not_be_empty(cls, value):
-        assert value.strip() != "", ValueError("el tipo de cantidad no debe estar vacio")
-        return value
-    
     @validator("calorie")
     def calorie_must_be_positive(cls, value):
         assert isinstance(value,float), ValueError("las calorias deben ser un float")

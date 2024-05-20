@@ -3,6 +3,8 @@ from src.schemas.meal import Meal
 from src.models.meal import Meal as meals
 from src.models.user import User as UserModel
 from src.models.diet import Diet as DietModel
+from src.models.plate_per_week_day import PlatePerWeekDay as PlatesPerWeekDays
+from sqlalchemy import and_
 
 class MealRepository():
     def __init__(self, db) -> None:
@@ -21,10 +23,12 @@ class MealRepository():
         Returns:
             Una lista de objetos Meal que representan todas las comidas almacenadas.
         """
-        query = self.db.query(meals).\
-        select_from(meals).\
-        join(DietModel).filter(DietModel.user_email == user)
-        return query.all()
+        query = (self.db.query(meals)
+             .join(PlatesPerWeekDays, meals.id == PlatesPerWeekDays.meal_id)
+             .join(DietModel, PlatesPerWeekDays.diet_id == DietModel.id)
+             .filter(DietModel.user_email == user)
+             .all())
+        return query
     
     def get_meal_by_id(self, id: int, user:str):
         """
@@ -36,10 +40,12 @@ class MealRepository():
         Returns:
             El objeto Meal correspondiente al ID proporcionado.
         """
-        element = self.db.query(meals).\
-        select_from(meals).\
-        join(DietModel).filter(meals.id == id, DietModel.user_email == user).first()
-        return element
+        query = (self.db.query(meals)
+            .join(PlatesPerWeekDays, meals.id == PlatesPerWeekDays.meal_id)
+            .join(DietModel, PlatesPerWeekDays.diet_id == DietModel.id)
+            .filter(DietModel.user_email == user, meals.id == id)
+            .first())
+        return query
     
     def delete_meal(self, id: int, user:str ) -> dict:
         """
@@ -51,9 +57,11 @@ class MealRepository():
         Returns:
             Un diccionario que contiene la información de la comida eliminada.
         """
-        element: Meal= self.db.query(meals).\
-        select_from(meals).\
-        join(DietModel).filter(meals.id == id, DietModel.user_email == user).first()
+        element = (self.db.query(meals)
+            .join(PlatesPerWeekDays, meals.id == PlatesPerWeekDays.meal_id)
+            .join(DietModel, PlatesPerWeekDays.diet_id == DietModel.id)
+            .filter(DietModel.user_email == user, meals.id == id)
+            .first())
         self.db.delete(element)
         self.db.commit()
         return element
@@ -86,9 +94,11 @@ class MealRepository():
         Returns:
             Un diccionario que contiene la información de la comida actualizada.
         """
-        element = self.db.query(meals).\
-        select_from(meals).\
-        join(DietModel).filter(meals.id == id, DietModel.user_email == user).first()
+        element = (self.db.query(meals)
+            .join(PlatesPerWeekDays, meals.id == PlatesPerWeekDays.meal_id)
+            .join(DietModel, PlatesPerWeekDays.diet_id == DietModel.id)
+            .filter(DietModel.user_email == user, meals.id == id)
+            .first())
         element.name = meal.name
         element.description = meal.description
         self.db.commit()

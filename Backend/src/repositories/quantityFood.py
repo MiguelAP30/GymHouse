@@ -2,6 +2,8 @@ from typing import List
 from src.schemas.quantityFood import QuantityFood
 from src.models.quantityFood import QuantityFood as quantity_foods
 from src.models.diet import Diet as DietModel
+from src.models.meal import Meal as meals
+from src.models.plate_per_week_day import PlatePerWeekDay as PlatesPerWeekDays
 
 class QuantityFoodRepository():
     def __init__(self, db) -> None:
@@ -29,8 +31,13 @@ class QuantityFoodRepository():
         Postcondición:
         - Devuelve una lista de objetos QuantityFood que representan los alimentos en cantidad.
         """
-        query = self.db.query(quantity_foods).join(DietModel).filter(DietModel.user_email == user)
-        return query.all()
+        query = (self.db.query(quantity_foods)
+             .join(meals, quantity_foods.meal_id == meals.id)
+             .join(PlatesPerWeekDays, meals.id == PlatesPerWeekDays.meal_id)
+             .join(DietModel, PlatesPerWeekDays.diet_id == DietModel.id)
+             .filter(DietModel.user_email == user)
+             .all())
+        return query
     
     def get_quantity_food_by_id(self, id: int , user:str):
         """
@@ -45,27 +52,29 @@ class QuantityFoodRepository():
         Postcondición:
         - Devuelve el objeto QuantityFood correspondiente al ID especificado.
         """
-        element = self.db.query(quantity_foods).join(DietModel).filter(quantity_foods.id == id, DietModel.user_email == user).first()
-        return element
+        query = (self.db.query(quantity_foods)
+             .join(meals, quantity_foods.meal_id == meals.id)
+             .join(PlatesPerWeekDays, meals.id == PlatesPerWeekDays.meal_id)
+             .join(DietModel, PlatesPerWeekDays.diet_id == DietModel.id)
+             .filter(DietModel.user_email == user, quantity_foods.id == id)
+             .first())
+        return query
     
-    def delete_quantity_food(self, id: int, user: str) -> dict:
+    def delete_quantity_food(self, element: QuantityFood) -> dict:
         """
         Elimina un alimento en cantidad de la base de datos.
 
         Parámetros:
-        - id: ID del alimento en cantidad a eliminar.
+        - element: objeto QuantityFood que representa el alimento en cantidad a eliminar.
 
         Precondición:
-        - El ID debe ser un entero válido.
+        - element debe ser una instancia válida de la clase QuantityFood.
 
         Postcondición:
         - El alimento en cantidad correspondiente al ID especificado es eliminado de la base de datos.
-        - Devuelve un diccionario que representa el alimento en cantidad eliminado.
         """
-        element: QuantityFood= self.db.query(quantity_foods).join(DietModel).filter(quantity_foods.id == id, DietModel.user_email == user).first()
         self.db.delete(element)
         self.db.commit()
-        return element
 
     def create_new_quantity_food(self, quantity_food:QuantityFood ) -> dict:
         """
@@ -88,7 +97,7 @@ class QuantityFoodRepository():
         self.db.refresh(new_quantity_food)
         return new_quantity_food
     
-    def update_quantity_food(self, id: int, quantity_food: QuantityFood) -> dict:
+    def update_quantity_food(self, id: int, quantity_food: QuantityFood, new_quantity_food: QuantityFood) -> dict:
         """
         Actualiza un alimento en cantidad en la base de datos.
 
@@ -104,13 +113,13 @@ class QuantityFoodRepository():
         - El alimento en cantidad correspondiente al ID especificado es actualizado en la base de datos.
         - Devuelve un diccionario que representa el alimento en cantidad actualizado.
         """
-        element = self.db.query(quantity_foods).filter(quantity_foods.id == id).first()
-        element.value = quantity_food.value
-        element.calorie = quantity_food.calorie
-        element.protein = quantity_food.protein
-        element.carbohydrate = quantity_food.carbohydrate
-        element.fat = quantity_food.fat
+
+        quantity_food.value = new_quantity_food.value
+        quantity_food.calorie = new_quantity_food.calorie
+        quantity_food.protein = new_quantity_food.protein
+        quantity_food.carbohydrate = new_quantity_food.carbohydrate
+        quantity_food.fat = new_quantity_food.fat
 
         self.db.commit()
-        self.db.refresh(element)
-        return element
+        self.db.refresh(quantity_food)
+        return quantity_food

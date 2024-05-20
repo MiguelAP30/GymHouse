@@ -17,7 +17,7 @@ food_router = APIRouter(tags=['Alimentos'])
 #CRUD food
 
 @food_router.get('/',response_model=List[Food],description="Returns all food")
-def get_categories(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> List[Food]:
+def get_foods(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> List[Food]:
     db= SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
@@ -50,7 +50,7 @@ def get_food(credentials: Annotated[HTTPAuthorizationCredentials,Depends(securit
         return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
 @food_router.post('/',response_model=dict,description="Creates a new food")
-def create_categorie(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], food: Food = Body()) -> dict:
+def create_food(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], food: Food = Body()) -> dict:
     db= SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
