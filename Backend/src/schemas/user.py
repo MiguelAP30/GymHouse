@@ -15,6 +15,7 @@ class User(BaseModel):
     gender: str = Field(min_length=1,title="Genero del usuario", max_length=1)
     physical_activity: int = Field(title="Total de días de ejercicio que hace el usuario", ge=0, le=7)
     role_id: Optional[int] = Field(default= 1, title="Rol del usuario", ge=1)
+    status: Optional[bool] = Field(default= True, title="Estado del usuario")
     
     class Config:
         json_Schema_extra = {
@@ -30,7 +31,8 @@ class User(BaseModel):
                 "height": 180,
                 "birth_date": "2003-11-12",
                 "gender": "m",
-                "physical_activity": 6
+                "physical_activity": 6,
+                "status": True,
             }
         }
     

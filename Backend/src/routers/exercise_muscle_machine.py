@@ -16,13 +16,13 @@ exercise_muscle_machine_router = APIRouter(tags=['Máquina para hacer ejercicio 
 #CRUD exercise_muscle_machine
 
 @exercise_muscle_machine_router.get('/exercises_by_rate',response_model=List[ExerciseMuscleMachine],description="Devuelve ejercicios ordenados según su calificación")
-def get_all_excercise_muscle_by_rate(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> List[ExerciseMuscleMachine]:
+def get_all_excercise_muscle_by_rate(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id :int)-> List[ExerciseMuscleMachine]:
     db= SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
         if role_user >= 2:
-            result = ExerciseMuscleMachineRepository(db).get_all_excercise_muscle_by_rate()
+            result = ExerciseMuscleMachineRepository(db).get_all_excercise_muscle_by_rate(id)
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
         else:
             return JSONResponse(
@@ -34,13 +34,13 @@ def get_all_excercise_muscle_by_rate(credentials: Annotated[HTTPAuthorizationCre
                 )
 
 @exercise_muscle_machine_router.get('/exercises_by_machine_and_rate',response_model=List[ExerciseMuscleMachine],description="Devuelve los ejercicios ordenados según su calificación y máquina")
-def get_all_excercise_muscle_machine_by_rate(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> List[ExerciseMuscleMachine]:
+def get_all_excercise_muscle_machine_by_rate(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id_machine: int, id_muscle : int)-> List[ExerciseMuscleMachine]:
     db= SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
         if role_user >= 2:
-            result = ExerciseMuscleMachineRepository(db).get_all_excercise_muscle_machine_by_rate()
+            result = ExerciseMuscleMachineRepository(db).get_all_excercise_muscle_machine_by_rate(id_muscle, id_machine)
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
         else:
             return JSONResponse(

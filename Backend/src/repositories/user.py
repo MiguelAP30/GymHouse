@@ -34,7 +34,7 @@ class UserRepository():
         query = self.db.query(users)
         return query.all()
     
-    def get_user_by_id(self, id: int ):
+    def get_user_by_id(self, id: str ):
         """
         Obtiene un usuario de la base de datos por su ID.
 
@@ -50,7 +50,7 @@ class UserRepository():
         Postcondición:
             - Se devuelve el objeto User que representa al usuario encontrado, o None si no se encuentra ningún usuario con el ID dado.
         """
-        element = self.db.query(users).filter(users.id == id).first()
+        element = self.db.query(users).filter(users.id_number == id).first()
         return element
     
     def get_user_by_email(self, email: str):
@@ -74,7 +74,7 @@ class UserRepository():
     
     def delete_user(self, email: str ) -> dict:
         """
-        Elimina un usuario de la base de datos por su dirección de correo electrónico.
+        Desactiva un usuario de la base de datos por su dirección de correo electrónico.
 
         Args:
             email: La dirección de correo electrónico del usuario a eliminar.
@@ -86,11 +86,12 @@ class UserRepository():
             - email debe ser una cadena de caracteres válida.
 
         Postcondición:
-            - Se elimina el usuario de la base de datos y se devuelve un diccionario que contiene su información.
+            - Se cambia el estado del usuario en la base de datos y se devuelve un diccionario que contiene su información.
         """
         element: User= self.db.query(users).filter(users.email == email).first()
-        self.db.delete(element)
+        element.status = False
         self.db.commit()
+        self.db.refresh(element)
         return element
 
     def create_new_user(self, user:User ) -> dict:

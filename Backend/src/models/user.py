@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, Float, Date, String, inspect
+from sqlalchemy import Column, ForeignKey, Integer, Float, Date, String, inspect, Boolean
 from sqlalchemy.orm import relationship
 from src.config.database import Base
 
@@ -17,6 +17,7 @@ class User(Base):
     birth_date = Column(Date)
     physical_activity = Column(Integer)
     gender = Column(String(length=1))
+    status = Column(Boolean, default=True)
     role_id = Column(Integer, ForeignKey("roles.id"))
 
     roles = relationship("Role", back_populates="users")
