@@ -27,6 +27,7 @@ class JWTHandler:
             "user.name": user.name, 
             "user.id_number": user.id_number,
             "user.role": user.role_id,  
+            "user.status": user.status,
         }        
         return jwt.encode(payload, self.secret, algorithm=self.algorithm)
     

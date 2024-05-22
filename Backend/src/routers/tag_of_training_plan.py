@@ -15,29 +15,31 @@ tag_of_training_plan_router = APIRouter(tags=['Etiquetas para planes de entrenam
 
 #CRUD tag_of_training_plan
 
-@tag_of_training_plan_router.get('/',response_model=List[TagOfTrainingPlan],description="Returns all tag_of_training_plan")
+@tag_of_training_plan_router.get('/',response_model=List[TagOfTrainingPlan],description="Devuelve todas las etiquetas de planes de entrenamiento")
 def get_tag(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> List[TagOfTrainingPlan]:
     db= SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 2:
+        user_status = payload.get("user.status")
+        if role_user >= 2 and user_status == True:
             result = TagOfTrainingPlanRepository(db).get_all_tag_of_training_plans()
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
         return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
-@tag_of_training_plan_router.get('/{id}',response_model=TagOfTrainingPlan,description="Returns data of one specific tag_of_training_plan")
+@tag_of_training_plan_router.get('/{id}',response_model=TagOfTrainingPlan,description="Devuelve la información de una sola etiqueta de plan de entrenamiento")
 def get_tag_of_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> TagOfTrainingPlan:
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 2:
+        status_user = payload.get("user.status")
+        if role_user >= 2 and status_user == True:
             element=  TagOfTrainingPlanRepository(db).get_tag_of_training_plan_by_id(id)
             if not element:        
                 return JSONResponse(
                     content={            
-                        "message": "The requested income was not found",            
+                        "message": "The requested tag of training plan was not found",            
                         "data": None        
                         }, 
                     status_code=status.HTTP_404_NOT_FOUND
@@ -48,17 +50,18 @@ def get_tag_of_training_plan(credentials: Annotated[HTTPAuthorizationCredentials
                 )
         return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
-@tag_of_training_plan_router.post('/',response_model=dict,description="Creates a new tag_of_training_plan")
+@tag_of_training_plan_router.post('/',response_model=dict,description="Crea una nueva etiqueta de plan de entrenamiento")
 def create_tag(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], tag_of_training_plan: TagOfTrainingPlan = Body()) -> dict:
     db= SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 2:
+        user_status = payload.get("user.status")
+        if role_user >= 2 and user_status == True:
             new_tag_of_training_plan = TagOfTrainingPlanRepository(db).create_new_tag_of_training_plan(tag_of_training_plan)
             return JSONResponse(
                 content={        
-                "message": "The tag_of_training_plan was successfully created",        
+                "message": "The tag of training plan was successfully created",        
                 "data": jsonable_encoder(new_tag_of_training_plan)    
                 }, 
                 status_code=status.HTTP_201_CREATED
@@ -66,18 +69,19 @@ def create_tag(credentials: Annotated[HTTPAuthorizationCredentials,Depends(secur
         else:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
-@tag_of_training_plan_router.delete('/{id}',response_model=dict,description="Removes specific tag_of_training_plan")
+@tag_of_training_plan_router.delete('/{id}',response_model=dict,description="Elimina una etiqueta de plan de entrenamiento específica")
 def remove_tag_of_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 2:
+        user_status = payload.get("user.status")
+        if role_user >= 2 and user_status == True:
             element = TagOfTrainingPlanRepository(db).delete_tag_of_training_plan(id)
             if not element:        
                 return JSONResponse(
                     content={            
-                        "message": "The requested tag_of_training_plan was not found",            
+                        "message": "The requested tag of training plan was not found",            
                         "data": None        
                         }, 
                     status_code=status.HTTP_404_NOT_FOUND
@@ -86,18 +90,19 @@ def remove_tag_of_training_plan(credentials: Annotated[HTTPAuthorizationCredenti
         else:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
-@tag_of_training_plan_router.put('/{id}',response_model=TagOfTrainingPlan,description="Updates specific tag_of_training_plan")
+@tag_of_training_plan_router.put('/{id}',response_model=TagOfTrainingPlan,description="Actualiza una etiqueta de plan de entrenamiento específica")
 def update_tag_of_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1), tag_of_training_plan: TagOfTrainingPlan = Body()) -> dict:
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 2:
+        user_status = payload.get("user.status")
+        if role_user >= 2 and user_status == True:
             element = TagOfTrainingPlanRepository(db).update_tag_of_training_plan(id, tag_of_training_plan)
             if not element:        
                 return JSONResponse(
                     content={            
-                        "message": "The requested tag_of_training_plan was not found",            
+                        "message": "The requested tag of training plan was not found",            
                         "data": None        
                         }, 
                     status_code=status.HTTP_404_NOT_FOUND

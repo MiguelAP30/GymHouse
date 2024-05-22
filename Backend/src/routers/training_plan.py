@@ -21,8 +21,11 @@ def get_training_plans(credentials: Annotated[HTTPAuthorizationCredentials,Depen
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_current_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_current_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        if status_user == False:
+            return JSONResponse(content={"message": "Your account is disabled", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
         current_user = payload.get("sub")
         result = TrainingPlanRepository(db).get_all_training_plans(current_user)
         return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
@@ -33,8 +36,11 @@ def get_training_plan_by_id(credentials: Annotated[HTTPAuthorizationCredentials,
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_current_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_current_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        if status_user == False:
+            return JSONResponse(content={"message": "Your account is disabled", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
         current_user = payload.get("sub")
         element=  TrainingPlanRepository(db).get_training_plan_by_id(id, current_user)
         if not element:        
@@ -57,8 +63,11 @@ def create_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Dep
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_current_user = payload.get("user.role")
+        status_user  = payload.get("user.status")
         if role_current_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        if status_user == False:
+            return JSONResponse(content={"message": "Your account is disabled", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
         training_plan.user_email = payload.get("sub")
         new_training_plan = TrainingPlanRepository(db).create_new_training_plan(training_plan)
         return JSONResponse(
@@ -75,8 +84,11 @@ def remove_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Dep
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_current_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_current_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        if status_user == False:
+            return JSONResponse(content={"message": "Your account is disabled", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
         current_user = payload.get("sub")
         element = TrainingPlanRepository(db).delete_training_plan(id, current_user)
         if not element:        
@@ -95,8 +107,11 @@ def update_training_plan(credentials: Annotated[HTTPAuthorizationCredentials,Dep
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_current_user = payload.get("user.role")
+        user_status = payload.get("user.status")
         if role_current_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        if user_status == False:
+            return JSONResponse(content={"message": "Your account is disabled", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
         current_user = payload.get("sub")
         element = TrainingPlanRepository(db).update_training_plan(id, training_plan, current_user)
         if not element:        

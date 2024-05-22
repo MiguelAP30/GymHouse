@@ -43,7 +43,7 @@ def get_quantity_Food(credentials: Annotated[HTTPAuthorizationCredentials,Depend
         if not element:        
             return JSONResponse(
                 content={            
-                    "message": "The requested income was not found",            
+                    "message": "The requested quantity food was not found",            
                     "data": None        
                     }, 
                 status_code=status.HTTP_404_NOT_FOUND
@@ -64,7 +64,7 @@ def create_quantity_Food(credentials: Annotated[HTTPAuthorizationCredentials,Dep
         new_quantityFood = QuantityFoodRepository(db).create_new_quantity_food(quantityFood)
         return JSONResponse(
             content={        
-            "message": "The quantityFood was successfully created",        
+            "message": "The quantity food was successfully created",        
             "data": jsonable_encoder(new_quantityFood)    
             }, 
             status_code=status.HTTP_201_CREATED
@@ -83,7 +83,7 @@ def remove_quantityFood(credentials: Annotated[HTTPAuthorizationCredentials,Depe
         if not element:        
             return JSONResponse(
                 content={            
-                    "message": "The requested quantityFood was not found",            
+                    "message": "The requested quantity food was not found",            
                     "data": None        
                     }, 
                 status_code=status.HTTP_404_NOT_FOUND
@@ -91,7 +91,7 @@ def remove_quantityFood(credentials: Annotated[HTTPAuthorizationCredentials,Depe
         QuantityFoodRepository(db).delete_quantity_food(element)
         return JSONResponse(
             content={        
-            "message": "The quantityFood was successfully deleted",        
+            "message": "The quantity food was successfully deleted",        
             "data": None    
             }, 
             status_code=status.HTTP_200_OK
@@ -110,7 +110,7 @@ def update_quantity_Food(credentials: Annotated[HTTPAuthorizationCredentials,Dep
         if not element:
             return JSONResponse(
                 content={            
-                    "message": "The requested quantityFood was not found",            
+                    "message": "The requested quantity food was not found",            
                     "data": None        
                     }, 
                 status_code=status.HTTP_404_NOT_FOUND
@@ -118,7 +118,7 @@ def update_quantity_Food(credentials: Annotated[HTTPAuthorizationCredentials,Dep
         QuantityFoodRepository(db).update_quantity_food(id, element, quantityFood)
         return JSONResponse(
             content={        
-            "message": "The quantityFood was successfully updated",        
+            "message": "The quantity food was successfully updated",        
             "data": jsonable_encoder(element)    
             }, 
             status_code=status.HTTP_200_OK

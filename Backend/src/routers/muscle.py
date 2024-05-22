@@ -16,29 +16,31 @@ muscle_router = APIRouter(tags=['Músculos'])
 
 #CRUD muscle
 
-@muscle_router.get('/',response_model=List[Muscle],description="Returns all muscle")
+@muscle_router.get('/',response_model=List[Muscle],description="Devuelve todos los músculos")
 def get_muscles(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> List[Muscle]:
     db= SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 3:
+        status_user = payload.get("user.status")
+        if role_user >= 3 and status_user:
             result = MuscleRepository(db).get_all_muscles()
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
-        return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        return JSONResponse(content={"message": "You do not have the necessary permissions or your account is inactive", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
     
-@muscle_router.get('/{id}',response_model=Muscle,description="Returns data of one specific muscle")
+@muscle_router.get('/{id}',response_model=Muscle,description="Devuelve la información de un solo músculo")
 def get_muscle(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> Muscle:
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 3:
+        status_user = payload.get("user.status")
+        if role_user >= 3 and status_user:
             element=  MuscleRepository(db).get_muscle_by_id(id)
             if not element:        
                 return JSONResponse(
                     content={            
-                        "message": "The requested income was not found",            
+                        "message": "The requested muscle was not found",            
                         "data": None        
                         }, 
                     status_code=status.HTTP_404_NOT_FOUND
@@ -47,15 +49,16 @@ def get_muscle(credentials: Annotated[HTTPAuthorizationCredentials,Depends(secur
                 content=jsonable_encoder(element),                        
                 status_code=status.HTTP_200_OK
                 )
-        return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        return JSONResponse(content={"message": "You do not have the necessary permissions or your account is inactive", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
-@muscle_router.post('/',response_model=dict,description="Creates a new muscle")
+@muscle_router.post('/',response_model=dict,description="Crea un nuevo músculo")
 def create_muscle(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], muscle: Muscle = Body()) -> dict:
     db= SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 3:
+        status_user = payload.get("user.status")
+        if role_user >= 3 and status_user:
             new_muscle = MuscleRepository(db).create_new_muscle(muscle)
             return JSONResponse(
                 content={        
@@ -65,15 +68,16 @@ def create_muscle(credentials: Annotated[HTTPAuthorizationCredentials,Depends(se
                 status_code=status.HTTP_201_CREATED
             )
         else:
-            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+            return JSONResponse(content={"message": "You do not have the necessary permissions or your account is inactive", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
-@muscle_router.delete('/{id}',response_model=dict,description="Removes specific muscle")
+@muscle_router.delete('/{id}',response_model=dict,description="Elimina un músculo específico")
 def remove_muscle(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 3:
+        status_user = payload.get("user.status")
+        if role_user >= 3 and status_user:
             element = MuscleRepository(db).delete_muscle(id)
             if not element:        
                 return JSONResponse(
@@ -84,15 +88,16 @@ def remove_muscle(credentials: Annotated[HTTPAuthorizationCredentials,Depends(se
                     status_code=status.HTTP_404_NOT_FOUND
                     )
             return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
-        return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        return JSONResponse(content={"message": "You do not have the necessary permissions or your account is inactive", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
-@muscle_router.put('/{id}',response_model=dict,description="Updates specific muscle")
+@muscle_router.put('/{id}',response_model=dict,description="Actualiza un músculo específico")
 def update_muscle(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1), muscle: Muscle = Body()) -> dict:
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 3:
+        status_user = payload.get("user.status")
+        if role_user >= 3 and status_user:
             element = MuscleRepository(db).update_muscle(id, muscle)
             if not element:        
                 return JSONResponse(
@@ -104,4 +109,4 @@ def update_muscle(credentials: Annotated[HTTPAuthorizationCredentials,Depends(se
                     )
             return JSONResponse(content=jsonable_encoder(element), status_code=status.HTTP_200_OK)
         else:
-            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+            return JSONResponse(content={"message": "You do not have the necessary permissions or your account is inactive", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)

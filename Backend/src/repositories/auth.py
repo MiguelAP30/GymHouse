@@ -83,6 +83,11 @@ class AuthRepository:
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Credenciales inválidas (2)",
             )
+        if not check_user.status:
+            return HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Cuenta deshabilitada",
+            )
         access_token = auth_handler.encode_token(check_user)
         refresh_token = auth_handler.encode_refresh_token(check_user)
         return access_token, refresh_token

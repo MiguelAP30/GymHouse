@@ -21,9 +21,13 @@ def get_exercises(credentials: Annotated[HTTPAuthorizationCredentials,Depends(se
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_user >= 3:
-            result = ExerciseRepository(db).get_all_excercise()
-            return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
+            if status_user:
+                result = ExerciseRepository(db).get_all_excercises()
+                return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
+            else:
+                return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_403_FORBIDDEN)
         else:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
@@ -33,20 +37,24 @@ def get_excercise(credentials: Annotated[HTTPAuthorizationCredentials,Depends(se
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_user >= 3:
-            element=  ExerciseRepository(db).get_excercise_by_id(id)
-            if not element:        
+            if status_user:
+                element=  ExerciseRepository(db).get_excercise_by_id(id)
+                if not element:        
+                    return JSONResponse(
+                        content={            
+                            "message": "The requested exercise was not found",            
+                            "data": None        
+                            }, 
+                        status_code=status.HTTP_404_NOT_FOUND
+                        )    
                 return JSONResponse(
-                    content={            
-                        "message": "The requested income was not found",            
-                        "data": None        
-                        }, 
-                    status_code=status.HTTP_404_NOT_FOUND
-                    )    
-            return JSONResponse(
-                content=jsonable_encoder(element),                        
-                status_code=status.HTTP_200_OK
-                )
+                    content=jsonable_encoder(element),                        
+                    status_code=status.HTTP_200_OK
+                    )
+            else:
+                return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_403_FORBIDDEN)
         else:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
@@ -56,15 +64,19 @@ def create_exercise(credentials: Annotated[HTTPAuthorizationCredentials,Depends(
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_user >= 3:
-            new_excercise = ExerciseRepository(db).create_new_excercise(exercise)
-            return JSONResponse(
-                content={        
-                "message": "The exercise was successfully created",        
-                "data": jsonable_encoder(new_excercise)    
-                }, 
-                status_code=status.HTTP_201_CREATED
-            )
+            if status_user:
+                new_excercise = ExerciseRepository(db).create_new_excercise(exercise)
+                return JSONResponse(
+                    content={        
+                    "message": "The exercise was successfully created",        
+                    "data": jsonable_encoder(new_excercise)    
+                    }, 
+                    status_code=status.HTTP_201_CREATED
+                )
+            else:
+                return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_403_FORBIDDEN)
         else:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
@@ -74,23 +86,27 @@ def remove_excercise(credentials: Annotated[HTTPAuthorizationCredentials,Depends
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_user >= 3:
-            element = ExerciseRepository(db).delete_excercise(id)
-            if not element:        
+            if status_user:
+                element = ExerciseRepository(db).delete_excercise(id)
+                if not element:        
+                    return JSONResponse(
+                        content={            
+                            "message": "The requested exercise was not found",            
+                            "data": None        
+                            }, 
+                        status_code=status.HTTP_404_NOT_FOUND
+                    )
                 return JSONResponse(
-                    content={            
-                        "message": "The requested exercise was not found",            
-                        "data": None        
-                        }, 
-                    status_code=status.HTTP_404_NOT_FOUND
+                    content={        
+                    "message": "The exercise was successfully removed",        
+                    "data": jsonable_encoder(element)    
+                    }, 
+                    status_code=status.HTTP_200_OK
                 )
-            return JSONResponse(
-                content={        
-                "message": "The exercise was successfully removed",        
-                "data": jsonable_encoder(element)    
-                }, 
-                status_code=status.HTTP_200_OK
-            )
+            else:
+                return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_403_FORBIDDEN)
         else:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
@@ -100,22 +116,26 @@ def update_excercise(credentials: Annotated[HTTPAuthorizationCredentials,Depends
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_user >= 3:
-            element = ExerciseRepository(db).update_excercise(id, exercise)
-            if not element:        
+            if status_user:
+                element = ExerciseRepository(db).update_excercise(id, exercise)
+                if not element:        
+                    return JSONResponse(
+                        content={            
+                            "message": "The requested exercise was not found",            
+                            "data": None        
+                            }, 
+                        status_code=status.HTTP_404_NOT_FOUND
+                    )
                 return JSONResponse(
-                    content={            
-                        "message": "The requested exercise was not found",            
-                        "data": None        
-                        }, 
-                    status_code=status.HTTP_404_NOT_FOUND
+                    content={        
+                    "message": "The exercise was successfully updated",        
+                    "data": jsonable_encoder(element)    
+                    }, 
+                    status_code=status.HTTP_200_OK
                 )
-            return JSONResponse(
-                content={        
-                "message": "The exercise was successfully updated",        
-                "data": jsonable_encoder(element)    
-                }, 
-                status_code=status.HTTP_200_OK
-            )
+            else:
+                return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_403_FORBIDDEN)
         else:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)

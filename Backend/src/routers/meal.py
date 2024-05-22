@@ -22,8 +22,11 @@ def get_meals(credentials: Annotated[HTTPAuthorizationCredentials,Depends(securi
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        elif not status_user:
+            return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_403_FORBIDDEN)
         current_user = payload.get("sub")
         result = MealRepository(db).get_all_meals(current_user)
         return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
@@ -34,8 +37,11 @@ def get_meal(credentials: Annotated[HTTPAuthorizationCredentials,Depends(securit
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        elif not status_user:
+            return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_403_FORBIDDEN)
         current_user = payload.get("sub")
         element = MealRepository(db).get_meal_by_id(id, current_user)
         if not element:        
@@ -57,8 +63,11 @@ def create_meal(credentials: Annotated[HTTPAuthorizationCredentials,Depends(secu
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        elif not status_user:
+            return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_403_FORBIDDEN)
         new_meal = MealRepository(db).create_new_meal(meal)
         return JSONResponse(
             content={        
@@ -68,14 +77,17 @@ def create_meal(credentials: Annotated[HTTPAuthorizationCredentials,Depends(secu
             status_code=status.HTTP_201_CREATED
         )
 
-@meal_router.delete('/{id}',response_model=dict,description="Removes specific meal")
+@meal_router.delete('/{id}',response_model=dict,description="Elimina una comida específica")
 def remove_meal(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        elif not status_user:
+            return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_403_FORBIDDEN)
         current_user = payload.get("sub")
         MealRepository(db).delete_meal(id, current_user)
         return JSONResponse(
@@ -92,8 +104,11 @@ def update_meal(credentials: Annotated[HTTPAuthorizationCredentials,Depends(secu
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
+        status_user = payload.get("user.status")
         if role_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        elif not status_user:
+            return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_403_FORBIDDEN)
         current_user = payload.get("sub")
         result = MealRepository(db).update_meal(id, meal, current_user)
         return JSONResponse(

@@ -2,40 +2,21 @@ from pydantic import BaseModel, EmailStr, Field, validator, model_validator
 from typing import List, Optional
 
 class User(BaseModel):
-    email: EmailStr = Field(min_length=6, title="Email del usuario", max_length=250)
-    id_number: str = Field(min_length=6, title="Numero de identificacion del usuario", max_length=20)
-    name: str = Field(min_length=2, title="Nombre del usuario", max_length=50)
-    password: str = Field(min_length=6,title="Contraseña del usuario", max_length=60)
-    lastname: str = Field(min_length=2, title="Apellido del usuario", max_length=50)
-    phone: str = Field(min_length=8, title="Telefono del usuario", max_length=20)
-    address: Optional[str] = Field(default=None, min_length=8, title="Direccion del usuario", max_length=150)
-    weight: float = Field(title="Peso del usuario")
-    height: float = Field(title="Altura del usuario")
-    birth_date: str = Field(title="Fecha de nacimiento del usuario")
-    gender: str = Field(min_length=1,title="Genero del usuario", max_length=1)
-    physical_activity: int = Field(title="Total de días de ejercicio que hace el usuario", ge=0, le=7)
-    role_id: Optional[int] = Field(default= 1, title="Rol del usuario", ge=1)
-    status: Optional[bool] = Field(default= True, title="Estado del usuario")
-    
-    class Config:
-        json_Schema_extra = {
-            "example": {
-                "email": "hola@gmail.com",
-                "id_number": "123456789",
-                "password": "123456",
-                "name": "Miguel Angel",
-                "lastname": "Perez Clavijo",
-                "phone": "12345678",
-                "address": "Calle 123",
-                "weight": 74.5,
-                "height": 180,
-                "birth_date": "2003-11-12",
-                "gender": "m",
-                "physical_activity": 6,
-                "status": True,
-            }
-        }
-    
+    email: EmailStr = Field(min_length=6, title="Email del usuario", max_length=250, example="hola@gmail.com")
+    id_number: str = Field(min_length=6, title="Numero de identificacion del usuario", max_length=20, example="123456789")
+    name: str = Field(min_length=2, title="Nombre del usuario", max_length=50, example="Miguel Angel")
+    password: str = Field(min_length=6,title="Contraseña del usuario", max_length=60, example="123456")
+    lastname: str = Field(min_length=2, title="Apellido del usuario", max_length=50, example="Perez Clavijo")
+    phone: str = Field(min_length=8, title="Telefono del usuario", max_length=20, example="12345678")
+    address: Optional[str] = Field(default=None, min_length=8, title="Direccion del usuario", max_length=150, example="Calle 123")
+    weight: float = Field(title="Peso del usuario", example=74.5)
+    height: float = Field(title="Altura del usuario", example=180)
+    birth_date: str = Field(title="Fecha de nacimiento del usuario", example="2003-11-12")
+    gender: str = Field(min_length=1,title="Genero del usuario", max_length=1, example="m")
+    physical_activity: int = Field(title="Total de días de ejercicio que hace el usuario", ge=0, le=7, example=6)
+    role_id: Optional[int] = Field(default= 1, title="Rol del usuario", ge=1, example=1)
+    status: Optional[bool] = Field(default= True, title="Estado del usuario", example=True)
+
     @validator("id_number")
     def id_number_must_be_str(cls, v):
         assert isinstance(v, str), ValueError("El numero de identificacion del usuario debe ser un string")

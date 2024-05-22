@@ -21,9 +21,18 @@ def get_all_excercise_muscle_by_rate(credentials: Annotated[HTTPAuthorizationCre
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 2:
+        status_user = payload.get("user.status")
+        if role_user >= 2 and status_user:
             result = ExerciseMuscleMachineRepository(db).get_all_excercise_muscle_by_rate(id)
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
+        elif not status_user:
+            return JSONResponse(
+                content={            
+                    "message": "Your account is inactive",            
+                    "data": None        
+                    }, 
+                status_code=status.HTTP_403_FORBIDDEN
+                )
         else:
             return JSONResponse(
                 content={            
@@ -39,9 +48,18 @@ def get_all_excercise_muscle_machine_by_rate(credentials: Annotated[HTTPAuthoriz
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 2:
+        status_user = payload.get("user.status")
+        if role_user >= 2 and status_user:
             result = ExerciseMuscleMachineRepository(db).get_all_excercise_muscle_machine_by_rate(id_muscle, id_machine)
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
+        elif not status_user:
+            return JSONResponse(
+                content={            
+                    "message": "Your account is inactive",            
+                    "data": None        
+                    }, 
+                status_code=status.HTTP_403_FORBIDDEN
+                )
         else:
             return JSONResponse(
                 content={            
@@ -51,18 +69,19 @@ def get_all_excercise_muscle_machine_by_rate(credentials: Annotated[HTTPAuthoriz
                 status_code=status.HTTP_401_UNAUTHORIZED
                 )
 
-@exercise_muscle_machine_router.get('/{id}',response_model=ExerciseMuscleMachine,description="Devuelve un ejercicio_muscle_machine por id")
+@exercise_muscle_machine_router.get('/{id}',response_model=ExerciseMuscleMachine,description="Devuelve un ejercicio-musculo-maquina por id")
 def get_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> ExerciseMuscleMachine:
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 2:
+        status_user = payload.get("user.status")
+        if role_user >= 2 and status_user:
             element = ExerciseMuscleMachineRepository(db).get_excercise_muscle_machine_by_id(id)
             if not element:        
                 return JSONResponse(
                     content={            
-                        "message": "The requested income was not found",            
+                        "message": "The requested exercise-muscle-machine was not found",            
                         "data": None        
                         }, 
                     status_code=status.HTTP_404_NOT_FOUND
@@ -71,6 +90,14 @@ def get_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCredent
                 content=jsonable_encoder(element),                        
                 status_code=status.HTTP_200_OK
                 )
+        elif not status_user:
+            return JSONResponse(
+                content={            
+                    "message": "Your account is inactive",            
+                    "data": None        
+                    }, 
+                status_code=status.HTTP_403_FORBIDDEN
+                )
         else:
             return JSONResponse(
                 content={            
@@ -80,22 +107,30 @@ def get_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCredent
                 status_code=status.HTTP_401_UNAUTHORIZED
                 )
 
-@exercise_muscle_machine_router.post('/',response_model=dict,description="Crea un nuevo ejercicio_muscle_machine")
+@exercise_muscle_machine_router.post('/',response_model=dict,description="Crea un nuevo ejercicio-musculo-maquina")
 def create_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], exercise: ExerciseMuscleMachine = Body()) -> dict:
     db= SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        current_user = payload.get("sub")
-        if role_user >= 3:
+        status_user = payload.get("user.status")
+        if role_user >= 3 and status_user:
             new_excercise = ExerciseMuscleMachineRepository(db).create_new_excercise_muscle_machine(exercise)
             return JSONResponse(
                 content={        
-                "message": "The exercise_muscle_machine was successfully created",        
+                "message": "The exercise-muscle-machine was successfully created",        
                 "data": jsonable_encoder(new_excercise)    
                 }, 
                 status_code=status.HTTP_201_CREATED
             )
+        elif not status_user:
+            return JSONResponse(
+                content={            
+                    "message": "Your account is inactive",            
+                    "data": None        
+                    }, 
+                status_code=status.HTTP_403_FORBIDDEN
+                )
         else:
             return JSONResponse(
                 content={            
@@ -105,30 +140,38 @@ def create_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCred
                 status_code=status.HTTP_401_UNAUTHORIZED
                 )
 
-@exercise_muscle_machine_router.delete('/{id}',response_model=dict,description="Elimina un ejercicio_muscle_machine por id")
+@exercise_muscle_machine_router.delete('/{id}',response_model=dict,description="Elimina un ejercicio-musculo-maquina por id")
 def remove_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1)) -> dict:
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        current_user = payload.get("sub")
-        if role_user >= 3:
+        status_user = payload.get("user.status")
+        if role_user >= 3 and status_user:
             element = ExerciseMuscleMachineRepository(db).delete_excercise_muscle_machine(id)
             if not element:        
                 return JSONResponse(
                     content={            
-                        "message": "The requested exercise_muscle_machine was not found",            
+                        "message": "The requested exercise-muscle-machine was not found",            
                         "data": None        
                         }, 
                     status_code=status.HTTP_404_NOT_FOUND
                     )    
             return JSONResponse(
                 content={        
-                "message": "The exercise_muscle_machine was successfully removed",        
+                "message": "The exercise-muscle-machine was successfully removed",        
                 "data": jsonable_encoder(element)    
                 }, 
                 status_code=status.HTTP_200_OK
             )
+        elif not status_user:
+            return JSONResponse(
+                content={            
+                    "message": "Your account is inactive",            
+                    "data": None        
+                    }, 
+                status_code=status.HTTP_403_FORBIDDEN
+                )
         else:
             return JSONResponse(
                 content={            
@@ -138,29 +181,38 @@ def remove_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCred
                 status_code=status.HTTP_401_UNAUTHORIZED
                 )
 
-@exercise_muscle_machine_router.put('/{id}',response_model=dict,description="Actualiza un ejercicio_muscle_machine por id")
+@exercise_muscle_machine_router.put('/{id}',response_model=dict,description="Actualiza un ejercicio-musculo-maquina por id")
 def update_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], id: int = Path(ge=1), exercise: ExerciseMuscleMachine = Body()) -> dict:
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
         role_user = payload.get("user.role")
-        if role_user >= 3:
+        status_user = payload.get("user.status")
+        if role_user >= 3 and status_user:
             element = ExerciseMuscleMachineRepository(db).update_rate_excercise_muscle_machine(id, exercise)
             if not element:        
                 return JSONResponse(
                     content={            
-                        "message": "The requested exercise_muscle_machine was not found",            
+                        "message": "The requested exercise-muscle-machine was not found",            
                         "data": None        
                         }, 
                     status_code=status.HTTP_404_NOT_FOUND
                     )    
             return JSONResponse(
                 content={        
-                "message": "The exercise_muscle_machine was successfully updated",        
+                "message": "The exercise-muscle-machine was successfully updated",        
                 "data": jsonable_encoder(element)    
                 }, 
                 status_code=status.HTTP_200_OK
             )
+        elif not status_user:
+            return JSONResponse(
+                content={            
+                    "message": "Your account is inactive",            
+                    "data": None        
+                    }, 
+                status_code=status.HTTP_403_FORBIDDEN
+                )
         else:
             return JSONResponse(
                 content={            
