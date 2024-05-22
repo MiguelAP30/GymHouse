@@ -44,13 +44,21 @@ uvicorn main:app --reload
 
 ## Endpoints CRUD
 
-## Diet:
+1. **Diet:**
 
-1. Diet:
+   - Create Diet: /api/v1/diet/
+   - Get All Diets: /api/v1/diet/
+   - Get Diet By Id: /api/v1/diet/:id
+   - Update Diet By Id: /api/v1/diet/:id
+   - Delete Diet By Id: /api/v1/diet/:id
 
-Create Diet: /api/v1/diet/
-Get All Diets: /api/v1/diet/
-Get Diet By Id: /api/v1/diet/:id
-Delete Diet By Id: /api/v1/diet/:id
+2. **Meal:**
 
+   - Create Meal: /api/v1/meal/
+   - Get All Meals: /api/v1/meal/
+   - Get Meal By Id: /api/v1/meal/:id
+   - Update Meal By Id: /api/v1/meal/:id
+   - Delete Meal By Id: /api/v1/meal/:id
+
+  
 
