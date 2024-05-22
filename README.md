@@ -41,10 +41,16 @@ uvicorn main:app --reload
   14. /api/v1/type_quantity: Gestión de tipos de cantidad.
   15. /api/v1/food: Gestión de alimentos.
   16. /api/v1/tag_of_diet: Gestión de etiquetas de dietas.
-  /api/v1/diet: Gestión de dietas.
 
-##Endpoints CRUD
+## Endpoints CRUD
 
-##Diet:
+## Diet:
+
+1. Diet:
+
+Create Diet: /api/v1/diet/
+Get All Diets: /api/v1/diet/
+Get Diet By Id: /api/v1/diet/:id
+Delete Diet By Id: /api/v1/diet/:id
 
 
