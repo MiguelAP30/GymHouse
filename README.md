@@ -23,7 +23,7 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-## Endpoints
+## Endpoints generales
 
   1. /api/v1/auth: Autenticación de usuarios.
   2. /api/v1/user: Gestión de usuarios.
@@ -42,3 +42,9 @@ uvicorn main:app --reload
   15. /api/v1/food: Gestión de alimentos.
   16. /api/v1/tag_of_diet: Gestión de etiquetas de dietas.
   /api/v1/diet: Gestión de dietas.
+
+##Endpoints CRUD
+
+##Diet:
+
+
