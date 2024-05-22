@@ -23,24 +23,6 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-## Endpoints generales
-
-  1. /api/v1/auth: Autenticación de usuarios.
-  2. /api/v1/user: Gestión de usuarios.
-  3. /api/v1/role: Gestión de roles.
-  4. /api/v1/exercise: Gestión de ejercicios.
-  5. /api/v1/muscle: Gestión de músculos.
-  6. /api/v1/machine: Gestión de máquinas.
-  7. /api/v1/exercise_muscle_machine: Gestión de ejercicios, músculos y máquinas.
-  8. /api/v1/tag_of_training_plan: Gestión de etiquetas de planes de entrenamiento.
-  9. /api/v1/training_plan: Gestión de planes de entrenamiento.
-  10. /api/v1/week_day: Gestión de días de la semana.
-  11. /api/v1/detailed_exercise: Gestión de ejercicios detallados.
-  12. /api/v1/exercise_per_week_day: Gestión de ejercicios por día de la semana.
-  13. /api/v1/food_category: Gestión de categorías de alimentos.
-  14. /api/v1/type_quantity: Gestión de tipos de cantidad.
-  15. /api/v1/food: Gestión de alimentos.
-  16. /api/v1/tag_of_diet: Gestión de etiquetas de dietas.
 
 ## Endpoints CRUD
 
@@ -199,3 +181,11 @@ uvicorn main:app --reload
    - Deactive User: /api/v1/user/:email
    - Update User: /api/v1/user/:email
    - Update Role By Email: /api/v1/user/user_role/:email?role_id=:id
+
+20. **Role**
+
+   - Create Role: /api/v1/role/
+   - Get all Roles: /api/v1/role/
+   - Get Role By Id: /api/v1/role/:id
+   - Upgrade Role: /api/v1/role/:id
+   - Delete Role: /api/v1/role/:id
