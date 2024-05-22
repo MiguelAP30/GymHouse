@@ -126,3 +126,76 @@ uvicorn main:app --reload
    - Get Food By id: /api/v1/food/_id
    - Delete Food By id: /api/v1/food/:id
    - Update Food By id: /api/v1/food/:id
+
+11. **Exercise**
+
+   - Get Alls Exercises: /api/v1/exercise/
+   - Create Exercise: /api/v1/exercise/
+   - Get Exercises By id: /api/v1/exercise/:id
+   - Delete Exercises By id: /api/v1/exercise/:id
+   - Update Exercises By id: /api/v1/exercise/:id
+
+12. **Muscle**
+
+   - Get Alls Muscles: /api/v1/muscle/
+   - Create Muscle: /api/v1/muscle/
+   - Get Muscle By id: /api/v1/muscle/:id
+   - Delete Muscle By id: /api/v1/muscle/:id
+   - Update Muscle By id: /api/v1/muscle/:id
+
+13. **Muscle**
+
+   - Get Alls Machines: /api/v1/machine/
+   - Create Machine: /api/v1/machine/
+   - Get Machine By id: /api/v1/machine/:id
+   - Delete Machine By id: /api/v1/machine/:id
+   - Update Machine By id: /api/v1/machine/:id
+
+14. **Exercise Muscle Machine**
+
+   - Get Alls Exercise Muscle Machine By Rate: /api/v1/exercise_muscle_machine/exercises_by_rate?id=:id
+   - Create Exercise Muscle Machine: /api/v1/exercise_muscle_machine/
+   - Get Exercise Muscle Machine By Machine And Rate:/api/v1/exercise_muscle_machine/exercises_by_machine_and_rate?id_machine=:id&id_muscle=:id
+   - Get Exercise Muscle Machine By id: /api/v1/exercise_muscle_machine/:id
+   - Delete Exercise Muscle Machine By id: /api/v1/exercise_muscle_machine/:id
+   - Update Exercise Muscle Machine By id: /api/v1/exercise_muscle_machine/:id
+
+15. **Training Plan**
+
+   - Get Alls Trainings Plans: /api/v1/training_plan/
+   - Create Training Plan: /api/v1/training_plan/
+   - Get Training Plan id: /api/v1/training_plan/:id
+   - Detele Training Plan: /api/v1/training_plan/:id
+   - Update Training Plan By Id: /api/v1/training_plan/:id
+
+16. **Detailed Exercise**
+
+   - Get Alls Detailed Exercises: /api/v1/detailed_exercise/
+   - Create Detailed Exercise: /api/v1/detailed_exercise/
+   - Get Detailed Exercise By id: /api/v1/detailed_exercise/:id
+   - Update Detailed Exercise: /api/v1/detailed_exercise/:id
+   - Delete Detailed Exercise: /api/v1/detailed_exercise/:id
+
+17. **Exercise Per Week Day**
+
+   - Get Alls My Exercises Per Week Day: /api/v1/exercise_per_week_day/my_exercises
+   - Get Alls Premium Exercises Per Week Day: /api/v1/exercise_per_week_day/premium_exercises
+   - Get Alls Client Exercises Per Week Day: /api/v1/exercise_per_week_day/client_exercises
+   - Get Alls Admin Exercises Per Week Day: /api/v1/exercise_per_week_day/admin_exercises
+   - Get Exercises Per Week Day By id: /api/v1/exercise_per_week_day/1
+   - Delete Exercises Per Week Day By id: /api/v1/exercise_per_week_day/:id
+   - Create Exercises Per Week Day: Create Exercises Per Week Day: /api/v1/exercise_per_week_day/
+
+18. **Auth**
+
+   - Register: /api/v1/register
+   - Login: /api/v1/login
+   - Refresh Token: /api/v1/refresh_token
+
+19. **User**
+
+   - Get All Users: /api/v1/user/
+   - Get User By Email: /api/v1/user/:email
+   - Deactive User: /api/v1/user/:email
+   - Update User: /api/v1/user/:email
+   - Update Role By Email: /api/v1/user/user_role/:email?role_id=:id
