@@ -34,7 +34,7 @@ API_VERSION = 1
 tags_metadata = []
 
 
-app = FastAPI(openapi_tags=tags_metadata, root_path=f"/api/v{API_VERSION}")
+app = FastAPI(openapi_tags=tags_metadata)
 
 #################################################
 #                 Middlewares                   #
