@@ -60,5 +60,69 @@ uvicorn main:app --reload
    - Update Meal By Id: /api/v1/meal/:id
    - Delete Meal By Id: /api/v1/meal/:id
 
-  
+3. **Plate Per Week Day**
 
+   - Create Plate Per Week Day: /api/v1/plate_per_week_day/
+   - Get All My DIets: /api/v1/plate_per_week_day/my_diets
+   - Get All Public Diets: /api/v1/plate_per_week_day/premium_diets
+   - Get All Public Diets Users: /plate_per_week_day/client_diets
+   - Get All Public Diets Professionals: /api/v1/plate_per_week_day/admin_diets
+   - Get All Public Diets Administrative: /api/v1/plate_per_week_day/:id
+   - Get Plate Per Week Day By id: /api/v1/plate_per_week_day/:id
+   - Delete Plate Per Week Day By id: /api/v1/plate_per_week_day/:id
+   
+4. **Plate Per Week Day**
+
+   - Get Alls Quantity Food: /api/v1/quantityFood/
+   - Create Quantity Food: /api/v1/quantityFood/
+   - Get Quantity Food By id: /api/v1/quantityFood/:id
+   - Delete Quantity Food By id: /api/v1/quantityFood/:id
+   - Update Quantity Food: /api/v1/quantityFood/:id
+
+5. **Week Day**
+
+   - Get Alls Week days: /api/v1/week_day/
+   - Create Week Day: /api/v1/week_day/
+   - Get Week Day By id: /api/v1/week_day/:id
+   - Delete Week Day: /api/v1/week_day/:id
+   - Update Week Day: /api/v1/week_day/:id
+
+6. **Tag Training Plan**
+
+   - Get Alls Tag Training Plans: /api/v1/tag_of_training_plan/
+   - Create Tag Training Plan: /api/v1/tag_of_training_plan/
+   - Get Tag Training Plan By id: /api/v1/tag_of_training_plan/:id
+   - Delete Tag Training Plan By id: /api/v1/tag_of_training_plan/:id 
+   - Update Tag Training Plan By id: /api/v1/tag_of_training_plan/:id
+
+7. **Tag Diets**
+
+   - Get Alls Tags Diets: /api/v1/tag_of_diet/
+   - Create Tag Diet: /api/v1/tag_of_diet/
+   - Get Tag Diet By id: /api/v1/tag_of_diet/:id
+   - Delete Tag Diet By id: /api/v1/tag_of_diet/:id
+   - Update Tag Diet By id: /api/v1/tag_of_diet/:id
+
+8. **Type Quantity Food**
+
+   - Get Alls Type Quantity Foods: /api/v1/type_quantity/
+   - Create Quantity Food: /api/v1/type_quantity/
+   - Get Quantity Food By id: /api/v1/type_quantity/:id
+   - Delete Quantity Food By id: /api/v1/type_quantity/:id
+   - Update Quantity Food By id: /api/v1/type_quantity/:id  
+
+9. **Food Category**
+
+   - Get Alls Food Categories: /api/v1/food_category/
+   - Create Food Category: /api/v1/food_category/
+   - Get Food Category By id: /api/v1/food_category/:id
+   - Delete Food Category By id: /api/v1/food_category/:id
+   - Update Food Category By id: /api/v1/food_category/:id
+
+10. **Food**
+
+   - Get Alls Foods: /api/v1/food/
+   - Create Food: /api/v1/food/
+   - Get Food By id: /api/v1/food/_id
+   - Delete Food By id: /api/v1/food/:id
+   - Update Food By id: /api/v1/food/:id
