@@ -57,7 +57,7 @@ class ExercisePerWeekDayRepository:
         exercises = self.db.query(ExercisePerWeekDayModel, WeekDayModel.name, TrainingPlanModel.name, UserModel.name).\
             select_from(ExercisePerWeekDayModel).\
             join(TrainingPlanModel).\
-            filter(TrainingPlanModel.status == True).\
+            filter(TrainingPlanModel.is_visible == True).\
             join(UserModel).\
             filter(UserModel.role_id == 2).\
             join(WeekDayModel, ExercisePerWeekDayModel.week_day_id == WeekDayModel.id).\
