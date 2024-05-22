@@ -107,6 +107,7 @@ class FoodRepository():
         element.name = food.name
         element.description = food.description
         element.image = food.image
+        element.food_category_id = food.food_category_id
 
         self.db.commit()
         self.db.refresh(element)

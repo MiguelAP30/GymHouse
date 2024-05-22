@@ -29,10 +29,12 @@ Base.metadata.create_all(bind=engine)
 ##################################################
 #                     Tags                       #
 
+API_VERSION = 1
+
 tags_metadata = []
 
 
-app = FastAPI(openapi_tags=tags_metadata)
+app = FastAPI(openapi_tags=tags_metadata, root_path=f"/api/v{API_VERSION}")
 
 #################################################
 #                 Middlewares                   #

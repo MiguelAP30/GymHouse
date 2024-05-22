@@ -117,6 +117,7 @@ class TrainingPlanRepository():
         filter(training_plans.id == id, training_plans.user_email == user).first()
         element.name = training_plan.name
         element.description = training_plan.description
+        element.tag_of_training_plan_id = training_plan.tag_of_training_plan_id
 
         self.db.commit()
         self.db.refresh(element)
