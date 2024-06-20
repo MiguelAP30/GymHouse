@@ -9,7 +9,6 @@ class WeekDay(Base):
     name = Column(String(length=20))
 
     exercises_per_week_days = relationship("ExercisePerWeekDay", back_populates="week_days")
-    plates_per_week_days = relationship("PlatePerWeekDay", back_populates="week_days")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
