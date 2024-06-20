@@ -6,7 +6,7 @@ from src.config.database import SessionLocal
 from fastapi.encoders import jsonable_encoder
 from src.repositories.exercise_muscle_machine import ExerciseMuscleMachineRepository
 from src.schemas.exercise_muscle_machine import ExerciseMuscleMachine
-from src.models.exercise_muscle_machine import ExerciseMuscleMachine as ExcersiceMuscleMachineModel
+from models.exercise_muscle import ExerciseMuscleMachine as ExcersiceMuscleMachineModel
 from fastapi.security import HTTPAuthorizationCredentials
 from src.auth.has_access import security
 from src.auth import auth_handler

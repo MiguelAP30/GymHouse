@@ -15,6 +15,8 @@ class TrainingPlan(Base):
     exercises_per_week_days = relationship("ExercisePerWeekDay", back_populates="training_plans")
     tags_of_training_plans = relationship("TagOfTrainingPlan", back_populates="training_plans")
     users = relationship("User", back_populates="training_plans")
+    comments = relationship("Comment", back_populates="training_plans")
+    stars = relationship("Star", back_populates="training_plans")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}

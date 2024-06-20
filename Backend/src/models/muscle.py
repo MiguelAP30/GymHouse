@@ -9,7 +9,7 @@ class Muscle(Base):
     name = Column(String(length=50))
     description = Column(String(length=200))
 
-    exercises_muscles_machines = relationship("ExerciseMuscleMachine", back_populates="muscles")
+    specific_muscles = relationship("SpecificMuscle", back_populates="muscles")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}

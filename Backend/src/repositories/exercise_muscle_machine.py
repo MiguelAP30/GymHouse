@@ -2,7 +2,7 @@ from typing import List
 
 from sqlalchemy import desc
 from src.schemas.exercise_muscle_machine import ExerciseMuscleMachine
-from src.models.exercise_muscle_machine import ExerciseMuscleMachine as ExcersiceMuscleMachineModel
+from models.exercise_muscle import ExerciseMuscleMachine as ExcersiceMuscleMachineModel
 from src.models.muscle import Muscle as MuscleModel
 from src.models.machine import Machine as MachineModel
 

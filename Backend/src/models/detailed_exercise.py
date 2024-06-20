@@ -6,12 +6,12 @@ class DetailedExercise(Base):
     __tablename__ = "details_exercises"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    exercise_muscle_machine_id = Column(Integer, ForeignKey("exercises_muscles_machines.id"))
+    exercice_muscle_id = Column(Integer, ForeignKey("exercises_muscles.id"))
     sets = Column(Integer)
     reps = Column(Integer)
     rest = Column(Float)
 
-    exercises_muscles_machines = relationship("ExerciseMuscleMachine", back_populates="details_exercises")
+    exercises_muscles = relationship("ExerciseMuscleMachine", back_populates="details_exercises")
     exercises_per_week_days = relationship("ExercisePerWeekDay", back_populates="details_exercises")
 
     def to_dict(self):
