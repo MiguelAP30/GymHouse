@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Body, Path
 from src.middlewares.error_handler import ErrorHandler
 
-from src.routers.exercise_muscle_machine import exercise_muscle_machine_router
+#from src.routers.exercise_muscle_machine import exercise_muscle_machine_router
 from src.routers.exercise_per_week_day import exercise_per_week_day_router
 from src.routers.exercise import exercise_router
 from src.routers.machine import machine_router
@@ -45,7 +45,7 @@ app.include_router(prefix="/role", router= role_router)
 app.include_router(prefix="/exercise", router= exercise_router)
 app.include_router(prefix="/muscle", router= muscle_router)
 app.include_router(prefix="/machine", router= machine_router)
-app.include_router(prefix="/exercise_muscle_machine", router= exercise_muscle_machine_router)
+#app.include_router(prefix="/exercise_muscle_machine", router= exercise_muscle_machine_router)
 app.include_router(prefix="/tag_of_training_plan", router= tag_of_training_plan_router)
 app.include_router(prefix="/training_plan", router= training_plan_router)
 app.include_router(prefix="/week_day", router= week_day_router)

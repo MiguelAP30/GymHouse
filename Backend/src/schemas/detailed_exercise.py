@@ -3,7 +3,7 @@ from typing import List, Optional
 
 class DetailedExercise(BaseModel):
     id: Optional[int] = Field(default=None, title="Id del ejercicio detallado")
-    exercise_muscle_machine_id: int = Field(title="Id de la tabla de ejercicios musculos maquinas")
+    exercice_muscle_id: int = Field(title="Id de la tabla de ejercicios musculos")
     sets: int = Field(ge=1,title="Cantidad de series", le=10)
     reps: int = Field(ge=1,title="Cantidad de repeticiones", le=100)
     rest: float = Field(ge=1, title="Tiempo de descanso", le=1000)
@@ -29,7 +29,7 @@ class DetailedExercise(BaseModel):
     class Config:
         json_schema_extra = {
             "example": {
-                "exercise_muscle_machine_id": 1,
+                "exercice_muscle_id": 1,
                 "sets": 3,
                 "reps": 10,
                 "rest": 60.0

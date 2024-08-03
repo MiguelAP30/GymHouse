@@ -8,6 +8,8 @@ class Exercise(BaseModel):
     video: str = Field(title="Video del ejercicio")
     image: str = Field(title="Imagen del ejercicio")
     dateAdded: str = Field(title="Fecha de creacion del ejercicio")
+    dificulty_id: Optional[int] = Field(default=None, title="Id de la dificultad")
+    machine_id: Optional[int] = Field(default=None, title="Id de la maquina")
 
     @validator("name")
     def name_must_not_be_empty(cls, value):
@@ -31,7 +33,9 @@ class Exercise(BaseModel):
                 "description": "El press de banca es un ejercicio de empuje que trabaja principalmente los músculos del pecho, los tríceps y los hombros.",
                 "video": "https://www.youtube.com/watch?v=1",
                 "image": "https://www.google.com",
-                "dateAdded": "2024-05-07"
+                "dateAdded": "2024-05-07",
+                "dificulty_id": 1,
+                "machine_id": 1
             }
         }
 

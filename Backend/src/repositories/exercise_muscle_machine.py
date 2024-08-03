@@ -1,8 +1,8 @@
 from typing import List
 
 from sqlalchemy import desc
-from src.schemas.exercise_muscle_machine import ExerciseMuscleMachine
-from models.exercise_muscle import ExerciseMuscleMachine as ExcersiceMuscleMachineModel
+from src.schemas.exercise_muscle import ExerciseMuscle
+from models.exercise_muscle import ExerciseMuscle as ExcersiceMuscleMachineModel
 from src.models.muscle import Muscle as MuscleModel
 from src.models.machine import Machine as MachineModel
 
@@ -12,7 +12,7 @@ class ExerciseMuscleMachineRepository():
     def __init__(self, db) -> None:
         self.db = db
 
-    def get_all_excercise_muscle_by_rate(self, muscle: int) -> List[ExerciseMuscleMachine]: 
+    def get_all_excercise_muscle_by_rate(self, muscle: int) -> List[ExerciseMuscle]: 
         """
         Obtiene todos los ejercicios de un músculo específico ordenados por tasa de calificación.
 
@@ -29,7 +29,7 @@ class ExerciseMuscleMachineRepository():
         query = self.db.query(ExcersiceMuscleMachineModel).join(MuscleModel).filter(MuscleModel.id == muscle).order_by(desc(ExcersiceMuscleMachineModel.rate))
         return query.all()
 
-    def get_all_excercise_muscle_machine_by_rate(self, muscle: int, machine: int) -> List[ExerciseMuscleMachine]:
+    def get_all_excercise_muscle_machine_by_rate(self, muscle: int, machine: int) -> List[ExerciseMuscle]:
         """
         Obtiene todos los ejercicios de un músculo y una máquina específicos ordenados por tasa de calificación.
 
@@ -79,12 +79,12 @@ class ExerciseMuscleMachineRepository():
         - Devuelve un diccionario que contiene los datos del ExerciseMuscleMachine eliminado.
         """
 
-        element: ExerciseMuscleMachine = self.db.query(ExcersiceMuscleMachineModel).filter(ExcersiceMuscleMachineModel.id == id).first()       
+        element: ExerciseMuscle = self.db.query(ExcersiceMuscleMachineModel).filter(ExcersiceMuscleMachineModel.id == id).first()       
         self.db.delete(element)    
         self.db.commit()    
         return element
 
-    def create_new_excercise_muscle_machine(self, excercise: ExerciseMuscleMachine ) -> dict:
+    def create_new_excercise_muscle_machine(self, excercise: ExerciseMuscle ) -> dict:
         """
         Crea un nuevo ejercicio de músculo y máquina.
 
@@ -105,7 +105,7 @@ class ExerciseMuscleMachineRepository():
         self.db.refresh(new_excercise)
         return new_excercise
 
-    def update_rate_excercise_muscle_machine(self, id: int, excercise: ExerciseMuscleMachine) -> dict:
+    def update_rate_excercise_muscle_machine(self, id: int, excercise: ExerciseMuscle) -> dict:
         """
         Actualiza la tasa de calificación de un ejercicio de músculo y máquina específico.
 
