@@ -4,12 +4,15 @@ from typing import Annotated, List
 from fastapi import APIRouter
 from src.config.database import SessionLocal 
 from fastapi.encoders import jsonable_encoder
+from src.auth.has_access import security
+from src.auth import auth_handler
+from fastapi.security import HTTPAuthorizationCredentials
+
 from src.schemas.detailed_exercise import DetailedExercise
 from src.repositories.detailed_exercise import DetailedExerciseRepository
 from src.models.detailed_exercise import DetailedExercise as detailed_exercises
-from fastapi.security import HTTPAuthorizationCredentials
-from src.auth.has_access import security
-from src.auth import auth_handler
+
+
 
 detailed_exercise_router = APIRouter(tags=['Ejercicios detallados'])
 
