@@ -4,9 +4,9 @@ from typing import Annotated, List
 from fastapi import APIRouter
 from src.config.database import SessionLocal 
 from fastapi.encoders import jsonable_encoder
-from src.repositories.exercise_muscle_machine import ExerciseMuscleMachineRepository
+from src.repositories.exercise_muscle import ExerciseMuscleRepository
 from src.schemas.exercise_muscle import ExerciseMuscle
-from models.exercise_muscle import ExerciseMuscle as ExcersiceMuscleMachineModel
+from src.models.exercise_muscle import ExerciseMuscle as ExcersiceMuscleModel
 from fastapi.security import HTTPAuthorizationCredentials
 from src.auth.has_access import security
 from src.auth import auth_handler
@@ -23,7 +23,7 @@ def get_all_excercise_muscle_by_rate(credentials: Annotated[HTTPAuthorizationCre
         role_user = payload.get("user.role")
         status_user = payload.get("user.status")
         if role_user >= 2 and status_user:
-            result = ExerciseMuscleMachineRepository(db).get_all_excercise_muscle_by_rate(id)
+            result = ExerciseMuscleRepository(db).get_all_excercise_muscle_by_rate(id)
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
         elif not status_user:
             return JSONResponse(
@@ -50,7 +50,7 @@ def get_all_excercise_muscle_machine_by_rate(credentials: Annotated[HTTPAuthoriz
         role_user = payload.get("user.role")
         status_user = payload.get("user.status")
         if role_user >= 2 and status_user:
-            result = ExerciseMuscleMachineRepository(db).get_all_excercise_muscle_machine_by_rate(id_muscle, id_machine)
+            result = ExerciseMuscleRepository(db).get_all_excercise_muscle_machine_by_rate(id_muscle, id_machine)
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
         elif not status_user:
             return JSONResponse(
@@ -77,7 +77,7 @@ def get_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCredent
         role_user = payload.get("user.role")
         status_user = payload.get("user.status")
         if role_user >= 2 and status_user:
-            element = ExerciseMuscleMachineRepository(db).get_excercise_muscle_machine_by_id(id)
+            element = ExerciseMuscleRepository(db).get_excercise_muscle_machine_by_id(id)
             if not element:        
                 return JSONResponse(
                     content={            
@@ -115,7 +115,7 @@ def create_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCred
         role_user = payload.get("user.role")
         status_user = payload.get("user.status")
         if role_user >= 3 and status_user:
-            new_excercise = ExerciseMuscleMachineRepository(db).create_new_excercise_muscle_machine(exercise)
+            new_excercise = ExerciseMuscleRepository(db).create_new_excercise_muscle_machine(exercise)
             return JSONResponse(
                 content={        
                 "message": "The exercise-muscle-machine was successfully created",        
@@ -148,7 +148,7 @@ def remove_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCred
         role_user = payload.get("user.role")
         status_user = payload.get("user.status")
         if role_user >= 3 and status_user:
-            element = ExerciseMuscleMachineRepository(db).delete_excercise_muscle_machine(id)
+            element = ExerciseMuscleRepository(db).delete_excercise_muscle_machine(id)
             if not element:        
                 return JSONResponse(
                     content={            
@@ -189,7 +189,7 @@ def update_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCred
         role_user = payload.get("user.role")
         status_user = payload.get("user.status")
         if role_user >= 3 and status_user:
-            element = ExerciseMuscleMachineRepository(db).update_rate_excercise_muscle_machine(id, exercise)
+            element = ExerciseMuscleRepository(db).update_rate_excercise_muscle_machine(id, exercise)
             if not element:        
                 return JSONResponse(
                     content={            

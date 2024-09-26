@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, validator, model_validator
 from typing import List, Optional
 
 class Dificulty(BaseModel):
-    id: Optional[int] = Field(default=None, title="Id de la dificultad")
+    id: int = Field(default=None, title="Id de la dificultad")
     name: str = Field(title="Nombre de la dificultad")
     
     @validator("name")
