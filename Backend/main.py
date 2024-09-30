@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Body, Path
 from src.middlewares.error_handler import ErrorHandler
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.routers.exercise_per_week_day import exercise_per_week_day_router
 from src.routers.exercise import exercise_router
@@ -43,6 +44,23 @@ app = FastAPI(openapi_tags=tags_metadata, root_path=f"/api/v{API_VERSION}")
 #                 Middlewares                   #
 
 #app.add_middleware(ErrorHandler)
+
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+    "http://localhost:3000",
+    "http://localhost:8080",
+    "http://localhost:4000",
+    # Agrega aquí otros orígenes permitidos
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Permitir estos orígenes
+    allow_credentials=True,
+    allow_methods=["*"],  # Permitir todos los métodos (GET, POST, etc.)
+    allow_headers=["*"],  # Permitir todos los encabezados
+)
 
 #################################################
 #      Router's definition (endpoints sets)     #

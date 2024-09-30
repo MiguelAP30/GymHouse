@@ -24,6 +24,7 @@ class Gym(Base):
     is_active = Column(Boolean)
 
     users = relationship("User", back_populates="gyms")
+    users_gyms = relationship("UserGym", back_populates="gyms")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}

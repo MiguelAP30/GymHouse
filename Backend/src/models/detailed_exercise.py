@@ -11,7 +11,7 @@ class DetailedExercise(Base):
     reps = Column(Integer)
     rest = Column(Float)
 
-    exercises_muscles = relationship("ExerciseMuscleMachine", back_populates="details_exercises")
+    exercises_muscles = relationship("ExerciseMuscle", back_populates="details_exercises")
     exercises_per_week_days = relationship("ExercisePerWeekDay", back_populates="details_exercises")
 
     def to_dict(self):

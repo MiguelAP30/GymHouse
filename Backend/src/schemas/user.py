@@ -14,27 +14,7 @@ class User(BaseModel):
     status: Optional[bool] = Field(default= True, title="Estado del usuario", example=True)
     start_date: Optional[str] = Field(default=None, title="Fecha de inicio del usuario", example="2021-11-12")
     final_date: Optional[str] = Field(default=None, title="Fecha de finalizacion del usuario", example="2021-12-12")
-    role_id: Optional[int] = Field(default= 1, title="Rol del usuario", ge=1, example=1)
-
-    @validator("id_number")
-    def id_number_must_be_str(cls, v):
-        assert isinstance(v, str), ValueError("El numero de identificacion del usuario debe ser un string")
-        return v
-    
-    @validator("password")
-    def password_must_be_str(cls, v):
-        assert isinstance(v, str), ValueError("La contraseña del usuario debe ser un string")
-        return v
-    
-    @validator("user_name")
-    def user_name_must_be_str(cls, v):
-        assert isinstance(v, str), ValueError("El nombre de usuario debe ser un string")
-        return v
-
-    @validator("name")
-    def name_must_be_str(cls, v):
-        assert isinstance(v, str), ValueError("El nombre del usuario debe ser un string")
-        return v
+    role_id: Optional[int] = Field(default= 1, title="Rol del usuario", ge=1, example=4)
 
 class UserLogin (BaseModel):
     email: EmailStr = Field(min_length=6, max_length=64, alias="email", title="Correo del usuario")

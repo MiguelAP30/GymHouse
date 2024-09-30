@@ -26,6 +26,7 @@ class User(Base):
     history_pr_exercises = relationship("HistoryPrExercise", back_populates="users")
     gyms = relationship("Gym", back_populates="users")
     users_gyms = relationship("UserGym", back_populates="users")
+    comments = relationship("Comment", back_populates="users")
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
