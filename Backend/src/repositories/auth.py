@@ -23,7 +23,8 @@ class AuthRepository:
             phone=user.phone,
             address=user.address,
             birth_date=user.birth_date,
-            gender=user.gender
+            gender=user.gender,
+            role_id=user.role_id
         )
         return UserRepository(db).create_new_user(new_user)
 

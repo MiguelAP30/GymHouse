@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Body, Path
 from src.middlewares.error_handler import ErrorHandler
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
 
 from src.routers.exercise_per_week_day import exercise_per_week_day_router
 from src.routers.exercise import exercise_router
@@ -23,9 +24,19 @@ from src.routers.exercise_muscle import exercise_muscle_router
 from src.routers.dificulty import dificulty_router
 from src.routers.comment import comment_router
 
-from src.config.database import Base, engine
+from src.config.database import Base, engine, SessionLocal
+from src.config.database_init import init_data
 
+# Crear las tablas en la base de datos
 Base.metadata.create_all(bind=engine)
+
+# Inicializar datos en la base de datos
+def startup_event():
+    db: Session = SessionLocal()
+    try:
+        init_data(db)
+    finally:
+        db.close()
 
 ##################################################
 #                     Tags                       #
@@ -45,22 +56,25 @@ app = FastAPI(openapi_tags=tags_metadata, root_path=f"/api/v{API_VERSION}")
 
 #app.add_middleware(ErrorHandler)
 
-origins = [
-    "http://localhost",
-    "http://localhost:8000",
-    "http://localhost:3000",
-    "http://localhost:8080",
-    "http://localhost:4000",
-    # Agrega aquí otros orígenes permitidos
-]
+# origins = [
+#     "http://localhost",
+#     "http://localhost:8000",
+#     "http://localhost:3000",
+#     "http://localhost:8080",
+#     "http://localhost:4000",
+#     # Agrega aquí otros orígenes permitidos
+# ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,  # Permitir estos orígenes
-    allow_credentials=True,
-    allow_methods=["*"],  # Permitir todos los métodos (GET, POST, etc.)
-    allow_headers=["*"],  # Permitir todos los encabezados
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,  # Permitir estos orígenes
+#     allow_credentials=True,
+#     allow_methods=["*"],  # Permitir todos los métodos (GET, POST, etc.)
+#     allow_headers=["*"],  # Permitir todos los encabezados
+# )
+
+# Agregar el evento de inicio
+app.add_event_handler("startup", startup_event)
 
 #################################################
 #      Router's definition (endpoints sets)     #
@@ -87,12 +101,4 @@ app.include_router(prefix="/gym", router= gym_router)
 app.include_router(prefix="/dificulty", router= dificulty_router)
 app.include_router(prefix="/comment", router= comment_router)
 
-
 #################################################
-
-
-
-
-
-
-
