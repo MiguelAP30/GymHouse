@@ -7,12 +7,31 @@ import { hoverscale , hoverLink} from '../tokens';
 
 export const Header = () => {
     const [isAuthenticaded, setIsAuthenticated] = useState(false);
+    const [nameUser, setNameUser] = useState("");
+
     const router = useRouter();
 
     useEffect(() => {
         const loggedIn = localStorage.getItem('token');
+        if(!!loggedIn){
+            showNameUser(loggedIn)
+        }
         setIsAuthenticated(!!loggedIn);
     }, []);
+
+    const showNameUser = async(token:string) => {
+        fetch('http://localhost:8000/api/v1/user_data', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(response => response.json()).then((data)=>{
+            setNameUser(data.data["user.name"]);
+            console.log(data.data["user.name"]);
+            
+        })
+    }
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -36,6 +55,9 @@ export const Header = () => {
                 <Link href="/preguntas" className={`mr-[20px] ${hoverLink}`}>Preguntas Frecuentes</Link>
                 <Link href="/nosotros" className={`mr-[20px] ${hoverLink}`}>Nosotros</Link>
             </aside>
+            <div className="pr-[120px] flex-grow text-center">
+                {isAuthenticaded ? <h2 className="text-white">! Bienvenido {nameUser} !</h2> : null}
+            </div>
             <menu className="flex justify-center items-center mr-5">
                 {isAuthenticaded ? 
                     <>

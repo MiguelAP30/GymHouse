@@ -27,6 +27,7 @@ from src.routers.comment import comment_router
 from src.config.database import Base, engine, SessionLocal
 from src.config.database_init import init_data
 
+
 # Crear las tablas en la base de datos
 Base.metadata.create_all(bind=engine)
 
@@ -51,6 +52,14 @@ tags_metadata = []
 app = FastAPI(openapi_tags=tags_metadata, root_path=f"/api/v{API_VERSION}")
 
 
+# Configuración de CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permitir el origen de tu frontend
+    allow_credentials=True,
+    allow_methods=["*"],  # Permitir todos los métodos (GET, POST, etc.)
+    allow_headers=["*"],  # Permitir todas las cabeceras
+)
 #################################################
 #                 Middlewares                   #
 
