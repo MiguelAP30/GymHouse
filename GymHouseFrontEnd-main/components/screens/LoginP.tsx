@@ -30,7 +30,8 @@ export default function LoginP() {
             email: data.email,
             password: data.password
         }
-        const token = await postLogin(body)
+        let token = null
+        token = await postLogin(body)
         console.log(await postLogin(body));
         if(token){
             localStorage.setItem('token', token);

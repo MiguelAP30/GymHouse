@@ -40,8 +40,7 @@ export const registerSchema = z.object({
         .max(100, { message: "La dirección no puede superar los 100 caracteres." })
         .optional(),
 
-    birth_date: z.string()
-        .regex(/^\d{2}-\d{2}-\d{4}$/, { message: "La fecha de nacimiento debe tener el formato DD-MM-YYYY." }),
+    birth_date: z.string(),
     
     gender: z.string().optional()
 
