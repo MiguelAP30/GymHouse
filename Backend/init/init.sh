@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
-sleep 30
+sleep 20
 
 uvicorn main:app --host gym_house --reload
