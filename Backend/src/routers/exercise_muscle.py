@@ -243,7 +243,7 @@ def update_excercise_muscle_machine(credentials: Annotated[HTTPAuthorizationCred
         role_user = payload.get("user.role")
         status_user = payload.get("user.status")
         if role_user >= 3 and status_user:
-            element = ExerciseMuscleRepository(db).update_excercise_muscle(id, exercise)
+            element = ExerciseMuscleRepository(db).update_rate_excercise_muscle(id, exercise)
             if not element:        
                 return JSONResponse(
                     content={            

@@ -6,6 +6,7 @@ from src.models.exercise_muscle import ExerciseMuscle as ExerciseMuscleModel
 from src.models.muscle import Muscle as MuscleModel
 from src.models.machine import Machine as MachineModel
 from src.models.specific_muscle import SpecificMuscle as SpecificMuscleModel
+from src.models.exercise import Exercise as ExerciseModel
 
 
 
@@ -20,7 +21,8 @@ class ExerciseMuscleRepository():
     def get_excercise_muscle_machine_by_rate(self, machine_id: int) -> List[ExerciseMuscle]:
         query = (
             self.db.query(ExerciseMuscleModel)
-            .join(MachineModel)
+            .join(ExerciseModel, ExerciseMuscleModel.exercise_id == ExerciseModel.id)
+            .join(MachineModel, ExerciseModel.machine_id == MachineModel.id)
             .filter(MachineModel.id == machine_id)
             .order_by(desc(ExerciseMuscleModel.rate))
         )
