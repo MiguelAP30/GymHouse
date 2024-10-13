@@ -6,7 +6,7 @@ class SpecificMuscle(Base):
     __tablename__ = "specific_muscles"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(length=20))
+    name = Column(String(length=40))
     muscle_id = Column(Integer, ForeignKey("muscles.id"))
     description = Column(String(length=200))
 

@@ -26,8 +26,7 @@ def get_dificulty(credentials: Annotated[HTTPAuthorizationCredentials,Depends(se
         if role_current_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
         if user_status:
-            current_user = payload.get("sub")
-            result = DificultyRepository(db).get_all_dificulty(current_user)
+            result = DificultyRepository(db).get_all_dificulty()
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
         return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 

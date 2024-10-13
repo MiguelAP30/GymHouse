@@ -6,11 +6,7 @@ class SpecificMuscle(BaseModel):
     name: str = Field(title="Nombre del músculo específico")
     muscle_id: int = Field(title="Id del músculo")
     description: str = Field(title="Descripción del músculo específico")
-    
-    @validator("muscle_id")
-    def muscle_id_must_be_positive(cls, value):
-        assert value > 0, ValueError("El id del músculo debe ser positivo")
-        return value
+
     
     class Config:
         json_schema_extra = {
