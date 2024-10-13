@@ -11,6 +11,17 @@ class AuthRepository:
 
     def register_user(self, user: UserCreateSchema) -> dict:
         db = SessionLocal()
+        user_repo = UserRepository(db)
+
+        # Verificar si hay usuarios existentes
+        existing_users = user_repo.get_all_users()
+        
+        # Asignar rol de administrador al primer usuario registrado
+        if len(existing_users) == 0:
+            role_id = 4  # Rol de administrador
+        else:
+            role_id = 1  # Rol por defecto (cambia esto según tu configuración)
+
         if UserRepository(db).get_user_by_email(email=user.email) is not None:
             raise Exception("La cuenta ya existe")
         hashed_password = auth_handler.hash_password(password=user.password)
@@ -24,6 +35,7 @@ class AuthRepository:
             address=user.address,
             birth_date=user.birth_date,
             gender=user.gender,
+            role_id=role_id
         )
         return UserRepository(db).create_new_user(new_user)
 
