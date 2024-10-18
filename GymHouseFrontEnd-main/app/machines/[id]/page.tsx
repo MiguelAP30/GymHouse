@@ -1,15 +1,55 @@
-'use client'
-import { CardRutina } from '@/components/organisms/CardRutina'
-import { useParams } from 'next/navigation'
-import React from 'react'
+'use client';
+import { CardRutina } from '@/components/organisms/CardRutina';
+import useAuthStore from '@/validators/useAuthStore';
+import { useParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Spinner from '../../../components/molecules/Spinner';
 
-export default function page(){
+export default function Page() {
+  const { isAuthenticated, fetchToken, rol, setToken } = useAuthStore();
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const { id } = useParams();
 
-    const {id} = useParams()
-  return (
-    <>
-    <CardRutina idCard={`${id}`} />
-    <div>page  </div>
-    </>
-  )
+  // Obtiene el token desde localStorage
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+
+  useEffect(() => {
+    const checkPermission = async () => {
+      setLoading(true);
+      setToken(token); // Establece el token en el store
+      await fetchToken(); // Obtiene los datos del usuario
+      setLoading(false); // Finaliza la carga
+    };
+
+    checkPermission();
+  }, [fetchToken, setToken, token]);
+
+  useEffect(() => {
+    // Si ya se terminó la carga y no está autenticado o el rol no es el correcto, redirige
+    if (!loading) {
+      if (!isAuthenticated || rol !== 4) {
+        router.push("/"); // Redirige al home si no está autenticado o el rol no es correcto
+      }
+    }
+  }, [isAuthenticated, rol, loading, router]);
+
+  // Mientras se está verificando la autenticación, muestra el Spinner
+  if (loading) {
+    return <Spinner />;
+  }
+
+  // Si pasa la verificación de autenticación y permisos, renderiza el contenido
+  if (isAuthenticated && rol === 4) {
+    return (
+      <>
+        <CardRutina idCard={`${id}`} />
+        <div>page</div>
+      </>
+    );
+  }
+
+  // Retorna null o un Spinner adicional si aún no se ha hecho la redirección
+  return null;
 }
