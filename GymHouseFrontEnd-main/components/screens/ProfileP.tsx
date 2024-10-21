@@ -9,10 +9,12 @@ import { User} from '@/types/user';
 import { Profile } from '@/types/profile';
 import Swal from 'sweetalert2';
 import { useSearchParams } from 'next/navigation';
+import useAuthStore from '@/validators/useAuthStore';
+import { Await } from 'react-router-dom';
 
 export default function ProfileP() {
     const searchParams = useSearchParams();
-    const email = searchParams.get('email');
+    const {fetchToken, setToken, email } = useAuthStore();
     const [user, setUser] = useState<User>();
     const [profile, setProfile] = useState<Profile>();
     const {
@@ -24,24 +26,25 @@ export default function ProfileP() {
         resolver: zodResolver(profileSchema)
     });
 
+    const token = localStorage.getItem('token') as string;
+
     useEffect(() => {
-        if (email) {
-            getUserDataByEmail(email as string, localStorage.getItem('token') as string)
-                .then((data) => {
-                    setUser(data);
-                    setProfile(data.profile);
-                });
+        const fetchProfile = async () => {
+            setToken(token);
+            await fetchToken();
         }
+        fetchProfile();
     }, [email]);
 
     const onSubmit: SubmitHandler<Profile> = async (data) => {
         console.log(data);
         console.log("hola");
         const profileData: Profile = {
+            user_email: email as string,
             weight: data.weight,
             height: data.height,
             physical_activity: data.physical_activity,
-            date: new Date().toISOString()
+            date: new Date().toLocaleDateString('sv-SE')
         };
         setProfile(profileData);
         const profile = await postProfile(profileData, localStorage.getItem('token') as string);
