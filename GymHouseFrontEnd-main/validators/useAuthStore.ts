@@ -26,7 +26,6 @@ const useAuthStore = create<AuthState>((set, get) => ({
       set({ token, isAuthenticated: true });  // Autentica si hay token
   },
   
-  // Recupera el token desde el localStorage y actualiza el estado de autenticación
   fetchToken: async () => {
     const token = get().token;
     if (token) {
