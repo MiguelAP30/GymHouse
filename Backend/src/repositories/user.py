@@ -1,4 +1,5 @@
 from typing import List
+from sqlalchemy.orm import load_only
 from src.schemas.user import User
 from src.models.user import User as users
 
@@ -15,7 +16,12 @@ class UserRepository():
         return element
     
     def get_user_by_email(self, email: str):
-        element = self.db.query(users).filter(users.email == email).first()
+        element = (
+            self.db.query(users)
+            .options(load_only(users.email,users.id_number, users.user_name, users.name, users.phone, users.birth_date, users.gender, users.address))
+            .filter(users.email == email)
+            .first()
+        )
         return element
     
     def delete_user(self, email: str ) -> dict:

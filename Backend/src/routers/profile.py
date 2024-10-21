@@ -72,8 +72,8 @@ def update_profile(id: int, profile: Profile, credentials: Annotated[HTTPAuthori
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
         return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
 
-@profile_router.get('/{id}',response_model=Profile,description="Devuelve un perfil específico")
-def get_profile_by_id(id: int, credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> Profile:
+@profile_router.get('/{email}',response_model=Profile,description="Devuelve un perfil específico")
+def get_profile_by_email(email: str, credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> Profile:
     db= SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)
     if payload:
@@ -82,6 +82,6 @@ def get_profile_by_id(id: int, credentials: Annotated[HTTPAuthorizationCredentia
         if role_current_user < 2:
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
         if user_status:
-            result = ProfileRepository(db).get_profile_by_id(id)
+            result = ProfileRepository(db).get_profile_by_email(email)
             return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
         return JSONResponse(content={"message": "Your account is inactive", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)

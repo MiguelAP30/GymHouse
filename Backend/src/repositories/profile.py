@@ -33,6 +33,5 @@ class ProfileRepository():
         self.db.refresh(element)
         return element
     
-    def get_profile_by_id(self, id: int) -> Profile:
-        element = self.db.query(profiles).filter(profiles.id == id).first()
-        return element
+    def get_profile_by_email(self, email: str) -> Profile:
+        return self.db.query(profiles).filter(profiles.user_email == email).all()

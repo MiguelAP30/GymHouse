@@ -6,20 +6,6 @@ import { useRouter } from 'next/navigation';
 import { hoverscale , hoverLink} from '../tokens';
 
 export const HeaderRoutines = () => {
-    /* const [isAuthenticaded, setIsAuthenticated] = useState(false);
-    const router = useRouter();
-
-    useEffect(() => {
-        const loggedIn = localStorage.getItem('isAuthenticated') === 'true';
-        setIsAuthenticated(loggedIn);
-    }, []);
-
-    const handleLogout = () => {
-        localStorage.removeItem('isAuthenticated');
-        setIsAuthenticated(false);
-        router.push('/');
-    }; */
-
     return (
         <header className="flex flex-row items-center justify-center w-full bg-[#011627] m-0 p-4">
                 <input 

@@ -37,7 +37,6 @@ export default function RegisterP() {
             birth_date: data.birth_date,
             gender: data.gender
         };
-
         setRegister(dataregister);
         const register =await postRegister(dataregister); 
         if(register.data){
@@ -85,10 +84,10 @@ export default function RegisterP() {
                         <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
                             <label className="text-white" htmlFor="email">Email</label>
                             <input
-                            {...register("email")}
-                            id="email"
-                            type="email" 
-                            className="text-black p-2 rounded w-full"
+                                {...register("email")}
+                                id="email"
+                                type="email" 
+                                className="text-black p-2 rounded w-full"
                             />
                             {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                         </div>

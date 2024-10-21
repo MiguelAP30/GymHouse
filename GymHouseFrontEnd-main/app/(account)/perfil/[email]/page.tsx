@@ -6,12 +6,12 @@ import React from 'react'
 
 
 export default function page(){
-    const {id} = useParams()
-    console.log(id);
+    const {email} = useParams()
+    console.log(email);
     
   return (
     <>
-        <div>Perfil Usuario {id}</div>
+        <div>Perfil Usuario {email}</div>
     </>
   )
 }

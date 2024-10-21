@@ -5,6 +5,7 @@ interface AuthState {
   token: string | null;
   nameUser: string | null;
   rol: number | null;
+  email: string | null;
   setIsAuthenticated: (value: boolean) => void;
   setToken: (token: string | null) => void;
   fetchToken: () => Promise<void>;
@@ -15,6 +16,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
   token: null,
   nameUser: null,
   rol: null,
+  email: null,
   
   // Actualiza el estado de isAuthenticated al cambiarlo manualmente
   setIsAuthenticated: (value: boolean) => set({ isAuthenticated: value }),
@@ -43,11 +45,13 @@ const useAuthStore = create<AuthState>((set, get) => ({
         set({ 
           nameUser: data.data["user.name"],
           rol: data.data["user.role"],
+          email: data.data["sub"],
           isAuthenticated: true // Marca al usuario como autenticado
         });
         
         console.log(data.data["user.name"]);
         console.log("rol", data.data["user.role"]);
+        console.log("email", data.data["sub"]);
         
       } catch (error) {
         console.error("Error fetching user data:", error);

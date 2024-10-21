@@ -22,14 +22,13 @@ export default function Page() {
       await fetchToken(); // Obtiene los datos del usuario
       setLoading(false); // Finaliza la carga
     };
-
     checkPermission();
   }, [fetchToken, setToken, token]);
 
   useEffect(() => {
     // Si ya se terminó la carga y no está autenticado o el rol no es el correcto, redirige
     if (!loading) {
-      if (!isAuthenticated || rol !== 4) {
+      if (!isAuthenticated || (rol ?? 0) < 2) {
         router.push("/"); // Redirige al home si no está autenticado o el rol no es correcto
       }
     }
@@ -41,7 +40,7 @@ export default function Page() {
   }
 
   // Si pasa la verificación de autenticación y permisos, renderiza el contenido
-  if (isAuthenticated && rol === 4) {
+  if (isAuthenticated && (rol ?? 0) > 1) {
     return (
       <>
         <CardRutina idCard={`${id}`} />
@@ -49,7 +48,4 @@ export default function Page() {
       </>
     );
   }
-
-  // Retorna null o un Spinner adicional si aún no se ha hecho la redirección
-  return null;
 }
