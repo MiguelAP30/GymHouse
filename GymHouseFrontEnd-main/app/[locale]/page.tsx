@@ -1,6 +1,6 @@
 'use client';
-import { Header, Footer } from '@/components'
-import { mainText } from '@/components/tokens';
+import { Header, Footer } from '../../components'
+import { mainText } from '../../components/tokens';
 import { useTranslations } from 'next-intl';
 export default function Home() {
   const t = useTranslations("home")

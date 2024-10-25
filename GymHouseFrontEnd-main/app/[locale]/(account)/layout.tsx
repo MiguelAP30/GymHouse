@@ -1,10 +1,10 @@
 'use client';
-import { Header, Footer } from '@/components';
-import useAuthStore from '@/validators/useAuthStore';
+import { Header, Footer } from '../../../components';
+import useAuthStore from '../../../validators/useAuthStore';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Spinner from '@/components/molecules/Spinner';
+import Spinner from '../../../components/molecules/Spinner';
 
 export default function AccountLayout({
     children

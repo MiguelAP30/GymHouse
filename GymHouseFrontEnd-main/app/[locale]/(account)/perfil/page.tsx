@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ProfileP  from "@/components/screens/ProfileP";
+import ProfileP  from "../../../../components/screens/ProfileP";
 
 export const metadata: Metadata = {
     title: "Profile",

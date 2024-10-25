@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import {HeaderRoutines} from '../../../components/molecules/Header_routines'
-import { CardRutina } from '../../../components/organisms/CardRutina'
+import {HeaderRoutines} from '../../../../components/molecules/Header_routines'
 
 export const metadata: Metadata = {
     title: "Routines",

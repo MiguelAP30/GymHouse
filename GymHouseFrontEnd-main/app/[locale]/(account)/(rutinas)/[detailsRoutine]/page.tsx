@@ -1,7 +1,7 @@
 'use client'
 import { useParams } from "next/navigation"
-import { CardDia } from '../../../../components/organisms/cardDay'
-import {centerItem} from '../../../../components/tokens'
+import { CardDia } from '../../../..../../../../components/organisms/cardDay'
+import {centerItem} from '../../../../../components/tokens'
 
 export default function DetailRoutine() {
 const { detailsRoutine } = useParams()

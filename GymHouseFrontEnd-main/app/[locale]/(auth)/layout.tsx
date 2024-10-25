@@ -1,4 +1,4 @@
-import { metadataRegister } from "@/components/metadata";
+
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

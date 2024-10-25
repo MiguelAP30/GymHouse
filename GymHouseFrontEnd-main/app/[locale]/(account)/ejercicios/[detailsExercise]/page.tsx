@@ -1,6 +1,6 @@
 'use client'
 import { useParams } from "next/navigation"
-import {TextTitle, TextParagraph} from '../../../../components/tokens'
+import {TextTitle, TextParagraph} from '../../../../../components/tokens'
 import Image from "next/image"
 
 export default function DetailRoutine() {

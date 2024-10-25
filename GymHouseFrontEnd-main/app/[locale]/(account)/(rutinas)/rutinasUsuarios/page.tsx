@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import {TextTitle, TextParagraph} from '../../../../components/tokens'
-import { CardRutina } from '../../../../components/organisms/CardRutina'
+import { CardRutina } from '../../../../../components/organisms/CardRutina'
 
 export const metadata: Metadata = {
     title: "Routines",

@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { TextTitle } from '@/components/tokens';
+import { TextTitle } from '../../components/tokens';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { profileSchema } from "@/validators/profileSchema";

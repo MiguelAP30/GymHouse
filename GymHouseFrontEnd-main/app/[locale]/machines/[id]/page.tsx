@@ -1,10 +1,10 @@
 'use client';
-import { CardRutina } from '@/components/organisms/CardRutina';
-import useAuthStore from '@/validators/useAuthStore';
+import { CardRutina } from '../../../../components/organisms/CardRutina';
+import useAuthStore from '../../../../validators/useAuthStore';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Spinner from '../../../components/molecules/Spinner';
+import Spinner from '../../../../components/molecules/Spinner';
 
 export default function Page() {
   const { isAuthenticated, fetchToken, rol, setToken } = useAuthStore();
