@@ -6,14 +6,17 @@ interface AuthState {
   nameUser: string | null;
   rol: number | null;
   email: string | null;
+  language: string | null;
   setIsAuthenticated: (value: boolean) => void;
   setToken: (token: string | null) => void;
   fetchToken: () => Promise<void>;
+  setLanguage:(lan:string) => void;
 }
 
 const useAuthStore = create<AuthState>((set, get) => ({
   isAuthenticated: false,
   token: null,
+  language:"es",
   nameUser: null,
   rol: null,
   email: null,
@@ -25,6 +28,11 @@ const useAuthStore = create<AuthState>((set, get) => ({
   setToken: (token: string | null) => {
       set({ token, isAuthenticated: true });  // Autentica si hay token
   },
+
+  setLanguage: (lan: string | null) => {
+    set({ language:lan });
+},
+  
   
   fetchToken: async () => {
     const token = get().token;

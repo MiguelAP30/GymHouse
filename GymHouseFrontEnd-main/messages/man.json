@@ -1,0 +1,74 @@
+{
+    "home": {
+        "message": "通过我们的健身房管理平台改变你的锻炼日程。Gymhouse 提供：个性化的锻炼方案，帮助你实现健身目标的跟踪工具，以及一个可以与其他用户互动的社交环境。"
+    },
+    "header": {
+        "message": "欢迎",
+        "faq": "常见问题",
+        "about": "关于我们",
+        "login": "登录",
+        "register": "注册",
+        "routines": "锻炼方案",
+        "exercises": "练习",
+        "profile": "个人资料",
+        "logout": "登出"
+    },
+    "footer": {},
+    "faq": {
+        "message": "常见问题"
+    },
+    "about": {
+        "title": "关于我们",
+        "message": "我们是一群健身爱好者，联合起来创建了 GymHouse，这里是你可以找到个性化锻炼方案和更多资源的地方。"
+    },
+    "login": {
+        "message": "欢迎来到 GymHouse",
+        "email": "电子邮件",
+        "password": "密码",
+        "loginButton": "登录"
+    },
+    "register": {
+        "message": "欢迎来到 GymHouse",
+        "email": "电子邮件",
+        "idNumber": "身份证号码",
+        "password": "密码",
+        "repeatPassword": "确认密码",
+        "name": "姓名",
+        "username": "用户名",
+        "phoneNumber": "电话号码",
+        "address": "地址（可选）",
+        "birthdate": "出生日期",
+        "gender": "性别",
+        "registerButton": "注册"
+    },
+    "routines": {
+        "general": "一般锻炼方案",
+        "professional": "专业锻炼方案",
+        "user": "用户锻炼方案",
+        "all": "所有锻炼方案",
+        "mine": "我的锻炼方案"
+    },
+    "exercises": {
+        "title": "练习",
+        "message": "为想要保持健康的人士提供的练习"
+    },
+    "profile": {
+        "title": "个人资料",
+        "weight": "体重",
+        "height": "身高",
+        "activity": "身体活动",
+        "updateButton": "更新",
+        "email": "电子邮件",
+        "idNumber": "身份证号码",
+        "username": "用户名",
+        "name": "姓名",
+        "phoneNumber": "电话号码",
+        "address": "地址",
+        "birthdate": "出生日期",
+        "gender": "性别"
+    },
+    "errors": {
+        "login": "登录",
+        "logout": "登出"
+    }
+}
