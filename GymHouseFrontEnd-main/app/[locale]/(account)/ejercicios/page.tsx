@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import {TextTitle, TextParagraph} from '../../../components/tokens'
+import {TextTitle, TextParagraph} from '../../../../components/tokens'
+import { useTranslations } from 'next-intl';
 
 export const metadata: Metadata = {
     title: "Exercises",
@@ -7,14 +8,15 @@ export const metadata: Metadata = {
 };
 
 export default function exercises() {
+    const t = useTranslations("exercises")
     return (
         <main className="w-full flex justify-between min-h-[80vh] h-[80vh] m-0 p-0">
             <aside className="flex flex-col items-center justify-center w-full bg-[#011627] m-0 p-0">
                 <h1 className={`${TextTitle}`}>
-                    Ejercicios
+                    {t("title")}
                 </h1>
                 <p className={`${TextParagraph}`}>
-                    Ejercicios para personas que quieren ponerse en forma.
+                    {t("message")}
                 </p>
             </aside>
         </main>

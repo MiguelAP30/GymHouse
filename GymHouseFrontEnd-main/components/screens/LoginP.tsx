@@ -13,6 +13,7 @@ import { postLogin } from '@/libs/api_general';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
 import { loginSchema } from "@/validators/loginSchema";
+import { useTranslations } from 'next-intl';
 
 export default function LoginP() {
     const router = useRouter();
@@ -49,7 +50,7 @@ export default function LoginP() {
             });
         }
     };
-
+    const t = useTranslations("login")
     return (
         <>
             <meta name="description" content={metadataLogin.description ?? ''} />
@@ -67,12 +68,12 @@ export default function LoginP() {
                         />
                     </Link>
                     <h1 className={`${boldFormText}`}>
-                        Welcome to GymHouse
+                        {t("message")}
                     </h1>
                 </div>
                 <form className={`${inputForm} p-4 rounded-2xl border border-gray-500`} onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col mb-4">
-                        <label className="text-white" htmlFor="email">Email</label>
+                        <label className="text-white" htmlFor="email">{t("email")}</label>
                         <input
                             {...register("email")}
                             id="email"
@@ -83,7 +84,7 @@ export default function LoginP() {
                         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
                     </div>
                     <div className={`${inputForm}`}>
-                        <label className="text-white" htmlFor="password">Password</label>
+                        <label className="text-white" htmlFor="password">{t("password")}</label>
                         <input
                             {...register("password")}
                             id="password"
@@ -96,7 +97,7 @@ export default function LoginP() {
                     <div className="mt-5">
                         <input
                             type="submit"
-                            value="Ingresar"
+                            value={t("loginButton")}
                             className={`${btnIngresar} w-full`}
                         />
                     </div>

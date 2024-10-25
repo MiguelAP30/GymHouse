@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import {TextTitle, TextParagraph, centerItem} from '../../../components/tokens'
+import {TextTitle, TextParagraph, centerItem} from '../../../../components/tokens'
+import { useTranslations } from 'next-intl';
+
 
 export const metadata: Metadata = {
     title: "GymHouse",
@@ -7,15 +9,15 @@ export const metadata: Metadata = {
 };
 
 export default function About() {
+    const t = useTranslations("about")
     return (
         <main className="w-full flex justify-between min-h-[80vh] h-[80vh] m-0 p-0">
             <aside className={`${centerItem} w-full bg-[#011627] m-0 p-0`}>
                 <h1 className={`${TextTitle}`}>
-                    ¿Quienes somos?
+                    {t("title")}
                 </h1>
                 <p className={`${TextParagraph}`}>
-                    Somos un grupo de entusiastas del fitness que se unieron para crear GymHouse, 
-                    un lugar donde puedes encontrar rutinas de ejercicios personalizadas y mucho más.
+                    {t("message")}
                 </p>
             </aside>
         </main>

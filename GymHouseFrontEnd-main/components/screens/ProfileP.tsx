@@ -10,6 +10,7 @@ import { User } from '@/types/user';
 import Swal from 'sweetalert2';
 import { useSearchParams } from 'next/navigation';
 import useAuthStore from '@/validators/useAuthStore';
+import { useTranslations } from 'next-intl';
 
 export default function ProfileP() {
     const searchParams = useSearchParams();
@@ -78,56 +79,56 @@ export default function ProfileP() {
     if (loading) {
         return <div>Loading...</div>;
     }
-
+    const t = useTranslations("profile")
     return (
         <main className="w-full flex justify-between m-0 p-0">
             <aside className="flex flex-col items-center justify-center w-full bg-[#011627] m-0 p-0">
-                <h1 className={`${TextTitle}`}>Perfil</h1>
+                <h1 className={`${TextTitle}`}>{t("title")}</h1>
                 <div className='w-1/2 flex justify-center items-center mb-[30px]'>
                     {profile ? (
                         <div className="flex flex-col justify-center items-center gap-4 p-4 bg-white rounded shadow-md">
                             <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">Email</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("email")}</label>
                                 <p className="p-2 border border-gray-300 rounded text-black">{user?.email}</p>
                             </div>
                             <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">Número de Identidad</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("idNumber")}</label>
                                 <p className="p-2 border border-gray-300 rounded text-black">{user?.id_number}</p>
                             </div>
                             <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">Username</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("username")}</label>
                                 <p className="p-2 border border-gray-300 rounded text-black">{user?.user_name}</p>
                             </div>
                             <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">Nombre</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("name")}</label>
                                 <p className="p-2 border border-gray-300 rounded text-black">{user?.name}</p>
                             </div>
                             <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">Teléfono</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("phoneNumber")}</label>
                                 <p className="p-2 border border-gray-300 rounded text-black">{user?.phone}</p>
                             </div>
                             <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">Dirección</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("address")}</label>
                                 <p className="p-2 border border-gray-300 rounded text-black">{user?.address}</p>
                             </div>
                             <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">Edad</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("birthdate")}</label>
                                 <p className="p-2 border border-gray-300 rounded text-black">{user?.birth_date}</p>
                             </div>
                             <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">Género</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("gender")}</label>
                                 <p className="p-2 border border-gray-300 rounded text-black">{user?.gender}</p>
                             </div>
                             <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">Peso</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("weight")}</label>
                                 <p className="p-2 border border-gray-300 rounded text-black">{profile.weight}</p>
                             </div>
                             <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">Altura</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("height")}</label>
                                 <p className="p-2 border border-gray-300 rounded text-black">{profile.height}</p>
                             </div>
                             <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">Actividad física</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("activity")}</label>
                                 <p className="p-2 border border-gray-300 rounded text-black">{profile.physical_activity}</p>
                             </div>
                             <div className="flex flex-row">
@@ -138,7 +139,7 @@ export default function ProfileP() {
                     ) : (
                         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 p-4 bg-white rounded shadow-md">
                             <div className="flex flex-col">
-                                <label className="mb-2 text-sm font-semibold text-gray-700" htmlFor="weight">Peso</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700" htmlFor="weight">{t("weight")}</label>
                                 <input 
                                     type="number" 
                                     {...register("weight", { valueAsNumber: true })} 
@@ -148,7 +149,7 @@ export default function ProfileP() {
                                 {errors.weight && <span className="text-red-500 text-sm">{errors.weight.message}</span>}
                             </div>
                             <div className="flex flex-col">
-                                <label className="mb-2 text-sm font-semibold text-gray-700" htmlFor="height">Altura</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700" htmlFor="height">{t("height")}</label>
                                 <input 
                                     type="number" 
                                     {...register("height", { valueAsNumber: true })} 
@@ -158,7 +159,7 @@ export default function ProfileP() {
                                 {errors.height && <span className="text-red-500 text-sm">{errors.height.message}</span>}
                             </div>
                             <div className="flex flex-col">
-                                <label className="mb-2 text-sm font-semibold text-gray-700" htmlFor="physical_activity">Actividad física</label>
+                                <label className="mb-2 text-sm font-semibold text-gray-700" htmlFor="physical_activity">{t("activity")}</label>
                                 <input 
                                     type="number" 
                                     {...register("physical_activity", { valueAsNumber: true })} 

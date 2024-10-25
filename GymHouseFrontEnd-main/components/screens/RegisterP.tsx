@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import { registerSchema } from "@/validators/registerSchema"
 import { log } from 'console';
+import { useTranslations } from 'next-intl';
 
 export default function RegisterP() {
     const router = useRouter();
@@ -58,7 +59,7 @@ export default function RegisterP() {
     const password = watch("password");
     const confirmPassword = watch("confirm_password");
     const [Register, setRegister] = useState<Register>();
-
+    const t = useTranslations("register")
     return (
         <>
             <meta name="description" content={metadataRegister.description ?? ''} />
@@ -76,13 +77,13 @@ export default function RegisterP() {
                         />
                     </Link>
                     <h1 className={`${boldFormText}`}>
-                        Welcome to GymHouse
+                        {t("message")}
                     </h1>
                 </div>
                 <form className={`${inputForm} p-4 rounded-2xl border border-gray-500`} onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-wrap -mx-2 mb-4">
                         <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
-                            <label className="text-white" htmlFor="email">Email</label>
+                            <label className="text-white" htmlFor="email">{t("email")}</label>
                             <input
                                 {...register("email")}
                                 id="email"
@@ -92,7 +93,7 @@ export default function RegisterP() {
                             {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                         </div>
                         <div className="w-full md:w-1/2 px-2">
-                            <label className="text-white" htmlFor="id_number">Número de Identificación</label>
+                            <label className="text-white" htmlFor="id_number">{t("idNumber")}</label>
                             <input
                                 {...register("id_number")}
                                 id="id_number"
@@ -104,7 +105,7 @@ export default function RegisterP() {
                     </div>
                     <div className="flex flex-wrap -mx-2 mb-4">
                         <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
-                            <label className="text-white" htmlFor="password">Contraseña</label>
+                            <label className="text-white" htmlFor="password">{t("password")}</label>
                             <input
                                 {...register("password")}
                                 id="password"
@@ -114,7 +115,7 @@ export default function RegisterP() {
                             {errors.password && <p>{errors.password.message}</p>}
                         </div>
                         <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
-                            <label className="text-white" htmlFor="confirm_password">Confirmar contraseña</label>
+                            <label className="text-white" htmlFor="confirm_password">{t("repeatPassword")}</label>
                             <input
                                 {...register("confirm_password")}
                                 id="confirm_password"
@@ -130,7 +131,7 @@ export default function RegisterP() {
 
                     <div className="flex flex-wrap -mx-2 mb-4">
                         <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
-                            <label className="text-white" htmlFor="name">Nombre</label>
+                            <label className="text-white" htmlFor="name">{t("name")}</label>
                             <input
                                 {...register("name")}
                                 id="name"
@@ -140,7 +141,7 @@ export default function RegisterP() {
                             {errors.name && <p>{errors.name.message}</p>}
                         </div>
                         <div className="w-full md:w-1/2 px-2">
-                            <label className="text-white" htmlFor="username">Nombre de Usuario</label>
+                            <label className="text-white" htmlFor="username">{t("username")}</label>
                             <input
                                 {...register("username")}
                                 id="username"
@@ -153,7 +154,7 @@ export default function RegisterP() {
 
                     <div className="flex flex-wrap -mx-2 mb-4">
                         <div className="w-full md:w-1/2 px-2">
-                            <label className="text-white" htmlFor="phone">Teléfono</label>
+                            <label className="text-white" htmlFor="phone">{t("phoneNumber")}</label>
                             <input
                                 {...register("phone")}
                                 id="phone"
@@ -163,7 +164,7 @@ export default function RegisterP() {
                             {errors.phone && <p>{errors.phone.message}</p>}
                         </div>
                         <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
-                            <label className="text-white" htmlFor="address">Dirección (opcional)</label>
+                            <label className="text-white" htmlFor="address">{t("address")} </label>
                             <input
                                 {...register("address")}
                                 id="address"
@@ -175,7 +176,7 @@ export default function RegisterP() {
 
                     <div className="flex flex-wrap -mx-2 mb-4">
                         <div className="w-full md:w-1/2 px-2">
-                            <label className="text-white" htmlFor="birth_date">Fecha de Nacimiento</label>
+                            <label className="text-white" htmlFor="birth_date">{t("birthdate")}</label>
                             <input
                                 {...register("birth_date")}
                                 id="birth_date"
@@ -185,7 +186,7 @@ export default function RegisterP() {
                             {errors.birth_date && <p>{errors.birth_date.message}</p>}
                         </div>
                         <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
-                            <label className="text-white" htmlFor="gender">Género</label>
+                            <label className="text-white" htmlFor="gender">{t("gender")}</label>
                             <select
                                 {...register("gender")}
                                 id="gender"
@@ -202,7 +203,7 @@ export default function RegisterP() {
                     <div className="mt-5">
                         <input
                             type="submit"
-                            value="Registrar"
+                            value={t("registerButton")}
                             className={`${btnIngresar} w-full`}
                         />
                     </div>

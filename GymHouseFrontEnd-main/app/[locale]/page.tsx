@@ -1,8 +1,9 @@
 'use client';
 import { Header, Footer } from '@/components'
 import { mainText } from '@/components/tokens';
-
+import { useTranslations } from 'next-intl';
 export default function Home() {
+  const t = useTranslations("home")
   return (
     <>
       <Header />
@@ -12,9 +13,7 @@ export default function Home() {
               GymHouse
           </h1>
           <p className={`${mainText}`}>
-              Transforma tu rutina de ejercicio con nuestra plataforma de gestión para gimnasios, Gymhouse cuenta con: 
-              acceso a rutinas personalizadas, herramientas de seguimiento para alcanzar tus metas fitness y un entorno
-              social en el que puedes interactura con los demas usuarios.
+              {t("message")}
           </p>
         </aside>
       </main>

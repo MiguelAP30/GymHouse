@@ -1,0 +1,75 @@
+{
+    "home": {
+        "message": "Transform your exercise routine with our gym management platform, Gymhouse has: access to personalized routines, tracking tools to achieve your fitness goals and a social environment in which you can interact with other users."
+    },
+    "header": {
+        "message": "Welcome",
+        "faq": "FAQ",
+        "about": "About us",
+        "login": "Iniciar sesión",
+        "register": "Registrarse",
+        "routines": "Routines",
+        "exercises": "Excercises",
+        "profile": "Profile",
+        "logout": "Log out" 
+    },
+    "footer": {
+    },
+    "faq": {
+        "message": "Frequently asked questions"
+    },
+    "about": {
+        "title": "About us",
+        "message": "We're a group of fitness enthusiasts who came together to create GymHouse, a place where you can find personalized workout routines and much more."
+    },
+    "login": {
+        "message": "Welcome to GymHouse",
+        "email": "Email",
+        "password": "Password",
+        "loginButton": "Login"
+    },
+    "register": {
+        "message": "Welcome to GymHouse",
+        "email": "Email",
+        "idNumber": "ID number",
+        "password": "Password",
+        "repeatPassword": "Confirm password",
+        "name": "Name",
+        "username": "Username",
+        "phoneNumber": "Phone number",
+        "address": "Address (optional)",
+        "birthdate": "Birthdate",
+        "gender": "Gender",
+        "registerButton": "Register"
+    },
+    "routines": {
+        "general": "General routines",
+        "professional": "Professional routines",
+        "user": "User routines",
+        "all": "All routines",
+        "mine": "My routines"
+    },
+    "exercises": {
+        "title": "Exercises",
+        "message": "Exercises for people who want to get in shape"
+    },
+    "profile": {
+        "title": "Profile",
+        "weight": "Weight",
+        "height": "Height",
+        "activity": "Physical activity",
+        "updateButton": "Update",
+        "email": "Email",
+        "idNumber": "ID number",
+        "username": "Username",
+        "name": "Name",
+        "phoneNumber": "Phone number",
+        "address": "Address ",
+        "birthdate": "Birthdate",
+        "gender": "Gender"
+    },
+    "errors": {
+        "login": "Log in",
+        "logout": "Log out"
+    }
+}

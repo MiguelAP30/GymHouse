@@ -1,0 +1,75 @@
+{
+    "home": {
+        "message": "Transforma tu rutina de ejercicios con nuestra plataforma de gestión de gimnasios. Gymhouse cuenta con: acceso a rutinas personalizadas, herramientas de seguimiento para alcanzar tus metas de fitness y un entorno social en el que puedes interactuar con otros usuarios."
+    },
+    "header": {
+        "message": "Bienvenido",
+        "faqButton": "Preguntas frecuentes",
+        "aboutButton": "Sobre nosotros",
+        "loginButton": "Iniciar sesión",
+        "registerButton": "Registrarse",
+        "routines": "Rutinas",
+        "exercises": "Ejercicios",
+        "profile": "Perfil",
+        "logout": "Cerrar sesión"
+    },
+    "footer": {
+    },
+    "faq": {
+        "message": "Preguntas frecuentes"
+    },
+    "about": {
+        "title":"Sobre nosotros",
+        "message": "Somos un grupo de entusiastas del fitness que se unieron para crear GymHouse, un lugar donde puedes encontrar rutinas de ejercicios personalizadas y mucho más."
+    },
+    "login": {
+        "message": "Bienvenido a GymHouse",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "loginButton": "Iniciar sesión"
+    },
+    "register": {
+        "message": "Bienvenido a GymHouse",
+        "email": "Correo electrónico",
+        "idNumber": "Número de identificación",
+        "password": "Contraseña",
+        "repeatPassword": "Confirmar contraseña",
+        "name": "Nombre",
+        "username": "Nombre de usuario",
+        "phoneNumber": "Número de teléfono",
+        "address": "Dirección (opcional)",
+        "birthdate": "Fecha de nacimiento",
+        "gender": "Género",
+        "registerButton": "Registrarse"
+    },
+    "routines": {
+        "general": "Rutinas generales",
+        "professional": "Rutinas profesionales",
+        "user": "Rutinas de usuarios",
+        "all": "Todas las rutinas",
+        "mine": "Mis rutinas"
+    },
+    "exercises": {
+        "title": "Ejercicios",
+        "message": "Ejercicios para personas que quieren ponerse en forma"
+    },
+    "profile": {
+        "title": "Perfil",
+        "weight": "Peso",
+        "height": "Altura",
+        "activity": "Actividad física",
+        "updateButton": "Actualizar",
+        "email": "Correo electrónico",
+        "idNumber": "Número de identificación",
+        "username": "Nombre de usuario",
+        "name": "Nombre",
+        "phoneNumber": "Número de teléfono",
+        "address": "Dirección",
+        "birthdate": "Fecha de nacimiento",
+        "gender": "Género"
+    },
+    "errors": {
+        "login": "Iniciar sesión",
+        "logout": "Cerrar sesión"
+    }
+}

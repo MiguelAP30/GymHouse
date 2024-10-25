@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { hoverscale, hoverLink } from '../tokens';
 import useAuthStore from '@/validators/useAuthStore';
+import { useTranslations } from 'next-intl';
 
 export const Header = () => {
   const { token, isAuthenticated, setIsAuthenticated, fetchToken, rol, nameUser, setToken } = useAuthStore();
@@ -31,6 +32,8 @@ export const Header = () => {
     router.push('/'); // Redirecciona al logout
   };
 
+  const t = useTranslations("header")
+
   return (
     <header className="w-full max-w-full h-[70px] shadow-md bg-[#17455A] flex justify-between items-center">
       <aside className="flex justify-center items-center mr-[40px] ml-[40px]">
@@ -44,29 +47,29 @@ export const Header = () => {
           />
         </Link>
         <Link href="/" className={`mr-[20px] ${hoverLink}`}>GymHouse</Link>
-        <Link href="/preguntas" className={`mr-[20px] ${hoverLink}`}>Preguntas Frecuentes</Link>
-        <Link href="/nosotros" className={`mr-[20px] ${hoverLink}`}>Nosotros</Link>
+        <Link href="/preguntas" className={`mr-[20px] ${hoverLink}`}>{t("faq")}</Link>
+        <Link href="/nosotros" className={`mr-[20px] ${hoverLink}`}>{t("about")}</Link>
       </aside>
       <div className="pr-[120px] flex-grow text-center">
-        {isAuthenticated ? <h2 className="text-white">¡Bienvenido {nameUser}!</h2> : null}
+        {isAuthenticated ? <h2 className="text-white">¡{t("message")} {nameUser}!</h2> : null}
       </div>
       <menu className="flex justify-center items-center mr-5">
         {isAuthenticated ? (
           <>
-            <Link href="/rutinasGenerales" className={`mr-[10px] ${hoverLink}`}>Rutinas</Link>
-            <Link href="/ejercicios" className={`mr-[10px] ${hoverLink}`}>Ejercicios</Link>
-            <Link href="/perfil" className={`mr-[10px] ${hoverLink}`}>Perfil</Link>
+            <Link href="/rutinasGenerales" className={`mr-[10px] ${hoverLink}`}>{t("routines")}</Link>
+            <Link href="/ejercicios" className={`mr-[10px] ${hoverLink}`}>{t("exercises")}</Link>
+            <Link href="/perfil" className={`mr-[10px] ${hoverLink}`}>{t("profile")}</Link>
             <input
               type="button"
-              value="Cerrar Sesión"
+              value={t("logout")}
               onClick={handleLogout}
               className={`ml-[40px] mr-[10px] ${hoverLink}`}
             />
           </>
         ) : (
           <>
-            <Link href="/login" className={`mr-[10px] ${hoverLink}`}>Login</Link>
-            <Link href="/register" className={`mr-[10px] ${hoverLink}`}>Register</Link>
+            <Link href="/login" className={`mr-[10px] ${hoverLink}`}>{t("login")}</Link>
+            <Link href="/register" className={`mr-[10px] ${hoverLink}`}>{t("register")}</Link>
           </>
         )}
       </menu>
