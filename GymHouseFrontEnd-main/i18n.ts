@@ -13,7 +13,6 @@ const messagesMap: Record<LocaleType, () => Promise<{ default: any }>> = {
 
 
 export default getRequestConfig(async ({ requestLocale }) => {
-    // Asegúrate de resolver correctamente `requestLocale`
     const locale = (await requestLocale) as LocaleType | undefined;
 
     if (!locale || !locales.includes(locale)) {

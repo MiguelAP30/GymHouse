@@ -7,7 +7,7 @@ export default createMiddleware({
 
 export const config = {
     matcher: [
-        '/:nextData(_next/data/[^/]{1,})?/(arb|en|es)(/:path*)?',
+        '/:locale(arb|en|es)/:path*',
         '/'
     ]
 };
