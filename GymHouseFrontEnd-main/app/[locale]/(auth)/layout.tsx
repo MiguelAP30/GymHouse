@@ -12,7 +12,7 @@ export default function AuthLayout({
  children: React.ReactNode;
 }) {
   return (
-    <main className="w-full flex justify-between h-screen">
+    <main className="w-full flex justify-between min-h-screen">
       <section></section>
       <section className="w-full flex justify-center items-center bg-[#011627]">
         {children}

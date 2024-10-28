@@ -71,5 +71,13 @@
     "errors": {
         "login": "Log in",
         "logout": "Log out"
+    },
+    "messages": {
+        "welcome": "Welcome",
+        "success1": "User logged in successfully",
+        "error": "Error",
+        "failed1": "User could not log in",
+        "success2": "User created successfully",
+        "failed2": "User could not be created"
     }
 }

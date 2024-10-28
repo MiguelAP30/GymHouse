@@ -21,7 +21,7 @@ export default function RegisterP() {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const {language} = useAuthStore() 
-
+    const b = useTranslations("messages");
     const {
         register,
         handleSubmit,
@@ -49,14 +49,14 @@ export default function RegisterP() {
         if (register.data) {
         router.push(`/${language}/login`);
             Swal.fire({
-                title: "!Bienvenido!",
-                text: "Usuario creado correctamente",
+                title: `!${b("welcome")}!`,
+                text: `${b("success2")}`,
                 icon: "success"
             });
         } else {
             Swal.fire({
-                title: "!Error!",
-                text: "El usuario no ha podido crearse",
+                title: `!${b("error")}!`,
+                text: `${b("failed2")}`,
                 icon: "error"
             });
         }
@@ -85,7 +85,7 @@ export default function RegisterP() {
             <meta name="description" content={metadataRegister.description ?? ''} />
             <title>{metadataRegister.title?.toString() ?? ''}</title>
 
-            <div className={`min-h-screen ${centerItem} flex-col`}>
+            <div className={`min-h-screen ${centerItem} flex-col  `}>
                 <div className={`mb-5 ${centerItem} flex-col`}>
                     <Link href="/">
                         <Image

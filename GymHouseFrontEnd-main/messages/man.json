@@ -70,5 +70,13 @@
     "errors": {
         "login": "登录",
         "logout": "登出"
+    },
+    "messages": {
+        "welcome": "欢迎",
+        "success1": "用户登录成功",
+        "error": "错误",
+        "failed1": "用户无法登录",
+        "success2": "用户创建成功",
+        "failed2": "无法创建用户"
     }
 }

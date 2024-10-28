@@ -30,6 +30,8 @@ export default function LoginP() {
     });
 
     const t = useTranslations("login");
+    const b = useTranslations("messages");
+
 
     useEffect(() => {
         if (localStorage.getItem('auth') === 'true') {
@@ -54,8 +56,8 @@ export default function LoginP() {
                 localStorage.setItem('token', token);
                 localStorage.setItem('auth', 'true');
                 Swal.fire({
-                    title: "!Bienvenido!",
-                    text: "Usuario logueado correctamente",
+                    title: `!${b("welcome")}!`,
+                    text: `${b("success1")}`,
                     icon: "success",
                 });
                 router.push('/');
@@ -64,8 +66,8 @@ export default function LoginP() {
             }
         } catch (error) {
             Swal.fire({
-                title: "!Error!",
-                text: "El usuario no ha podido loguearse",
+                title: `!${b("error")}!`,
+                text: `${b("failed1")}`,
                 icon: "error",
             });
         } finally {
