@@ -4,15 +4,24 @@ import { FeedStarIcon, BookmarkIcon } from "@primer/octicons-react"
 import {TextSubtitle, TextParagraph, hoverscale, sectionCard} from '../tokens'
 
 import {training_plan} from "@/types/training_plan"
+import useAuthStore from '@/validators/useAuthStore';
+import { useRouter, usePathname } from 'next/navigation';
 
 type CardProps = {
     trainingPlan: training_plan
 }
 
 export function CardRutina({ trainingPlan }: CardProps) {
+    const pathname = usePathname();
+    const { language } = useAuthStore();
+    const buildLink = (path: string) => {
+        const pathSegments = pathname.split('/');
+        const basePath = pathSegments[1] === language ? pathSegments.slice(2).join('/') : pathSegments.slice(1).join('/');
+        return `/${language}/${path}`;
+    };
     return (
         <article className="flex flex-col items-center h-max w-64 rounded-[20px] m-[20px] border-slate-400 p-4 bg-[#718698]">
-            <Link href={`/${trainingPlan.id} `}>
+            <Link href={buildLink(`/${trainingPlan.id} `)}>
                 <Image
                     className={"rounded-md " + hoverscale}
                     src='/logo_gym.png'
