@@ -35,6 +35,7 @@ export const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('auth');
     setToken(null);
     setIsAuthenticated(false);
     router.push('/');
