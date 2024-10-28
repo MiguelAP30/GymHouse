@@ -16,7 +16,8 @@
     "footer": {
     },
     "faq": {
-        "message": "Preguntas frecuentes"
+        "title": "Preguntas frecuentes",
+        "message": "¿Cómo puedo acceder a la plataforma?"
     },
     "about": {
         "title":"Sobre nosotros",
@@ -40,7 +41,8 @@
         "address": "Dirección (opcional)",
         "birthdate": "Fecha de nacimiento",
         "gender": "Género",
-        "registerButton": "Registrarse"
+        "registerButton": "Registrarse",
+        "passwords": "Las contraseñas no coinciden"
     },
     "routines": {
         "general": "Rutinas generales",
@@ -66,7 +68,9 @@
         "phoneNumber": "Número de teléfono",
         "address": "Dirección",
         "birthdate": "Fecha de nacimiento",
-        "gender": "Género"
+        "gender": "Género",
+        "date": "Fecha",
+        "button": "Actualizar"
     },
     "errors": {
         "login": "Iniciar sesión",
@@ -78,6 +82,9 @@
         "error": "Error",
         "failed1": "El usuario no ha podido loguearse",
         "success2": "Usuario creado correctamente",
-        "failed2": "El usuario no ha podido loguearse"
+        "failed2": "El usuario no ha podido loguearse",
+        "success3": "Perfil actualizado correctamente",
+        "failed3": "El perfil no ha podido actualizarse",
+        "profile": "Perfil actualizado!"
     }
 }

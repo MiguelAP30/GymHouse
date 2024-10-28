@@ -15,7 +15,8 @@
     },
     "footer": {},
     "faq": {
-        "message": "常见问题"
+        "title": "常见问题",
+        "message": "我如何访问平台？"
     },
     "about": {
         "title": "关于我们",
@@ -39,7 +40,8 @@
         "address": "地址（可选）",
         "birthdate": "出生日期",
         "gender": "性别",
-        "registerButton": "注册"
+        "registerButton": "注册",
+        "passwords": "密码不匹配"
     },
     "routines": {
         "general": "一般锻炼方案",
@@ -65,7 +67,9 @@
         "phoneNumber": "电话号码",
         "address": "地址",
         "birthdate": "出生日期",
-        "gender": "性别"
+        "gender": "性别",
+        "date": "日期",
+        "button": "更新"
     },
     "errors": {
         "login": "登录",
@@ -77,6 +81,9 @@
         "error": "错误",
         "failed1": "用户无法登录",
         "success2": "用户创建成功",
-        "failed2": "无法创建用户"
+        "failed2": "无法创建用户",
+        "success3": "个人资料更新成功",
+        "failed3": "无法更新个人资料",
+        "profile": "个人资料已更新！"
     }
 }

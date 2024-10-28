@@ -14,7 +14,6 @@ import { useRouter } from 'next/navigation';
 import { registerSchema } from "@/validators/registerSchema";
 import { useTranslations } from 'next-intl';
 import Spinner from '../molecules/Spinner';
-import { useStore } from 'zustand';
 import useAuthStore from '@/validators/useAuthStore';
 
 export default function RegisterP() {
@@ -145,7 +144,7 @@ export default function RegisterP() {
                             {errors.confirm_password && <p>{errors.confirm_password.message}</p>}
                         </div>
                         {password !== confirmPassword && (
-                            <p className='text-red-500'>Las contraseñas no coinciden</p>
+                            <p className='text-red-500'>{t("passwords")}</p>
                         )}
                     </div>
 

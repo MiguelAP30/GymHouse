@@ -16,7 +16,8 @@
     "footer": {
     },
     "faq": {
-        "message": "Frequently asked questions"
+        "title": "Frequently Asked Questions",
+        "message": "How can I access the platform?"
     },
     "about": {
         "title": "About us",
@@ -40,7 +41,8 @@
         "address": "Address (optional)",
         "birthdate": "Birthdate",
         "gender": "Gender",
-        "registerButton": "Register"
+        "registerButton": "Register",
+        "passwords": "Passwords do not match"
     },
     "routines": {
         "general": "General routines",
@@ -66,7 +68,9 @@
         "phoneNumber": "Phone number",
         "address": "Address ",
         "birthdate": "Birthdate",
-        "gender": "Gender"
+        "gender": "Gender",
+        "date": "Date",
+        "button": "Update"
     },
     "errors": {
         "login": "Log in",
@@ -78,6 +82,10 @@
         "error": "Error",
         "failed1": "User could not log in",
         "success2": "User created successfully",
-        "failed2": "User could not be created"
+        "failed2": "User could not be created",
+        "success3": "Profile updated successfully",
+        "failed3": "Profile could not be updated",
+        "profile": "Profile updated!",
+        "button": "Update"
     }
 }
