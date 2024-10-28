@@ -3,6 +3,7 @@ import Link from "next/link"
 import { FeedStarIcon, BookmarkIcon } from "@primer/octicons-react"
 import {TextSubtitle, TextParagraph, hoverscale, sectionCard} from '../tokens'
 
+
 type CardProps = {
     idCard: string
 }

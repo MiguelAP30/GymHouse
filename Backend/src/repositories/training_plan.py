@@ -1,6 +1,7 @@
 from typing import List
 from src.schemas.training_plan import TrainingPlan
 from src.models.training_plan import TrainingPlan as training_plans
+from src.models.user import User
 
 class TrainingPlanRepository():
     def __init__(self, db) -> None:
@@ -9,6 +10,22 @@ class TrainingPlanRepository():
     def get_all_training_plans(self, user: str) -> List[TrainingPlan]:
         query = self.db.query(training_plans).\
         filter(training_plans.user_email == user)
+        return query.all()
+    
+    def get_all_training_plans_by_role_admin(self) -> List[TrainingPlan]:
+        query = self.db.query(training_plans).join(User, training_plans.user_email == User.email).filter(User.role_id == 4, training_plans.is_visible == True)
+        return query.all()
+    
+    def get_all_training_plans_by_role_gym(self) -> List[TrainingPlan]:
+        query = self.db.query(training_plans).join(User, training_plans.user_email == User.email).filter(User.role_id == 3, training_plans.is_visible == True)
+        return query.all()
+    
+    def get_all_training_plans_by_role_premium(self) -> List[TrainingPlan]:
+        query = self.db.query(training_plans).join(User, training_plans.user_email == User.email).filter(User.role_id == 2, training_plans.is_visible == True)
+        return query.all()
+    
+    def get_all_my_training_plans(self, user_email: str) -> List[TrainingPlan]:
+        query = self.db.query(training_plans).join(User, training_plans.user_email == User.email).filter(training_plans.user_email == user_email)
         return query.all()
     
     def get_training_plan_by_id(self, id: int, user: str):

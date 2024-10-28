@@ -66,3 +66,57 @@ export const getUserDataByEmail = async (email: string, token: string) => {
   console.log(rawData);
   return rawData
 }
+
+//Rutinas
+
+export const get_training_plans_by_role_admin = async (token: string) => {
+  const info = await fetch(`${API}/training_plan/Generales`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  const rawData = await info.json()
+  console.log(rawData);
+  return rawData
+}
+
+export const get_training_plans_by_role_gym = async (token: string) => {
+  const info = await fetch(`${API}/training_plan/Profesionales`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  const rawData = await info.json()
+  console.log(rawData);
+  return rawData
+}
+
+export const get_training_plans_by_role_premium = async (token: string) => {
+  const info = await fetch(`${API}/training_plan/Usuarios`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  const rawData = await info.json()
+  console.log(rawData);
+  return rawData
+}
+
+export const get_my_training_plans = async (email: string, token: string) => {
+  const info = await fetch(`${API}/training_plan/${email}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  const rawData = await info.json()
+  console.log(rawData);
+  return rawData
+}
