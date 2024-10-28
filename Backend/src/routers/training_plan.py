@@ -26,8 +26,7 @@ def get_training_plans(credentials: Annotated[HTTPAuthorizationCredentials,Depen
             return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
         if status_user == False:
             return JSONResponse(content={"message": "Your account is disabled", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
-        current_user = payload.get("sub")
-        result = TrainingPlanRepository(db).get_all_training_plans(current_user)
+        result = TrainingPlanRepository(db).get_all_training_plans()
         return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
 @training_plan_router.get('/Generales', response_model=List[TrainingPlan], description="Retorna todos los planes de entrenamiento de los usuarios con rol de administrador")
@@ -72,7 +71,7 @@ def get_training_plans_by_role_premium(credentials: Annotated[HTTPAuthorizationC
         result = TrainingPlanRepository(db).get_all_training_plans_by_role_premium()
         return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
-@training_plan_router.get('/{email}', response_model=List[TrainingPlan], description="Retorna todos los planes de entrenamiento creados por el usuario autenticado")
+@training_plan_router.get('/Propias', response_model=List[TrainingPlan], description="Retorna todos los planes de entrenamiento creados por el usuario autenticado")
 def get_my_training_plans(credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)]) -> List[TrainingPlan]:
     db = SessionLocal()
     payload = auth_handler.decode_token(credentials.credentials)

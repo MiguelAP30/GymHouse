@@ -15,6 +15,7 @@ import { useTranslations } from 'next-intl';
 export default function ProfileP() {
     const searchParams = useSearchParams();
     const { fetchToken, setToken, email } = useAuthStore();
+    
     const [profile, setProfile] = useState<Profile | null>(null);
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);

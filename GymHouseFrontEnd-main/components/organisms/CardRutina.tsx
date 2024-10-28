@@ -3,14 +3,16 @@ import Link from "next/link"
 import { FeedStarIcon, BookmarkIcon } from "@primer/octicons-react"
 import {TextSubtitle, TextParagraph, hoverscale, sectionCard} from '../tokens'
 
+import {training_plan} from "@/types/training_plan"
 
 type CardProps = {
-    idCard: string
+    trainingPlan: training_plan
 }
-export function CardRutina({idCard}: CardProps) {
+
+export function CardRutina({ trainingPlan }: CardProps) {
     return (
-        <article className="flex flex-col items-center h-max rounded-[20px] m-[20px] border-slate-400 p-4 bg-[#718698]">
-            <Link href={`/${idCard} `}>
+        <article className="flex flex-col items-center h-max w-64 rounded-[20px] m-[20px] border-slate-400 p-4 bg-[#718698]">
+            <Link href={`/${trainingPlan.id} `}>
                 <Image
                     className={"rounded-md " + hoverscale}
                     src='/logo_gym.png'
@@ -19,8 +21,8 @@ export function CardRutina({idCard}: CardProps) {
                     height='200'
                 />
             </Link>
-            <p className={` ${TextSubtitle} text-center mt-4`}>Nombre De La Rutina</p>
-            <p>El id de la rutina es {idCard}</p>
+            <p className={` ${TextSubtitle} text-center mt-4`}>{trainingPlan.name}</p>
+            <p>{trainingPlan.description}</p>
             <section className={`${sectionCard}`}>
                 <p className={`${TextParagraph} text-center mt-2`}>10</p>
                 <FeedStarIcon size={20} className="ml-2 mt-[8px]" />

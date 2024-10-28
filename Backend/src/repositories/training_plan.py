@@ -7,9 +7,9 @@ class TrainingPlanRepository():
     def __init__(self, db) -> None:
         self.db = db
     
-    def get_all_training_plans(self, user: str) -> List[TrainingPlan]:
+    def get_all_training_plans(self, ) -> List[TrainingPlan]:
         query = self.db.query(training_plans).\
-        filter(training_plans.user_email == user)
+        filter(training_plans.is_visible == True)
         return query.all()
     
     def get_all_training_plans_by_role_admin(self) -> List[TrainingPlan]:

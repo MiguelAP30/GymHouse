@@ -13,6 +13,7 @@ const { detailsRoutine } = useParams()
                 <CardDia idCard='E3'/>
                 <CardDia idCard='E4'/>
                 <CardDia idCard='E5'/>
+                {detailsRoutine}
             </div>
         </section>
     )

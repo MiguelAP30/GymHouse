@@ -43,7 +43,6 @@ export default function Page() {
   if (isAuthenticated && (rol ?? 0) > 1) {
     return (
       <>
-        <CardRutina idCard={`${id}`} />
         <div>page</div>
       </>
     );

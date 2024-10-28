@@ -69,6 +69,19 @@ export const getUserDataByEmail = async (email: string, token: string) => {
 
 //Rutinas
 
+export const get_training_plans = async (token: string) => {
+  const info = await fetch(`${API}/training_plan`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  const rawData = await info.json()
+  console.log(rawData);
+  return rawData
+}
+
 export const get_training_plans_by_role_admin = async (token: string) => {
   const info = await fetch(`${API}/training_plan/Generales`, {
     method: 'GET',
@@ -108,15 +121,20 @@ export const get_training_plans_by_role_premium = async (token: string) => {
   return rawData
 }
 
-export const get_my_training_plans = async (email: string, token: string) => {
-  const info = await fetch(`${API}/training_plan/${email}`, {
+export const get_my_training_plans = async (token: string) => {
+  const response = await fetch(`${API}/training_plan/Propias`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     }
-  })
-  const rawData = await info.json()
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch training plans');
+  }
+
+  const rawData = await response.json();
   console.log(rawData);
-  return rawData
+  return rawData;
 }

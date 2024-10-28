@@ -31,7 +31,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
 
   setLanguage: (lan: string | null) => {
     set({ language:lan });
-},
+  },
   
   
   fetchToken: async () => {

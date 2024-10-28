@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import {HeaderRoutines} from '../../../../components/molecules/Header_routines'
 
-export const metadata: Metadata = {
-    title: "Routines",
-    description: "Routines"
-};
 
 export default function AuthLayout({
     children
