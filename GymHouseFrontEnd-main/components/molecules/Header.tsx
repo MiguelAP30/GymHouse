@@ -44,7 +44,7 @@ export const Header = () => {
   const changeLanguage = (newLanguage: string) => {
     setLanguage(newLanguage); // Cambia el idioma en el estado
     const pathSegments = pathname.split('/');
-    const newPath = `/${newLanguage}${pathSegments.slice(2).join('/')}`; // Cambia el idioma en la ruta
+    const newPath = `/${newLanguage}/${pathSegments.slice(2).join('/')}`; // Cambia el idioma en la ruta
     router.push(newPath); // Navega a la nueva ruta
   };
 
