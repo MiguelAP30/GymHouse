@@ -10,14 +10,15 @@ import { User } from '@/types/user';
 import Swal from 'sweetalert2';
 import { useSearchParams } from 'next/navigation';
 import useAuthStore from '@/validators/useAuthStore';
-import { useTranslations } from 'next-intl';
+import { hoverscale } from '@/components/tokens';
+import Image from 'next/image';
 
 export default function ProfileP() {
     const searchParams = useSearchParams();
     const { fetchToken, setToken, email } = useAuthStore();
     
-    const [profile, setProfile] = useState<Profile | null>(null);
-    const [user, setUser] = useState<User | null>(null);
+    const [profile, setProfile] = useState<Profile >();
+    const [user, setUser] = useState<User>();
     const [loading, setLoading] = useState(true);
     const {
         register,
@@ -80,104 +81,101 @@ export default function ProfileP() {
     if (loading) {
         return <div>Loading...</div>;
     }
-    const t = useTranslations("profile")
     return (
-        <main className="w-full flex justify-between m-0 p-0">
-            <aside className="flex flex-col items-center justify-center w-full bg-[#011627] m-0 p-0">
-                <h1 className={`${TextTitle}`}>{t("title")}</h1>
-                <div className='w-1/2 flex justify-center items-center mb-[30px]'>
-                    {profile ? (
-                        <div className="flex flex-col justify-center items-center gap-4 p-4 bg-white rounded shadow-md">
-                            <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("email")}</label>
-                                <p className="p-2 border border-gray-300 rounded text-black">{user?.email}</p>
-                            </div>
-                            <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("idNumber")}</label>
-                                <p className="p-2 border border-gray-300 rounded text-black">{user?.id_number}</p>
-                            </div>
-                            <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("username")}</label>
-                                <p className="p-2 border border-gray-300 rounded text-black">{user?.user_name}</p>
-                            </div>
-                            <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("name")}</label>
-                                <p className="p-2 border border-gray-300 rounded text-black">{user?.name}</p>
-                            </div>
-                            <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("phoneNumber")}</label>
-                                <p className="p-2 border border-gray-300 rounded text-black">{user?.phone}</p>
-                            </div>
-                            <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("address")}</label>
-                                <p className="p-2 border border-gray-300 rounded text-black">{user?.address}</p>
-                            </div>
-                            <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("birthdate")}</label>
-                                <p className="p-2 border border-gray-300 rounded text-black">{user?.birth_date}</p>
-                            </div>
-                            <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("gender")}</label>
-                                <p className="p-2 border border-gray-300 rounded text-black">{user?.gender}</p>
-                            </div>
-                            <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("weight")}</label>
-                                <p className="p-2 border border-gray-300 rounded text-black">{profile.weight}</p>
-                            </div>
-                            <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("height")}</label>
-                                <p className="p-2 border border-gray-300 rounded text-black">{profile.height}</p>
-                            </div>
-                            <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">{t("activity")}</label>
-                                <p className="p-2 border border-gray-300 rounded text-black">{profile.physical_activity}</p>
-                            </div>
-                            <div className="flex flex-row">
-                                <label className="mb-2 text-sm font-semibold text-gray-700 mt-[10px] mr-[5px]">Fecha</label>
-                                <p className="p-2 border border-gray-300 rounded text-black">{profile.date}</p>
-                            </div>
+        <main className="w-full flex justify-center m-0 p-0 bg-[#011627] min-h-screen">
+            <aside className="flex flex-col items-center justify-center w-full max-w-md px-6 py-8  shadow-lg rounded-lg">
+                <h1 className="text-3xl font-semibold text-[#fefefe] mb-8">Perfil</h1>
+                {profile ? (
+                    <div className="flex flex-col items-center gap-6 p-8 rounded-md shadow-lg bg-gradient-to-br from-[#17455A] to-blue-800 bg-opacity-70">
+                    <div className="w-32 h-32 rounded-full overflow-hidden mb-4">
+                        <Image 
+                            className={`object-cover w-full h-full ${hoverscale}`}
+                            src='/logo_twitter.png'
+                            alt="logo twitter" 
+                            width={50}
+                            height={50}
+                        />
+                    </div>
+                
+                    <h2 className="text-2xl font-semibold text-white">{user?.name}</h2>
+                    <p className="text-sm font-light text-white mb-6">{user?.user_name}</p>
+                
+                    <div className="flex flex-col items-start w-full gap-4">
+                        <div className="flex flex-row items-center justify-between w-full">
+                            <span className="text-sm font-semibold text-white">Email:</span>
+                            <p className="text-white">{user?.email}</p>
                         </div>
-                    ) : (
-                        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 p-4 bg-white rounded shadow-md">
-                            <div className="flex flex-col">
-                                <label className="mb-2 text-sm font-semibold text-gray-700" htmlFor="weight">{t("weight")}</label>
-                                <input 
-                                    type="number" 
-                                    {...register("weight", { valueAsNumber: true })} 
-                                    id="weight"
-                                    className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-                                />
-                                {errors.weight && <span className="text-red-500 text-sm">{errors.weight.message}</span>}
-                            </div>
-                            <div className="flex flex-col">
-                                <label className="mb-2 text-sm font-semibold text-gray-700" htmlFor="height">{t("height")}</label>
-                                <input 
-                                    type="number" 
-                                    {...register("height", { valueAsNumber: true })} 
-                                    id="height"
-                                    className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-                                />
-                                {errors.height && <span className="text-red-500 text-sm">{errors.height.message}</span>}
-                            </div>
-                            <div className="flex flex-col">
-                                <label className="mb-2 text-sm font-semibold text-gray-700" htmlFor="physical_activity">{t("activity")}</label>
-                                <input 
-                                    type="number" 
-                                    {...register("physical_activity", { valueAsNumber: true })} 
-                                    id="physical_activity"
-                                    className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-                                />
-                                {errors.physical_activity && <span className="text-red-500 text-sm">{errors.physical_activity.message}</span>}
-                            </div>
-                            <input 
-                                type="submit" 
-                                value="Actualizar"
-                                className="p-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </form>
-                    )}
+                        <div className="flex flex-row items-center justify-between w-full">
+                            <span className="text-sm font-semibold text-white">Identificación:</span>
+                            <p className="text-white">{user?.id_number}</p>
+                        </div>
+                        <div className="flex flex-row items-center justify-between w-full">
+                            <span className="text-sm font-semibold text-white">Teléfono:</span>
+                            <p className="text-white">{user?.phone}</p>
+                        </div>
+                        <div className="flex flex-row items-center justify-between w-full">
+                            <span className="text-sm font-semibold text-white">Dirección:</span>
+                            <p className="text-white">{user?.address}</p>
+                        </div>
+                        <div className="flex flex-row items-center justify-between w-full">
+                            <span className="text-sm font-semibold text-white">Fecha de nacimiento:</span>
+                            <p className="text-white">{user?.birth_date}</p>
+                        </div>
+                        <div className="flex flex-row items-center justify-between w-full">
+                            <span className="text-sm font-semibold text-white">Género:</span>
+                            <p className="text-white">{user?.gender}</p>
+                        </div>
+                    </div>
+                
+                    <div className="flex flex-col items-center w-full gap-4 mt-4">
+                        <button className="w-full py-2 text-white border border-white rounded-md hover:bg-white hover:text-green-600">Peso: {profile.weight}</button>
+                        <button className="w-full py-2 text-white border border-white rounded-md hover:bg-white hover:text-green-600">Estatura: {profile.height}</button>
+                        <button className="w-full py-2 text-white border border-white rounded-md hover:bg-white hover:text-green-600">Actividad: {profile.physical_activity}</button>
+                        <button className="w-full py-2 text-white border border-white rounded-md hover:bg-white hover:text-green-600">Fecha: {profile.date}</button>
+                    </div>
                 </div>
+                
+                ) : (
+                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 p-4 bg-gradient-to-br from-[#37318a] to-blue-800 bg-opacity-70 rounded shadow-md">
+                        <div className="flex flex-col ">
+                            <label className="mb-2 text-sm font-semibold text-white" htmlFor="weight">Peso</label>
+                            <input 
+                                type="number" 
+                                {...register("weight", { valueAsNumber: true })} 
+                                id="weight"
+                                className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                            />
+                            {errors.weight && <span className="text-red-500 text-sm">{errors.weight.message}</span>}
+                        </div>
+                        <div className="flex flex-col">
+                            <label className="mb-2 text-sm font-semibold text-white" htmlFor="height">Altura</label>
+                            <input 
+                                type="number" 
+                                {...register("height", { valueAsNumber: true })} 
+                                id="height"
+                                className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                            />
+                            {errors.height && <span className="text-red-500 text-sm">{errors.height.message}</span>}
+                        </div>
+                        <div className="flex flex-col">
+                            <label className="mb-2 text-sm font-semibold text-white" htmlFor="physical_activity">Actividad física</label>
+                            <input 
+                                type="number" 
+                                {...register("physical_activity", { valueAsNumber: true })} 
+                                id="physical_activity"
+                                className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                            />
+                            {errors.physical_activity && <span className="text-red-500 text-sm">{errors.physical_activity.message}</span>}
+                        </div>
+                        <input 
+                            type="submit" 
+                            value="Actualizar"
+                            className="p-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </form>
+                )}
             </aside>
         </main>
     );
+    
 }
