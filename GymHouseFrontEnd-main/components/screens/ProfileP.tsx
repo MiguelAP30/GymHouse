@@ -85,7 +85,7 @@ export default function ProfileP() {
         return <div>Loading...</div>;
     }
     return (
-        <main className="w-full flex justify-center m-0 p-0 bg-[#011627] min-h-screen">
+        <main className="w-full flex justify-center bg-[#011627] min-h-full">
             <aside className="flex flex-col items-center justify-center w-full max-w-md px-6 py-8  shadow-lg rounded-lg">
                 <h1 className="text-3xl font-semibold text-[#fefefe] mb-8">{t("title")}</h1>
                 {profile ? (

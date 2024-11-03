@@ -6,9 +6,10 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { hoverscale, hoverLink } from '../tokens';
 import useAuthStore from '@/validators/useAuthStore';
 import { useTranslations } from 'next-intl';
+import {role} from '@/types/roles';
 
 export const Header = () => {
-  const { language, isAuthenticated, setIsAuthenticated, fetchToken, nameUser, setToken, setLanguage } = useAuthStore();
+  const { language, isAuthenticated, setIsAuthenticated, fetchToken, nameUser, setToken, setLanguage, rol } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -50,7 +51,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="w-full max-w-full h-[70px] shadow-md bg-[#17455A] flex justify-between items-center">
+    <header className="w-full max-w-full min-h-[70px] shadow-md bg-[#17455A] flex justify-between items-center">
       <aside className="flex justify-center items-center mx-[40px]">
         <Link href="/" className="group">
           <Image
@@ -74,6 +75,8 @@ export const Header = () => {
             <Link href={`/${language}/rutinasGenerales`} className={`mr-[10px] ${hoverLink}`}>{t("routines")}</Link>
             <Link href={`/${language}/ejercicios`} className={`mr-[10px] ${hoverLink}`}>{t("exercises")}</Link>
             <Link href={`/${language}/perfil`} className={`mr-[10px] ${hoverLink}`}>{t("profile")}</Link>
+            {rol !== null && rol == role.admin && <Link href={`/${language}/dashboard/administrador`} className={`mr-[10px] ${hoverLink}`}>Admin Dashboard</Link>}
+            {rol !== null && rol == role.gym && <Link href={`/${language}/dashboard/gym`} className={`mr-[10px] ${hoverLink}`}>Gym Dashboard</Link>}
             <input
               type="button"
               value={t("logout")}

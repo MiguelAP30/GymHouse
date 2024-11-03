@@ -1,5 +1,4 @@
 'use client';
-import { CardRutina } from '../../../../components/organisms/CardRutina';
 import useAuthStore from '../../../../validators/useAuthStore';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';

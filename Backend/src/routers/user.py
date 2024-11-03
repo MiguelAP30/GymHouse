@@ -17,26 +17,36 @@ user_router = APIRouter(tags=['Usuarios'])
 #CRUD user
 
 @user_router.get('/',response_model=List[User],description="Devuelve todos los usuarios")
-def get_users()-> List[User]:
+def get_users(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)])-> List[User]:
     db= SessionLocal()
-    result = UserRepository(db).get_all_users()
-    return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_current_user = payload.get("user.role")
+        if role_current_user != 4:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        result = UserRepository(db).get_all_users()
+        return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
 @user_router.get('/{email}',response_model=User,description="Devuelve la información de un solo usuario")
-def get_user(email: str = Path(min_length=5)) -> User:
+def get_user(credentials: Annotated[HTTPAuthorizationCredentials,Depends(security)], email: str = Path(min_length=5)) -> User:
     db = SessionLocal()
     element=  UserRepository(db).get_user_by_email(email)
-    if not element:        
+    payload = auth_handler.decode_token(credentials.credentials)
+    if payload:
+        role_current_user = payload.get("user.role")
+        if role_current_user != 4:
+            return JSONResponse(content={"message": "You do not have the necessary permissions", "data": None}, status_code=status.HTTP_401_UNAUTHORIZED)
+        if not element:        
+            return JSONResponse(
+                content={            
+                    "message": "The requested user was not found",            
+                    "data": None        
+                    }, 
+                status_code=status.HTTP_404_NOT_FOUND
+                )    
         return JSONResponse(
-            content={            
-                "message": "The requested user was not found",            
-                "data": None        
-                }, 
-            status_code=status.HTTP_404_NOT_FOUND
-            )    
-    return JSONResponse(
-        content=jsonable_encoder(element),                        
-        status_code=status.HTTP_200_OK
+            content=jsonable_encoder(element),                        
+            status_code=status.HTTP_200_OK
         )
 
 @user_router.put('/{email}',response_model=dict,description="Desactiva el usuario del sistema")

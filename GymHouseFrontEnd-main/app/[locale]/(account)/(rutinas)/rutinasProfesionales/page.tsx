@@ -38,9 +38,9 @@ export default function GeneralRoutines() {
                         <CardRutina key={index} trainingPlan={training_plan} />
                     ))
                 ) : (
-                    <div>No training plans available.</div>
+                    <div className='text-black'>No hay rutinas disponibles.</div>
                 )}
             </div>
         </section>
     );
-}
+}       

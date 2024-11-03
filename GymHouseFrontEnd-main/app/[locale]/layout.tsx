@@ -18,8 +18,8 @@ export default async function RootLayout({
   const messages = await getMessages();
   return (
     <NextIntlClientProvider messages= {messages}> 
-      <html lang="en"> 
-          <body className={inter.className}>
+      <html lang="en" className="h-full"> 
+          <body className={`${inter.className}h-full flex flex-col `}>
               {children}
           </body>
       </html>

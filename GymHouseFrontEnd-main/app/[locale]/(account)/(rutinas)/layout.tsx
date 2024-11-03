@@ -9,7 +9,7 @@ export default function AuthLayout({
 }) {
     return (
         <>
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-full">
             <main className="flex-grow w-full flex flex-col m-0 p-0">
                 <HeaderRoutines/>
                 {children}

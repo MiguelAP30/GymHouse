@@ -46,9 +46,11 @@ export default function AccountLayout({
     // Si pasa la verificación de autenticación y permisos, renderiza el contenido
     if (isAuthenticated && (rol ?? 0) > 1) {
       return (
-        <div>
+        <div className="h-screen flex flex-col">
           <Header />
-          { children }
+          <div className="flex-grow">
+            {children}
+          </div>
           <Footer />
         </div>
       );
